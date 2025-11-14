@@ -1,4 +1,6 @@
-﻿namespace chefPro
+﻿using chefPro.Views;
+
+namespace chefPro
 {
     public partial class App : Application
     {
@@ -9,7 +11,13 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var loginPage = new vLogin();
+
+            // Quitar la barra de navegación para esa página
+            NavigationPage.SetHasNavigationBar(loginPage, false);
+
+            // Devolver la ventana con un NavigationPage que contiene tu login
+            return new Window(new NavigationPage(loginPage));
         }
     }
 }

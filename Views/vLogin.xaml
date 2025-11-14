@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2021/maui/toolkit"
+             x:Class="chefPro.Views.vLogin">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Botón de Login -->
+            <Style x:Key="buttonLogin" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#FF6600" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+            <!-- Boton de Registro -->
+            <Style x:Key="buttonRegister" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#FFE5D6" />
+                <Setter Property="TextColor" Value="#FF6600" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="BorderWidth" Value="0" />
+            </Style>
+
+            <!-- Boton de Login con Google -->
+            <Style x:Key="buttonLoginGoogle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="#333" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="BorderColor" Value="#DDD" />
+                <Setter Property="BorderWidth" Value="1" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid>
+
+        <Image Source="fondo_cocina.jpg"
+            Aspect="AspectFill"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"/>
+
+        <BoxView HorizontalOptions="Fill"
+                 VerticalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <!-- Blanco sólido arriba -->
+                    <GradientStop Color="White" Offset="0.0" />
+                    <!-- Blanco semi-transparente en el medio -->
+                    <GradientStop Color="#CCFFFFFF" Offset="0.4" />
+                    <!-- Transparente abajo (se ve la imagen) -->
+                    <GradientStop Color="Transparent" Offset="0.7" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+
+            <!-- Contenido centrado -->
+            <VerticalStackLayout
+                Padding="40,0"
+                Spacing="25">
+
+                <!-- Logo / Título -->
+                <Image Source="chefpro_logo.png"
+                       HeightRequest="120"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,-40"/>
+
+                <Label Text="ChefPro"
+                       FontAttributes="Bold"
+                       FontSize="40"
+                       TextColor="#FF6600"
+                       HorizontalOptions="Center" />
+
+                <Label Text="¡Bienvenido de nuevo!"
+                       FontAttributes="Bold"
+                       FontSize="24"
+                       TextColor="#1E1E1E"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,20"/>
+
+                <material:TextField 
+                    Title="Correo Electróico"
+                    x:Name="txtEmail"
+                    TextColor="#666"
+                    FontSize="14"
+                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"
+                    AccentColor="DeepSkyBlue"/>
+
+                <material:TextField Title="Password" IsPassword="True">
+                    <material:TextField.Attachments>
+                        <material:TextFieldPasswordShowHideAttachment />
+                    </material:TextField.Attachments>
+                </material:TextField>
+
+                <Button
+                    x:Name="btnLogin"
+                    Style="{StaticResource buttonLogin}"
+                    StyleClass="FilledButton" 
+                    Text="Inciar Sesión" />
+
+                <Button 
+                    x:Name="btnRegister"
+                    Style="{StaticResource buttonRegister}"
+                    Text="Registrarse" />
+
+                <Label Text="o"
+                   FontAttributes="Bold"
+                   FontSize="10"
+                   TextColor="#000"
+                   HorizontalOptions="Center" />
+
+                <Button 
+                    x:Name="btnLoginGoogle"
+                    Style="{StaticResource buttonLoginGoogle}"
+                    StyleClass="FilledButton" 
+                    ImageSource="logo_google.png"
+                    Text="Iniciar con Google" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>
