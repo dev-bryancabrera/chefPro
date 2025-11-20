@@ -4,10 +4,21 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2021/maui/toolkit"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:Class="chefPro.Views.vLogin">
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <!-- Entrada de texto -->
+            <Style x:Key="entradaTexto" TargetType="material:TextField">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="#333333" />
+                <Setter Property="TitleColor" Value="#222222"/>
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="BorderColor" Value="#000000" />
+            </Style>
+
             <!-- Botón de Login -->
             <Style x:Key="buttonLogin" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="#FF6600" />
@@ -43,7 +54,6 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-
     <Grid>
 
         <Image Source="fondo_cocina.jpg"
@@ -58,7 +68,7 @@
                     <!-- Blanco sólido arriba -->
                     <GradientStop Color="White" Offset="0.0" />
                     <!-- Blanco semi-transparente en el medio -->
-                    <GradientStop Color="#CCFFFFFF" Offset="0.4" />
+                    <GradientStop Color="#CCFFFFFF" Offset="0.3" />
                     <!-- Transparente abajo (se ve la imagen) -->
                     <GradientStop Color="Transparent" Offset="0.7" />
                 </LinearGradientBrush>
@@ -92,33 +102,49 @@
                        Margin="0,0,0,20"/>
 
                 <material:TextField 
-                    Title="Correo Electróico"
+                    Style="{StaticResource entradaTexto}"
+                    Title="Correo Electronico"
                     x:Name="txtEmail"
                     TextColor="#666"
+                    Keyboard="Email"
                     FontSize="14"
-                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"
-                    AccentColor="DeepSkyBlue"/>
+                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}, Color=#222222}"
+                    AccentColor="Green">
 
-                <material:TextField Title="Password" IsPassword="True">
+                    <validation:RequiredValidation />
+                    <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Email inválido" />
+
+                </material:TextField>
+
+                <material:TextField x:Name="txtPassword" 
+                        Style="{StaticResource entradaTexto}"
+                        Title="Password" 
+                        IsPassword="True"
+                        AccentColor="Green">
+
                     <material:TextField.Attachments>
                         <material:TextFieldPasswordShowHideAttachment />
                     </material:TextField.Attachments>
+
                 </material:TextField>
 
                 <Button
                     x:Name="btnLogin"
                     Style="{StaticResource buttonLogin}"
                     StyleClass="FilledButton" 
-                    Text="Inciar Sesión" />
+                    Text="Inciar Sesión"
+                    input:FormView.IsSubmitButton="True"
+                    Clicked="btnLogin_Clicked"/>
 
                 <Button 
                     x:Name="btnRegister"
                     Style="{StaticResource buttonRegister}"
-                    Text="Registrarse" />
+                    Text="Registrarse"
+                    Clicked="btnRegister_Clicked"/>
 
-                <Label Text="o"
+                <Label Text="O"
                    FontAttributes="Bold"
-                   FontSize="10"
+                   FontSize="14"
                    TextColor="#000"
                    HorizontalOptions="Center" />
 
@@ -127,7 +153,8 @@
                     Style="{StaticResource buttonLoginGoogle}"
                     StyleClass="FilledButton" 
                     ImageSource="logo_google.png"
-                    Text="Iniciar con Google" />
+                    Text="Iniciar con Google"
+                    Clicked="btnLoginGoogle_Clicked"/>
 
             </VerticalStackLayout>
         </ScrollView>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2021/maui/toolkit"
+             x:Class="chefPro.Views.vRegistro">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Entrada de texto -->
+            <Style x:Key="entradaTexto" TargetType="material:TextField">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="#333333" />
+                <Setter Property="TitleColor" Value="#222222"/>
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="BorderColor" Value="#000000" />
+            </Style>
+
+            <!-- Botón Principal de Registro -->
+            <Style x:Key="buttonRegisterPrimary" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#FF6600" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+            <!-- Botón Secundario (Ya tengo cuenta) -->
+            <Style x:Key="buttonLoginSecondary" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="#FF6600" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="BorderWidth" Value="0" />
+            </Style>
+
+            <!-- Botón de Registro con Google -->
+            <Style x:Key="buttonRegisterGoogle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="#333" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="BorderColor" Value="#DDD" />
+                <Setter Property="BorderWidth" Value="1" />
+            </Style>
+
+            <!-- Estilo para Labels de Términos -->
+            <Style x:Key="labelTerms" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="#666" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+
+        <Image Source="fondo_cocina.jpg"
+            Aspect="AspectFill"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill"/>
+
+        <BoxView HorizontalOptions="Fill"
+                 VerticalOptions="Fill">
+            <BoxView.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <!-- Blanco sólido arriba -->
+                    <GradientStop Color="White" Offset="0.2" />
+                    <!-- Blanco semi-transparente en el medio -->
+                    <GradientStop Color="#CCFFFFFF" Offset="0.4" />
+                    <!-- Transparente abajo (se ve la imagen) -->
+                    <GradientStop Color="Transparent" Offset="0.8" />
+                </LinearGradientBrush>
+            </BoxView.Background>
+        </BoxView>
+
+        <ScrollView>
+
+            <!-- Contenido centrado -->
+            <VerticalStackLayout
+                Padding="40,20"
+                Spacing="20">
+
+                <!-- Logo / Título -->
+                <Image Source="chefpro_logo.png"
+                       HeightRequest="100"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,-30"/>
+
+                <Label Text="ChefPro"
+                       FontAttributes="Bold"
+                       FontSize="36"
+                       TextColor="#FF6600"
+                       HorizontalOptions="Center" />
+
+                <Label Text="Crear una cuenta"
+                       FontAttributes="Bold"
+                       FontSize="24"
+                       TextColor="#1E1E1E"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,10"/>
+
+                <!-- Campos del formulario -->
+                <material:TextField 
+                    Style="{StaticResource entradaTexto}"
+                    Title="Nombre Completo"
+                    x:Name="txtNombre"
+                    TextColor="#666"
+                    FontSize="14"
+                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}"
+                    AccentColor="DeepSkyBlue"/>
+
+                <material:TextField 
+                    Style="{StaticResource entradaTexto}"
+                    Title="Correo Electrónico"
+                    x:Name="txtEmail"
+                    TextColor="#666"
+                    FontSize="14"
+                    Keyboard="Email"
+                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"
+                    AccentColor="DeepSkyBlue"/>
+
+                <material:TextField 
+                    Style="{StaticResource entradaTexto}"
+                    Title="Teléfono (opcional)"
+                    x:Name="txtTelefono"
+                    TextColor="#666"
+                    FontSize="14"
+                    Keyboard="Telephone"
+                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Phone}}"
+                    AccentColor="DeepSkyBlue"/>
+
+                <material:TextField 
+                    Style="{StaticResource entradaTexto}"
+                    Title="Contraseña" 
+                    x:Name="txtPassword"
+                    IsPassword="True">
+                    <material:TextField.Attachments>
+                        <material:TextFieldPasswordShowHideAttachment />
+                    </material:TextField.Attachments>
+                </material:TextField>
+
+                <material:TextField 
+                    Style="{StaticResource entradaTexto}"
+                    Title="Confirmar Contraseña" 
+                    x:Name="txtConfirmPassword"
+                    IsPassword="True">
+                    <material:TextField.Attachments>
+                        <material:TextFieldPasswordShowHideAttachment />
+                    </material:TextField.Attachments>
+                </material:TextField>
+
+                <!-- CheckBox de Términos y Condiciones -->
+                <Grid Margin="0,10,0,0" ColumnSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox 
+                        Grid.Column="0"
+                        x:Name="chkTerminos"
+                        Color="#FF6600"
+                        VerticalOptions="Start"
+                        Margin="0,2,0,0"/>
+
+                    <Label 
+                        Grid.Column="1"
+                        Style="{StaticResource labelTerms}"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        LineBreakMode="WordWrap">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Acepto los " />
+                                <Span Text="Términos y Condiciones" 
+                                      TextColor="#FF6600" 
+                                      TextDecorations="Underline"/>
+                                <Span Text=" y la " />
+                                <Span Text="Política de Privacidad" 
+                                      TextColor="#FF6600" 
+                                      TextDecorations="Underline"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+
+                <!-- Botón de Registro -->
+                <Button
+                    x:Name="btnRegister"
+                    Style="{StaticResource buttonRegisterPrimary}"
+                    StyleClass="FilledButton" 
+                    Text="Registrarse"
+                    Margin="0,10,0,0"
+                    Clicked="btnRegister_Clicked"/>
+
+                <!-- Separador -->
+                <Label Text="o"
+                   FontAttributes="Bold"
+                   FontSize="10"
+                   TextColor="#000"
+                   HorizontalOptions="Center"
+                   Margin="0,5,0,5" />
+
+                <!-- Botón de Google -->
+                <Button 
+                    x:Name="btnRegisterGoogle"
+                    Style="{StaticResource buttonRegisterGoogle}"
+                    StyleClass="FilledButton" 
+                    ImageSource="logo_google.png"
+                    Text="Registrarse con Google"
+                    Clicked="btnRegisterGoogle_Clicked"/>
+
+                <!-- Ya tengo cuenta -->
+                <HorizontalStackLayout 
+                    HorizontalOptions="Center"
+                    Spacing="5"
+                    Margin="0,10,0,20">
+                    <Label 
+                        Text="¿Ya tienes una cuenta?"
+                        FontSize="14"
+                        TextColor="#666"
+                        VerticalOptions="Center"/>
+                    <Button 
+                        x:Name="btnGoLogin"
+                        Style="{StaticResource buttonLoginSecondary}"
+                        Text="Iniciar Sesión"
+                        Clicked="btnGoLogin_Clicked"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

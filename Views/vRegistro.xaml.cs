@@ -3,33 +3,47 @@ using System.Net;
 
 namespace chefPro.Views;
 
-public partial class vLogin : ContentPage
+public partial class vRegistro : ContentPage
 {
-    public vLogin()
+    public vRegistro()
     {
         InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
     }
 
-    private async void btnLogin_Clicked(object sender, EventArgs e)
+    private async void btnRegister_Clicked(object sender, EventArgs e)
     {
         try
         {
             // Validar campos
-            if (string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
+            if (string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrWhiteSpace(txtPassword.Text) || string.IsNullOrWhiteSpace(txtNombre.Text))
             {
                 await DisplayAlert("Error", "Complete todos los campos", "OK");
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(txtPassword.Text) || txtPassword.Text.Length < 6)
+            {
+                await DisplayAlert("Error", "La contraseña debe tener al menos 6 caracteres", "OK");
+                return;
+            }
+
+            if (txtPassword.Text != txtConfirmPassword.Text)
+            {
+                await DisplayAlert("Error", "Las contraseñas no coinciden", "OK");
+                return;
+            }
+
             WebClient cliente = new WebClient();
             var parametros = new System.Collections.Specialized.NameValueCollection();
+            parametros.Add("nombres", txtNombre.Text);
             parametros.Add("email", txtEmail.Text);
             parametros.Add("password", txtPassword.Text);
+            parametros.Add("tipo_login", "1");
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.107/wsChefPro/auth/login",
+                "http://192.168.0.107/wsChefPro/usuarios/registrar",
                 "POST",
                 parametros
             );
@@ -42,19 +56,19 @@ public partial class vLogin : ContentPage
 
             if (resultado != null && resultado.usuario != null)
             {
-                await DisplayAlert("Éxito", $"Bienvenido {resultado.usuario.nombres}", "OK");
-                await Navigation.PushAsync(new vInicio());
+                await DisplayAlert("Éxito",
+                    $"Usuario creado correctamente\n¡Bienvenido {resultado.usuario.nombres}!", "OK");
+                await Navigation.PushAsync(new vLogin());
             }
             else
             {
-                await DisplayAlert("Error", "Credenciales incorrectas", "OK");
+                await DisplayAlert("Error", "No se pudo crear el usuario", "OK");
             }
         }
         catch (WebException wex)
         {
             try
             {
-                // Leer la respuesta de error del servidor
                 using (var stream = wex.Response.GetResponseStream())
                 using (var reader = new System.IO.StreamReader(stream))
                 {
@@ -65,7 +79,7 @@ public partial class vLogin : ContentPage
             }
             catch
             {
-                await DisplayAlert("Error", "Error de conexión: " + wex.Message, "OK");
+                await DisplayAlert("Error", "Error de conexión", "OK");
             }
         }
         catch (Exception ex)
@@ -74,12 +88,12 @@ public partial class vLogin : ContentPage
         }
     }
 
-    private void btnRegister_Clicked(object sender, EventArgs e)
+    private void btnGoLogin_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new vRegistro());
+        Navigation.PushAsync(new vLogin());
     }
 
-    private void btnLoginGoogle_Clicked(object sender, EventArgs e)
+    private void btnRegisterGoogle_Clicked(object sender, EventArgs e)
     {
 
     }
