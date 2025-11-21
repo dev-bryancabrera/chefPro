@@ -20,7 +20,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
-		<RuntimeIdentifiers>android-arm;android-arm64</RuntimeIdentifiers>
+		<!--<RuntimeIdentifiers>android-arm;android-arm64</RuntimeIdentifiers-->
 		
 		<!-- Display name -->
 		<ApplicationTitle>chefPro</ApplicationTitle>
@@ -73,6 +73,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\AgregarReceta.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\BuscarReceta.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\vDetalleReceta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

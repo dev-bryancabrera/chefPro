@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             x:Class="chefPro.Views.AgregarReceta"
+             Title="Agregar Receta"
+             BackgroundColor="#FFF5EE">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="entradaTexto" TargetType="material:TextField">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="#333333" />
+                <Setter Property="TitleColor" Value="#222222"/>
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="BorderColor" Value="#FF6600" />
+                <Setter Property="AccentColor" Value="#FF6600"/>
+            </Style>
+
+            <Style x:Key="buttonGuardar" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#FF6600" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="55" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+            <Style x:Key="buttonFoto" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#FFE5D6" />
+                <Setter Property="TextColor" Value="#FF6600" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="45" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <Label Text="Agregar Receta"
+                   FontAttributes="Bold"
+                   FontSize="32"
+                   HorizontalOptions="Center"
+                   TextColor="#FF6600"/>
+
+            <Frame Padding="20" BackgroundColor="White"
+                   CornerRadius="25" HasShadow="True">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Título -->
+                    <material:TextField
+                        Style="{StaticResource entradaTexto}"
+                        Title="Título"
+                        x:Name="txtTitulo"
+                        Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Edit}, Color=#222}"/>
+
+                    <!-- Descripción -->
+                    <material:TextField
+                        Style="{StaticResource entradaTexto}"
+                        Title="Descripción"
+                        x:Name="txtDescripcion"
+                        MaxLength="500"
+                        Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Description}, Color=#222}"/>
+
+                    <!-- PRIMER GRID -->
+                    <Grid ColumnDefinitions="*,*"
+                          RowDefinitions="Auto,Auto,Auto">
+
+                        <material:TextField
+                            Grid.Row="0" Grid.Column="0"
+                            Style="{StaticResource entradaTexto}"
+                            Title="Tiempo preparación (min)"
+                            x:Name="txtTiempo"
+                            Keyboard="Numeric"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Timer}, Color=#222}"/>
+
+                        <material:TextField
+                            Grid.Row="0" Grid.Column="1"
+                            Style="{StaticResource entradaTexto}"
+                            Title="Peso total (g)"
+                            x:Name="txtPesoTotal"
+                            Keyboard="Numeric"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Scale}, Color=#222}"/>
+
+                        <material:TextField
+                            Grid.Row="1" Grid.Column="0"
+                            Style="{StaticResource entradaTexto}"
+                            Title="Porciones"
+                            x:Name="txtPorciones"
+                            Keyboard="Numeric"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.People}, Color=#222}"/>
+
+                        <material:TextField
+                            Grid.Row="1" Grid.Column="1"
+                            Style="{StaticResource entradaTexto}"
+                            Title="Peso por porción"
+                            x:Name="txtPesoPorcion"
+                            Keyboard="Numeric"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Scale}, Color=#222}"/>
+
+                        <material:TextField
+                            Grid.Row="2" Grid.Column="0"
+                            Style="{StaticResource entradaTexto}"
+                            Title="Valor venta"
+                            x:Name="txtValorVenta"
+                            Keyboard="Numeric"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Money}, Color=#222}"/>
+
+                        <material:TextField
+                            Grid.Row="2" Grid.Column="1"
+                            Style="{StaticResource entradaTexto}"
+                            Title="Costo receta"
+                            x:Name="txtCosto"
+                            Keyboard="Numeric"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Payments}, Color=#222}"/>
+                    </Grid>
+
+                    <!-- CAMPOS FALTANTES -->
+                    <material:TextField
+                        Style="{StaticResource entradaTexto}"
+                        Title="Precio unidad"
+                        x:Name="txtPrecioUnidad"
+                        Keyboard="Numeric"
+                        Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Money}, Color=#222}"/>
+                    <material:TextField
+                        Style="{StaticResource entradaTexto}"
+                        Title="Porcentaje ganancia"
+                        x:Name="txtPorcentajeGanancia"
+                        Keyboard="Numeric"/>            
+
+
+
+
+                    <!-- FOTO -->
+                    <VerticalStackLayout Spacing="10">
+                        <Image x:Name="imgFoto"
+                               HeightRequest="220"
+                               BackgroundColor="#DDD"
+                               Aspect="AspectFill"/>
+
+                        <Button Text="Tomar Foto"
+                                Style="{StaticResource buttonFoto}"
+                                Clicked="BtnFoto_Clicked"/>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Guardar Receta"
+                    Style="{StaticResource buttonGuardar}"
+                    Clicked="BtnGuardar_Clicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

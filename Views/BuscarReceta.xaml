@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             x:Class="chefPro.Views.BuscarReceta"
+             Title="Buscar Receta"
+             BackgroundColor="#FFF5EE">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="entradaTexto" TargetType="material:TextField">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="#333333" />
+                <Setter Property="TitleColor" Value="#222222"/>
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="BorderColor" Value="#FF6600" />
+                <Setter Property="AccentColor" Value="#FF6600"/>
+            </Style>
+
+            <Style x:Key="buttonGuardar" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#FF6600" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="HeightRequest" Value="55" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Padding="20" Spacing="20">
+
+        <Label Text="Buscar Receta"
+               FontAttributes="Bold"
+               FontSize="32"
+               HorizontalOptions="Center"
+               TextColor="#FF6600"/>
+
+        <material:TextField
+            x:Name="txtBusqueda"
+            Style="{StaticResource entradaTexto}"
+            Title="Título de la Receta"
+            Icon="🔍"/>
+
+        <Button Text="Buscar"
+                Style="{StaticResource buttonGuardar}"
+                Clicked="BtnBuscar_Clicked"/>
+
+        <CollectionView x:Name="ResultadosList"
+                        IsVisible="False"
+                        HeightRequest="500"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" BackgroundColor="White" CornerRadius="20" HasShadow="True" Margin="0,5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="{Binding titulo}" FontAttributes="Bold" FontSize="18"/>
+                            <Label Text="{Binding descripcion}" MaxLines="2" LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding valor_venta, StringFormat='Valor: {0:C2}'}"/>
+                            <Image Source="{Binding foto_url}" HeightRequest="150" Aspect="AspectFill"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+
+</ContentPage>
