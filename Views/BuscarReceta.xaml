@@ -2,68 +2,172 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2021/maui/toolkit"
              x:Class="chefPro.Views.BuscarReceta"
              Title="Buscar Receta"
              BackgroundColor="#FFF5EE">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="entradaTexto" TargetType="material:TextField">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="TextColor" Value="#333333" />
-                <Setter Property="TitleColor" Value="#222222"/>
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="BorderColor" Value="#FF6600" />
-                <Setter Property="AccentColor" Value="#FF6600"/>
-            </Style>
+    <Grid>
 
-            <Style x:Key="buttonGuardar" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#FF6600" />
-                <Setter Property="TextColor" Value="White" />
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="CornerRadius" Value="15" />
-                <Setter Property="HeightRequest" Value="55" />
-                <Setter Property="FontAttributes" Value="Bold" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="20">
 
-    <VerticalStackLayout Padding="20" Spacing="20">
+                <!-- TÍTULO -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="20"
+                       HasShadow="True"
+                       Padding="20">
+                    <Label Text="Buscar Receta"
+                           FontAttributes="Bold"
+                           FontSize="32"
+                           HorizontalOptions="Center"
+                           TextColor="#FF6600"/>
+                </Frame>
 
-        <Label Text="Buscar Receta"
-               FontAttributes="Bold"
-               FontSize="32"
-               HorizontalOptions="Center"
-               TextColor="#FF6600"/>
+                <!-- CAMPO DE BÚSQUEDA EN UNA CARD -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="20"
+                       HasShadow="True"
+                       Padding="20">
 
-        <material:TextField
-            x:Name="txtBusqueda"
-            Style="{StaticResource entradaTexto}"
-            Title="Título de la Receta"
-            Icon="🔍"/>
+                    <material:TextField
+                        x:Name="txtBusqueda"
+                        Title="Título de la Receta"
+                        Icon="🔍"
+                        TextColor="Black"
+                        TitleColor="#FF6600"
+                        BorderColor="#FF6600"
+                        BackgroundColor="Transparent" />
 
-        <Button Text="Buscar"
-                Style="{StaticResource buttonGuardar}"
-                Clicked="BtnBuscar_Clicked"/>
+                </Frame>
 
-        <CollectionView x:Name="ResultadosList"
-                        IsVisible="False"
-                        HeightRequest="500"
-                        SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="10" BackgroundColor="White" CornerRadius="20" HasShadow="True" Margin="0,5">
-                        <VerticalStackLayout Spacing="5">
-                            <Label Text="{Binding titulo}" FontAttributes="Bold" FontSize="18"/>
-                            <Label Text="{Binding descripcion}" MaxLines="2" LineBreakMode="TailTruncation"/>
-                            <Label Text="{Binding valor_venta, StringFormat='Valor: {0:C2}'}"/>
-                            <Image Source="{Binding foto_url}" HeightRequest="150" Aspect="AspectFill"/>
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                <!-- BOTÓN EN CARD -->
+                <Frame BackgroundColor="White"
+                       CornerRadius="20"
+                       HasShadow="True"
+                       Padding="10">
+                    <Button Text="Buscar"
+                            Clicked="BtnBuscar_Clicked"
+                            BackgroundColor="#FF6600"
+                            CornerRadius="15"
+                            HeightRequest="55"
+                            TextColor="White"
+                            FontAttributes="Bold"/>
+                </Frame>
 
-    </VerticalStackLayout>
+
+                <!-- LISTA DE RESULTADOS EN CARDS -->
+                <CollectionView x:Name="ResultadosList"
+                                SelectionMode="None">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Frame Padding="15"
+                                   BackgroundColor="White"
+                                   CornerRadius="25"
+                                   HasShadow="True"
+                                   Margin="0,10">
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Receta_Tap"
+                                                          CommandParameter="{Binding}"/>
+                                </Frame.GestureRecognizers>
+
+                                <VerticalStackLayout Spacing="8">
+
+                                    <!-- ID usuario -->
+                                    <Label Text="{Binding id_usuario, StringFormat='👤 Usuario: {0}'}"
+                                           FontAttributes="Bold"
+                                           FontSize="14"
+                                           TextColor="#444"/>
+
+                                    <!-- Fecha -->
+                                    <Label Text="{Binding fecha_creacion, StringFormat='📅 Fecha: {0}'}"
+                                           FontSize="14"
+                                           TextColor="#444"/>
+
+                                    <!-- Título -->
+                                    <Label Text="{Binding titulo}"
+                                           FontAttributes="Bold"
+                                           FontSize="22"
+                                           TextColor="#FF6600"/>
+
+                                    <!-- Descripción -->
+                                    <Label Text="{Binding descripcion}"
+                                           FontSize="16"
+                                           TextColor="#555"/>
+
+
+                                    <!-- INGREDIENTES -->
+                                    <Label Text="Ingredientes:"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           TextColor="#FF6600"/>
+
+                                    <CollectionView ItemsSource="{Binding Ingredientes}"
+                                                    SelectionMode="None">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{Binding nombre, StringFormat='• {0}'}"
+                                                       FontSize="14"
+                                                       TextColor="#444"/>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+
+
+                                    <!-- INSTRUCCIONES -->
+                                    <Label Text="Instrucciones:"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           TextColor="#FF6600"/>
+
+                                    <CollectionView ItemsSource="{Binding instruccionesLista}"
+                                                    SelectionMode="None">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{Binding}"
+                                                       FontSize="14"
+                                                       TextColor="#444"
+                                                       Margin="0,0,0,3"/>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+
+
+                                    <!-- Porciones -->
+                                    <Label Text="{Binding porciones, StringFormat='🍽 Porciones: {0}'}"
+                                           TextColor="#444"/>
+
+                                    <!-- Tiempo -->
+                                    <Label Text="{Binding tiempo_preparacion, StringFormat='⏱ Tiempo: {0} min'}"
+                                           TextColor="#444"/>
+
+                                    <!-- Valor -->
+                                    <Label Text="{Binding valor_venta, StringFormat='💲 Valor: {0:C2}'}"
+                                           TextColor="#444"/>
+
+                                    <!-- Imagen -->
+                                    <Frame CornerRadius="15"
+                                           Padding="0"
+                                           HasShadow="True">
+                                        <Image Source="{Binding foto_url}"
+                                               HeightRequest="150"
+                                               Aspect="AspectFill"/>
+                                    </Frame>
+
+                                </VerticalStackLayout>
+
+                            </Frame>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 
 </ContentPage>
