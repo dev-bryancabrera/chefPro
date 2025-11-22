@@ -21,9 +21,7 @@ namespace chefPro.Services
             _database.CreateTableAsync<Ingrediente>().Wait();
         }
 
-        // ========================================================
-        // ===============   RECETAS   ============================
-        // ========================================================
+        // ================== RECETAS ===================
 
         public Task<List<Receta>> ObtenerRecetasAsync()
             => _database.Table<Receta>().ToListAsync();
@@ -31,11 +29,11 @@ namespace chefPro.Services
         public Task<int> GuardarRecetaAsync(Receta receta)
             => _database.InsertAsync(receta);
 
-        // NUEVO: Insertar receta y devolver ID generado
+        // Insertar receta y devolver ID generado
         public async Task<int> InsertRecetaAsync(Receta receta)
         {
             await _database.InsertAsync(receta);
-            return receta.id_receta; // SQLite asigna el ID automáticamente
+            return receta.id_receta;
         }
 
         public Task<List<Receta>> BuscarRecetasPorTituloAsync(string titulo)
@@ -45,9 +43,7 @@ namespace chefPro.Services
                 .ToListAsync();
         }
 
-        // ========================================================
-        // ===============   INGREDIENTES   =======================
-        // ========================================================
+        // ================== INGREDIENTES ===================
 
         public Task<List<Ingrediente>> ObtenerIngredientesPorRecetaAsync(int idReceta)
         {
@@ -61,13 +57,11 @@ namespace chefPro.Services
             return _database.InsertAsync(ingrediente);
         }
 
-        // NUEVO: Insertar ingrediente independientemente
-        public async Task<int> InsertIngredienteAsync(Ingrediente ingrediente)
+        public Task<int> InsertIngredienteAsync(Ingrediente ingrediente)
         {
-            return await _database.InsertAsync(ingrediente);
+            return _database.InsertAsync(ingrediente);
         }
 
-        // NUEVO: Obtener ingredientes base (únicos)
         public async Task<List<string>> GetIngredientesBaseAsync()
         {
             var lista = await _database.Table<Ingrediente>().ToListAsync();
@@ -79,9 +73,7 @@ namespace chefPro.Services
                 .ToList();
         }
 
-        // ========================================================
-        // ===============   INICIALIZACIÓN   ======================
-        // ========================================================
+        // ================== INICIALIZACIÓN ===================
 
         public async Task InicializarRecetasAsync()
         {
@@ -98,10 +90,8 @@ namespace chefPro.Services
                     tiempo_preparacion = 120,
                     peso_total = 1000,
                     porciones = 10,
-                    peso_porcion = 100,
                     valor_venta = 5,
                     costo_receta = 2.5,
-                    precio_unidad = 0.5,
                     porcentaje_ganancia = 100,
                     foto_url = "pan_tradicional.jpg",
                     fecha_creacion = DateTime.Now.ToString("yyyy-MM-dd"),
@@ -115,10 +105,8 @@ namespace chefPro.Services
                     tiempo_preparacion = 45,
                     peso_total = 500,
                     porciones = 20,
-                    peso_porcion = 25,
                     valor_venta = 4,
                     costo_receta = 1.8,
-                    precio_unidad = 0.2,
                     porcentaje_ganancia = 122,
                     foto_url = "gm.png",
                     fecha_creacion = DateTime.Now.ToString("yyyy-MM-dd"),
@@ -132,10 +120,8 @@ namespace chefPro.Services
                     tiempo_preparacion = 60,
                     peso_total = 600,
                     porciones = 12,
-                    peso_porcion = 50,
                     valor_venta = 7.5,
                     costo_receta = 3.5,
-                    precio_unidad = 0.3,
                     porcentaje_ganancia = 114,
                     foto_url = "brownies_chocolate.jpg",
                     fecha_creacion = DateTime.Now.ToString("yyyy-MM-dd"),

@@ -16,5 +16,6 @@ namespace chefPro.Models
         public string nombre { get; set; }
         public double cantidad { get; set; }
         public string unidad { get; set; } // ej: g, ml, pieza
+        public double precio { get; set; }
     }
 }

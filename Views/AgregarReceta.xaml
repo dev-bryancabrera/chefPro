@@ -1,124 +1,283 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/maui/toolkit"
-             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:Class="chefPro.Views.AgregarReceta"
              Title="Agregar Receta"
              BackgroundColor="#FFF5EE">
+
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
-            
-            <!--Recordar enlazar con login
+        <VerticalStackLayout Padding="20" Spacing="18">
 
-            <Label x:Name="lblUsuarioActivo"
+            <!-- TÍTULO PRINCIPAL CENTRADO -->
+            <Label Text="Agregar Receta"
+                   FontSize="32"
                    FontAttributes="Bold"
-                   FontSize="16"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
                    TextColor="#FF6600"
-                   HorizontalOptions="End"-->
+                   Margin="0,10,0,0"/>
 
+            <!-- BLOQUE PRINCIPAL -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="25"
+                   Padding="20"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HasShadow="True">
 
-            <!-- TÍTULO GRANDE -->
-            <Label Text="🍲 AGREGAR RECETA" 
-                   FontSize="36" 
-                   FontAttributes="Bold" 
-                   HorizontalOptions="Center" 
-                   TextColor="#FF6600"/>
+                <VerticalStackLayout Spacing="18">
 
-            <!-- Título -->
-            <Frame BackgroundColor="#FFF8F0" CornerRadius="20" HasShadow="True" Padding="15">
-                <material:TextField x:Name="txtTitulo" 
-                                    Title="🍴 Título de la Receta" 
-                                    Icon="📝" 
-                                    TextColor="Black" 
-                                    TitleColor="#FF6600" 
-                                    BorderColor="#FF6600" 
-                                    BackgroundColor="Transparent"/>
-            </Frame>
+                    <!-- TÍTULO DE LA RECETA -->
+                    <Frame BackgroundColor="White"
+                           BorderColor="#FF6600"
+                           CornerRadius="12"
+                            HorizontalOptions="Center"
+                           WidthRequest="700"
+                           
+                           Padding="0">
+                        <HorizontalStackLayout Spacing="1" Padding="2">
+                            <Label Text="    📝" FontSize="20" VerticalOptions="Center"/>
+                            <Entry x:Name="txtTitulo"
+                                   Placeholder="Título"
+                                   VerticalOptions="Center"
+                                   HorizontalTextAlignment="Center"
+                                   HorizontalOptions="Center"
+                                   TextColor="Black"
+                                   HeightRequest="25"/>
+                        </HorizontalStackLayout>
+                    </Frame>
 
-            <!-- Descripción -->
-            <Frame BackgroundColor="#FFD1B3" CornerRadius="20" HasShadow="True" Padding="15">
-                <Editor x:Name="txtDescripcion" 
-                        TextColor="Black"
-                        Placeholder="📝 Descripción (max 150 caracteres)" 
-                        AutoSize="TextChanges" 
-                        HeightRequest="80"/>
-            </Frame>
+                    <!-- TIEMPO / PORCIONES / VALOR / % GANANCIA -->
+                    <HorizontalStackLayout Spacing="12" VerticalOptions="Center" HorizontalOptions="Center">
 
-            <!-- Instrucciones -->
-            <Frame BackgroundColor="#FFD1B3" CornerRadius="20" HasShadow="True" Padding="15">
-                <Editor x:Name="txtInstrucciones" 
-                              TextColor="Black"
-                        Placeholder="📖 Instrucciones paso a paso" 
-                        AutoSize="TextChanges" 
-                        HeightRequest="120"/>
-            </Frame>
+                        <!-- Tiempo -->
+                        <Frame BackgroundColor="White"
+                               BorderColor="#FF6600"
+                               CornerRadius="12"
+                               Padding="0"
+                               WidthRequest="120">
+                            <HorizontalStackLayout Spacing="1" Padding="1">
+                                <Label Text="  ⏱️" FontSize="20" VerticalOptions="Center"/>
+                                <Entry x:Name="txtTiempo"
+                                       Keyboard="Numeric"
+                                       Placeholder="Tiempo"
+                                       TextColor="Black"
+                                       HeightRequest="25"/>
+                            </HorizontalStackLayout>
+                        </Frame>
 
-            <BoxView HeightRequest="1" BackgroundColor="#FF6600" Margin="0,10"/>
+                        <!-- Porciones -->
+                        <Frame BackgroundColor="White"
+                               BorderColor="#FF6600"
+                               CornerRadius="12"
+                               Padding="0"
+                               WidthRequest="135">
+                            <HorizontalStackLayout Spacing="1" Padding="1">
+                                <Label Text="  🍽️" FontSize="20" VerticalOptions="Center"/>
+                                <Entry x:Name="txtPorciones"
+                                       Keyboard="Numeric"
+                                       Placeholder="Porciones"
+                                       TextColor="Black"
+                                       HeightRequest="30"/>
+                            </HorizontalStackLayout>
+                        </Frame>
 
-            <!-- Ingredientes -->
-            <Frame BackgroundColor="#FFD1B3" CornerRadius="20" HasShadow="True" Padding="10">
-                <VerticalStackLayout>
-                    <Label Text="🥕 Ingredientes" FontAttributes="Bold" FontSize="16" TextColor="#FF6600"/>
-                    <CollectionView x:Name="cvIngredientes" SelectionMode="None" HeightRequest="150">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <HorizontalStackLayout Spacing="10">
-                                    <Entry Placeholder="Nombre" Text="{Binding nombre}" WidthRequest="120"/>
-                                    <Entry Placeholder="Cantidad" Keyboard="Numeric" Text="{Binding cantidad}" WidthRequest="80"/>
-                                    <Entry Placeholder="Unidad" Text="{Binding unidad}" WidthRequest="80"/>
-                                    <Button Text="❌" Clicked="BtnEliminarIngrediente_Clicked" CommandParameter="{Binding .}" BackgroundColor="#FF6600" TextColor="White" CornerRadius="10" WidthRequest="50"/>
-                                </HorizontalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                    <Button Text="➕ Agregar Ingrediente" Clicked="BtnAgregarIngrediente_Clicked" BackgroundColor="#FF6600" TextColor="White" CornerRadius="15"/>
+                        <!-- Valor Venta -->
+                        <Frame BackgroundColor="White"
+                               BorderColor="#FF6600"
+                               CornerRadius="12"
+                               Padding="0"
+                               WidthRequest="145">
+                            <HorizontalStackLayout Spacing="1" Padding="1">
+                                <Label Text="  💲" FontSize="20" VerticalOptions="Center"/>
+                                <Entry x:Name="txtValorVenta"
+                                       Keyboard="Numeric"
+                                       Placeholder="Valor venta"
+                                       TextColor="Black"
+                                       VerticalOptions="Fill"
+                                       HorizontalOptions="Start"
+                                       HeightRequest="30"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+
+                        <!-- % Ganancia -->
+                        <Frame BackgroundColor="White"
+                               BorderColor="#FF6600"
+                               CornerRadius="12"
+                               Padding="0"
+                               WidthRequest="145">
+                            <HorizontalStackLayout Spacing="1" Padding="1">
+                                <Label Text=" 📈" FontSize="20" VerticalOptions="Center"/>
+                                <Entry x:Name="txtPorcentaje"
+                                       Keyboard="Numeric"
+                                       Placeholder="% Ganancia"
+                                       TextColor="Black"
+                                       HeightRequest="25"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+
+                    </HorizontalStackLayout>
+
+                    <!-- DESCRIPCIÓN -->
+                    <Frame BackgroundColor="White"
+                           BorderColor="#FF6600"
+                           CornerRadius="12"
+                           HeightRequest="66"
+                           Padding="0">
+                        <HorizontalStackLayout Spacing="10" Padding="12">
+                            <Label Text="💬" FontSize="20" VerticalOptions="Center"/>
+                            <Entry x:Name="txtDescripcion"
+                                   Placeholder="Descripción (máx. 150 caracteres)"
+                                   TextColor="Black"
+                                   HeightRequest="25"
+                                   MaxLength="150"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <!-- INGREDIENTES -->
+                    <Frame BackgroundColor="White"
+                           BorderColor="#FF6600"
+                           CornerRadius="12"
+                           
+                           Padding="0">
+                        <VerticalStackLayout Spacing="12">
+
+                            <HorizontalStackLayout Spacing="1">
+                                <Label Text="🥕" FontSize="2" VerticalOptions="Center"/>
+                                <Label Text="Ingredientes"
+                                       FontAttributes="Bold"
+                                       FontSize="18"
+                                       TextColor="#FF6600"/>
+                            </HorizontalStackLayout>
+
+                            <CollectionView x:Name="cvIngredientes"
+                                            HeightRequest="100"
+                                            
+                                            >
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <HorizontalStackLayout Spacing="6">
+
+                                            <Entry Placeholder="Nombre"
+                                                   Text="{Binding nombre}"
+                                                   HeightRequest="25"
+                                                    BackgroundColor="#FFE6D5"
+                                                   TextColor="black"
+                                                   VerticalOptions="Center"
+                                                   Margin="15"
+                                                   WidthRequest="100"/>
+
+                                            <Entry Placeholder="Cant"
+                                                   Text="{Binding cantidad}"
+                                                   Keyboard="Numeric"
+                                                   HeightRequest="45"
+                                                    BackgroundColor="#FFE6D5"
+                                                   TextColor="black"
+                                                   WidthRequest="75"/>
+
+                                            <Entry Placeholder="Und."
+                                                   Text="{Binding unidad}"
+                                                   HeightRequest="25"
+                                                   TextColor="black"
+                                                    BackgroundColor="#FFE6D5"
+                                                   WidthRequest="70"/>
+
+                                            <Entry Placeholder="$"
+                                                   Text="{Binding precio}"
+                                                   Keyboard="Numeric"
+                                                   HeightRequest="25"
+                                                   TextColor="black"
+                                                    BackgroundColor="#FFE6D5"
+                                                   WidthRequest="30"/>
+
+                                            <Button Text="❌"
+                                                    CommandParameter="{Binding .}"
+                                                    Clicked="BtnEliminarIngrediente_Clicked"
+                                                    WidthRequest="40"
+                                                    CornerRadius="10"
+                                                    BackgroundColor="#FFE6D5"
+                                                    TextColor="#FF6600"/>
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+                            <Button Text="➕ Agregar Ingrediente"
+                                    Clicked="BtnAgregarIngrediente_Clicked"
+                                    BackgroundColor="#FF6600"
+                                    TextColor="White"
+                                    WidthRequest="250"
+                                    CornerRadius="12"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- INSTRUCCIONES -->
+                    <Frame BackgroundColor="White"
+                           BorderColor="#FF6600"
+                           CornerRadius="12"
+                           Padding="12">
+                        <VerticalStackLayout Spacing="10">
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="📜" FontSize="20" VerticalOptions="Center"/>
+                                <Label Text="Instrucciones"
+                                       FontAttributes="Bold"
+                                       FontSize="18"
+                                       TextColor="#FF6600"/>
+                            </HorizontalStackLayout>
+
+                            <Editor x:Name="txtInstrucciones"
+                                    Placeholder="Escribe las instrucciones paso a paso"
+                                    TextColor="Black"
+                                    AutoSize="TextChanges"
+                                    HeightRequest="120"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- FOTO -->
+                    <Frame BackgroundColor="White"
+                           BorderColor="#FF6600"
+                           HorizontalOptions="Center"
+                           CornerRadius="12"
+                           Padding="12">
+                        <VerticalStackLayout Spacing="10">
+                            <Image x:Name="imgFoto"
+                                   HeightRequest="500"
+                                   Aspect="AspectFit"
+                                   BackgroundColor="#EEE"/>
+                            <Button Text="📷 Tomar / Seleccionar Foto"
+                                    BackgroundColor="#FFE6D5"
+                                    TextColor="#FF6600"
+                                     WidthRequest="300"
+                                    CornerRadius="12"
+                                    Clicked="BtnFoto_Clicked"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- BOTONES -->
+                    <VerticalStackLayout Spacing="12">
+                        <Button Text="💾 Guardar"
+                                BackgroundColor="#FF6600"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                HeightRequest="55"
+                                CornerRadius="15"
+                                HorizontalOptions="Center"
+                                 WidthRequest="120"
+                                Clicked="BtnGuardar_Clicked"/>
+
+                        <Button Text="↩️ Regresar"
+                                BackgroundColor="#FFE6D5"
+                                TextColor="#FF6600"
+                                HeightRequest="50"
+                                CornerRadius="15"
+                                WidthRequest="120"
+                                Clicked="BtnRegresar_Clicked"/>
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
+
             </Frame>
-            <Label Text="Detalles:" VerticalOptions="Center"    FontSize="26"   TextColor="Black"/>
-            <BoxView HeightRequest="1" BackgroundColor="#FF6600" Margin="0,10"/>
-
-            <!-- Tiempo de preparación -->
-            <Frame BackgroundColor="#FFD1B3" CornerRadius="20" HasShadow="True" Padding="15">
-                <HorizontalStackLayout Spacing="10">
-                    <Label Text="⏱ Tiempo (min):" VerticalOptions="Center"      TextColor="Black"/>
-                    <Entry x:Name="txtTiempo" Keyboard="Numeric" WidthRequest="80"      TextColor="Black"/>
-                </HorizontalStackLayout>
-            </Frame>
-
-            <!-- Peso por porción -->
-            <Frame BackgroundColor="#FFD1B3" CornerRadius="20" HasShadow="True" Padding="15">
-                <HorizontalStackLayout Spacing="10">
-                    <Label Text="⚖️ Peso por porción (g):" VerticalOptions="Center"      TextColor="Black"/>
-                    <Entry x:Name="txtPesoPorcion" Keyboard="Numeric" WidthRequest="80"       TextColor="Black"/>
-                </HorizontalStackLayout>
-            </Frame>
-
-            <!-- Costo receta -->
-            <Frame BackgroundColor="#FFD1B3" CornerRadius="20" HasShadow="True" Padding="15">
-                <HorizontalStackLayout Spacing="10">
-                    <Label Text="💲 Costo receta ($):" VerticalOptions="Center"      TextColor="Black"/>
-                    <Entry x:Name="txtCosto" Keyboard="Numeric" WidthRequest="80"      TextColor="Black"/>
-                </HorizontalStackLayout>
-            </Frame>
-
-            <BoxView HeightRequest="1" BackgroundColor="#FF6600" Margin="0,10"/>
-
-            <Frame BackgroundColor="#FFD1B3" CornerRadius="20" HasShadow="True" Padding="10">
-                <VerticalStackLayout>
-                    <Button Text="📸 Foto" Clicked="BtnFoto_Clicked" BackgroundColor="#FF6600" TextColor="White" CornerRadius="15"/>
-
-                    <Image x:Name="imgFoto" HeightRequest="150" Aspect="AspectFill"/>
-                </VerticalStackLayout>
-            </Frame>
-
-            <!-- Botones Guardar / Regresar -->
-            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
-                <Button Text="💾 Guardar" Clicked="BtnGuardar_Clicked" BackgroundColor="#FF6600" TextColor="White" CornerRadius="15" WidthRequest="120"/>
-                <Button Text="⬅️ Regresar" Clicked="BtnRegresar_Clicked" BackgroundColor="#AAAAAA" TextColor="White" CornerRadius="15" WidthRequest="120"/>
-            </HorizontalStackLayout>
-
         </VerticalStackLayout>
     </ScrollView>
+
 </ContentPage>

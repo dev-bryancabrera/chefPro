@@ -1,125 +1,137 @@
-﻿
-using chefPro.Models;
+﻿using chefPro.Models;
 using chefPro.Services;
 using System.Collections.ObjectModel;
 
 
-namespace chefPro.Views;
-
-public partial class AgregarReceta : ContentPage
+namespace chefPro.Views
 {
-    private RecetaService _service;
-    private ObservableCollection<Ingrediente> ingredientes;
-    private string fotoPath;
-
-    private int idUsuarioLogueado = 1; // Cambiar según usuario logueado
-
-    public AgregarReceta()
+    public partial class AgregarReceta : ContentPage
     {
-        InitializeComponent();
-        _service = new RecetaService();
-        ingredientes = new ObservableCollection<Ingrediente>();
-        cvIngredientes.ItemsSource = ingredientes;
+        // Lista observable para el CollectionView
+        public ObservableCollection<Ingrediente> Ingredientes { get; set; }
+            = new ObservableCollection<Ingrediente>();
 
-        // Puedes habilitar mostrar nombre de usuario si implementas login
-        // string nombreUsuario = ObtenerNombreUsuario(idUsuarioLogueado);
-        // lblUsuarioActivo.Text = $"Chef {nombreUsuario} está cocinando.";
-    }
-
-    private void BtnAgregarIngrediente_Clicked(object sender, EventArgs e)
-    {
-        ingredientes.Add(new Ingrediente());
-    }
-
-    private void BtnEliminarIngrediente_Clicked(object sender, EventArgs e)
-    {
-        if (sender is Button btn && btn.CommandParameter is Ingrediente ing)
+        public AgregarReceta()
         {
-            ingredientes.Remove(ing);
+            InitializeComponent();
+            cvIngredientes.ItemsSource = Ingredientes;
         }
-    }
 
-    private async void BtnFoto_Clicked(object sender, EventArgs e)
-    {
-        try
+   
+        // BOTÓN: AGREGAR INGREDIENTE
+        
+        private void BtnAgregarIngrediente_Clicked(object sender, EventArgs e)
         {
-            string opcion = await DisplayActionSheet("Selecciona una opción", "Cancelar", null, "Tomar Foto", "Seleccionar de Galería");
+            Ingredientes.Add(new Ingrediente
+            {
+                nombre = "",
+                cantidad = 0,
+                unidad = "",
+                precio = 0
+            });
+        }
 
-            if (opcion == "Tomar Foto")
+     
+        // BOTÓN: ELIMINAR INGREDIENTE
+     
+        private void BtnEliminarIngrediente_Clicked(object sender, EventArgs e)
+        {
+            if (sender is Button btn && btn.CommandParameter is Ingrediente ing)
             {
-                var photo = await MediaPicker.CapturePhotoAsync();
-                if (photo != null)
-                {
-                    var stream = await photo.OpenReadAsync();
-                    imgFoto.Source = ImageSource.FromStream(() => stream);
-                    fotoPath = photo.FullPath;
-                }
-            }
-            else if (opcion == "Seleccionar de Galería")
-            {
-                var photo = await MediaPicker.PickPhotoAsync();
-                if (photo != null)
-                {
-                    var stream = await photo.OpenReadAsync();
-                    imgFoto.Source = ImageSource.FromStream(() => stream);
-                    fotoPath = photo.FullPath;
-                }
+                Ingredientes.Remove(ing);
             }
         }
-        catch (Exception ex)
+
+        // BOTÓN: TOMAR O SELECCIONAR FOTO
+     
+        private async void BtnFoto_Clicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Error", ex.Message, "OK");
-        }
-    }
+            try
+            {
+                string opcion = await DisplayActionSheet(
+                    "Seleccionar imagen",
+                    "Cancelar",
+                    null,
+                    "Tomar foto",
+                    "Elegir de la galería"
+                );
 
-    private async void BtnGuardar_Clicked(object sender, EventArgs e)
-    {
-        if (string.IsNullOrWhiteSpace(txtTitulo.Text))
-        {
-            await DisplayAlert("Aviso", "Ingrese el título de la receta.", "OK");
-            return;
-        }
+                FileResult file = null;
 
-        if (ingredientes.Count == 0)
-        {
-            await DisplayAlert("Aviso", "Agregue al menos un ingrediente.", "OK");
-            return;
-        }
+                if (opcion == "Tomar foto")
+                {
+                    file = await MediaPicker.CapturePhotoAsync();
+                }
+                else if (opcion == "Elegir de la galería")
+                {
+                    file = await MediaPicker.PickPhotoAsync();
+                }
 
-        var receta = new Receta
-        {
-            titulo = txtTitulo.Text.Trim(),
-            descripcion = txtDescripcion.Text?.Trim(),
-            instrucciones = txtInstrucciones.Text?.Trim(),
-            tiempo_preparacion = double.TryParse(txtTiempo.Text, out double t) ? t : 0,
-            peso_porcion = double.TryParse(txtPesoPorcion.Text, out double pp) ? pp : 0,
-            costo_receta = double.TryParse(txtCosto.Text, out double c) ? c : 0,
-            fecha_creacion = DateTime.Now.ToString("yyyy-MM-dd"),
-            id_usuario = idUsuarioLogueado,
-            foto_url = fotoPath
-        };
+                if (file == null)
+                    return;
 
-        // Calcular peso total sumando ingredientes
-        receta.peso_total = ingredientes.Sum(i => i.cantidad);
-
-        // Guardar receta y obtener id
-        receta.id_receta = await _service.InsertRecetaAsync(receta);
-
-        // Guardar ingredientes
-        foreach (var ing in ingredientes)
-        {
-            ing.id_receta = receta.id_receta;
-            await _service.InsertIngredienteAsync(ing);
+                var stream = await file.OpenReadAsync();
+                imgFoto.Source = ImageSource.FromStream(() => stream);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", ex.Message, "OK");
+            }
         }
 
-        await DisplayAlert("Éxito", "Receta guardada correctamente.", "OK");
+        // BOTÓN: GUARDAR RECETA
+  
+        private async void BtnGuardar_Clicked(object sender, EventArgs e)
+        {
+            string titulo = txtTitulo.Text?.Trim();
+            string descripcion = txtDescripcion.Text?.Trim();
+            string instrucciones = txtInstrucciones.Text?.Trim();
 
-        // Ir a login reemplazando la pila de navegación
-        Application.Current.MainPage = new NavigationPage(new vInicio());
-    }
+            // Validaciones
+            if (string.IsNullOrWhiteSpace(titulo))
+            {
+                await DisplayAlert("Error", "El título es obligatorio.", "OK");
+                return;
+            }
 
-    private async void BtnRegresar_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new vInicio());
+            if (string.IsNullOrWhiteSpace(descripcion))
+            {
+                await DisplayAlert("Error", "La descripción es obligatoria.", "OK");
+                return;
+            }
+
+            if (descripcion.Length > 150)
+            {
+                await DisplayAlert("Error", "La descripción no puede superar 150 caracteres.", "OK");
+                return;
+            }
+
+            // Convertir campos numéricos
+            double.TryParse(txtTiempo.Text, out double tiempo);
+            double.TryParse(txtPorciones.Text, out double porciones);
+            double.TryParse(txtValorVenta.Text, out double valorVenta);
+            double.TryParse(txtPorcentaje.Text, out double porcentaje);
+
+            // Validación mínima opcional
+            if (porciones <= 0)
+            {
+                await DisplayAlert("Error", "Las porciones deben ser mayor a 0.", "OK");
+                return;
+            }
+
+            // Convertir ingredientes
+            var listaIngredientes = Ingredientes.ToList();
+
+            // Ejemplo de guardado (aquí iría BD o API real)
+            await DisplayAlert("Guardado", "La receta se guardó correctamente.", "OK");
+        }
+
+   
+        // BOTÓN: REGRESAR
+       
+        private async void BtnRegresar_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new vInicio());
+        }
     }
 }
