@@ -114,7 +114,7 @@
                     TextColor="#666"
                     FontSize="14"
                     Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}"
-                    AccentColor="DeepSkyBlue"/>
+                    AccentColor="#FB8C00"/>
 
                 <material:TextField 
                     Style="{StaticResource entradaTexto}"
@@ -124,7 +124,7 @@
                     FontSize="14"
                     Keyboard="Email"
                     Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"
-                    AccentColor="DeepSkyBlue"/>
+                    AccentColor="#FB8C00" />
 
                 <material:TextField 
                     Style="{StaticResource entradaTexto}"
@@ -134,13 +134,14 @@
                     FontSize="14"
                     Keyboard="Telephone"
                     Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Phone}}"
-                    AccentColor="DeepSkyBlue"/>
+                    AccentColor="#FB8C00" />
 
                 <material:TextField 
                     Style="{StaticResource entradaTexto}"
                     Title="Contraseña" 
                     x:Name="txtPassword"
-                    IsPassword="True">
+                    IsPassword="True"
+                    AccentColor="#FB8C00">
                     <material:TextField.Attachments>
                         <material:TextFieldPasswordShowHideAttachment />
                     </material:TextField.Attachments>
@@ -150,7 +151,8 @@
                     Style="{StaticResource entradaTexto}"
                     Title="Confirmar Contraseña" 
                     x:Name="txtConfirmPassword"
-                    IsPassword="True">
+                    IsPassword="True"
+                    AccentColor="#FB8C00" >
                     <material:TextField.Attachments>
                         <material:TextFieldPasswordShowHideAttachment />
                     </material:TextField.Attachments>
@@ -163,7 +165,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox 
+                    <material:CheckBox 
+                        Grid.Row="0"
                         Grid.Column="0"
                         x:Name="chkTerminos"
                         Color="#FF6600"
@@ -178,18 +181,27 @@
                         LineBreakMode="WordWrap">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="Acepto los " />
+                                <Span Text="Acepto los " TextColor="#000" />
                                 <Span Text="Términos y Condiciones" 
                                       TextColor="#FF6600" 
                                       TextDecorations="Underline"/>
-                                <Span Text=" y la " />
+                                <Span Text=" y la " TextColor="#000" />
                                 <Span Text="Política de Privacidad" 
                                       TextColor="#FF6600" 
                                       TextDecorations="Underline"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
+
                 </Grid>
+
+                <Label 
+                    x:Name="lblErrorTerminos"
+                    Text="Debe aceptar los términos y condiciones"
+                    TextColor="Red"
+                    FontSize="12"
+                    IsVisible="False"
+                    Margin="0,5,0,0"/>
 
                 <!-- Botón de Registro -->
                 <Button
@@ -201,9 +213,9 @@
                     Clicked="btnRegister_Clicked"/>
 
                 <!-- Separador -->
-                <Label Text="o"
+                <Label Text="O"
                    FontAttributes="Bold"
-                   FontSize="10"
+                   FontSize="13"
                    TextColor="#000"
                    HorizontalOptions="Center"
                    Margin="0,5,0,5" />

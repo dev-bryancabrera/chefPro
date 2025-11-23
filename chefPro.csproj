@@ -20,13 +20,13 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
-		<RuntimeIdentifiers>android-arm;android-arm64</RuntimeIdentifiers>
+		<!-- <RuntimeIdentifiers>android-arm;android-arm64</RuntimeIdentifiers> -->
 		
 		<!-- Display name -->
 		<ApplicationTitle>chefPro</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.chefpro</ApplicationId>
+		<ApplicationId>com.BryanTech.chefpro</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -64,6 +64,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Google.Apis.Auth" Version="1.72.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.100" />
@@ -91,6 +92,12 @@
 	  <MauiXaml Update="Views\vRegistro.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+	  <PackageReference Include="Xamarin.GooglePlayServices.Auth">
+	    <Version>121.4.0.1</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 </Project>

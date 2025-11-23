@@ -15,6 +15,8 @@ public partial class vRegistro : ContentPage
     {
         try
         {
+            lblErrorTerminos.IsVisible = false;
+
             // Validar campos
             if (string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrWhiteSpace(txtPassword.Text) || string.IsNullOrWhiteSpace(txtNombre.Text))
             {
@@ -34,6 +36,12 @@ public partial class vRegistro : ContentPage
                 return;
             }
 
+            if (!chkTerminos.IsChecked)
+            {
+                lblErrorTerminos.IsVisible = true;
+                return;
+            }
+
             WebClient cliente = new WebClient();
             var parametros = new System.Collections.Specialized.NameValueCollection();
             parametros.Add("nombres", txtNombre.Text);
@@ -43,7 +51,7 @@ public partial class vRegistro : ContentPage
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.107/wsChefPro/usuarios/registrar",
+                "http://192.168.0.105/wsChefPro/usuarios/registrar",
                 "POST",
                 parametros
             );

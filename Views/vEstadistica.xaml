@@ -2,11 +2,166 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="chefPro.Views.vEstadistica"
-             Title="vEstadistica">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Estadísticas"
+             BackgroundColor="#1a1a1a">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Header -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📊 Panel de Estadísticas" 
+                           FontSize="24" 
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+                    <Label x:Name="lblTotalVistas" 
+                           Text="Total de vistas: 0" 
+                           FontSize="16"
+                           TextColor="#FF6600"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Promedio de Ingredientes -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📝 Promedio de Ingredientes por Receta" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <Label x:Name="lblPromedioIngredientes" 
+                           Text="0 ingredientes" 
+                           FontSize="32"
+                           TextColor="#FF6600"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Recetas Más Vistas -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="🏆 Recetas Más Vistas" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <CollectionView x:Name="cvRecetasTop" 
+                                    HeightRequest="300">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#3d3d3d" 
+                                       Margin="0,5" 
+                                       Padding="10"
+                                       CornerRadius="8">
+                                    <Grid ColumnDefinitions="60,*,Auto" 
+                                          ColumnSpacing="10">
+                                        <Image Grid.Column="0"
+                                               Source="{Binding imagen}"
+                                               Aspect="AspectFill"
+                                               HeightRequest="50"
+                                               WidthRequest="50"
+                                               CornerRadius="5"/>
+                                        <Label Grid.Column="1"
+                                               Text="{Binding nombre}"
+                                               TextColor="White"
+                                               VerticalOptions="Center"
+                                               FontSize="14"/>
+                                        <Label Grid.Column="2"
+                                               Text="{Binding total_vistas, StringFormat='{0} vistas'}"
+                                               TextColor="#FF6600"
+                                               VerticalOptions="Center"
+                                               FontSize="12"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Ingredientes Más Usados -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="🥘 Ingredientes Más Usados" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <CollectionView x:Name="cvIngredientesTop" 
+                                    HeightRequest="250">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#3d3d3d" 
+                                       Margin="0,5" 
+                                       Padding="10"
+                                       CornerRadius="8">
+                                    <Grid ColumnDefinitions="*,Auto" 
+                                          ColumnSpacing="10">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding nombre}"
+                                               TextColor="White"
+                                               VerticalOptions="Center"
+                                               FontSize="14"/>
+                                        <Label Grid.Column="1"
+                                               Text="{Binding total_usos, StringFormat='{0} usos'}"
+                                               TextColor="#4CAF50"
+                                               VerticalOptions="Center"
+                                               FontSize="12"
+                                               FontAttributes="Bold"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Técnicas Más Usadas -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="👨‍🍳 Técnicas Más Usadas" 
+                           FontSize="18" 
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+                    <CollectionView x:Name="cvTecnicasTop" 
+                                    HeightRequest="250">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#3d3d3d" 
+                                       Margin="0,5" 
+                                       Padding="10"
+                                       CornerRadius="8">
+                                    <Grid ColumnDefinitions="*,Auto" 
+                                          ColumnSpacing="10">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding nombre}"
+                                               TextColor="White"
+                                               VerticalOptions="Center"
+                                               FontSize="14"/>
+                                        <Label Grid.Column="1"
+                                               Text="{Binding total_usos, StringFormat='{0} usos'}"
+                                               TextColor="#2196F3"
+                                               VerticalOptions="Center"
+                                               FontSize="12"
+                                               FontAttributes="Bold"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Botón Actualizar -->
+            <Button Text="🔄 Actualizar Estadísticas"
+                    Clicked="btnActualizar_Clicked"
+                    BackgroundColor="#FF6600"
+                    TextColor="White"
+                    CornerRadius="10"
+                    HeightRequest="50"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

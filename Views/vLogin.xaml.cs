@@ -5,6 +5,8 @@ namespace chefPro.Views;
 
 public partial class vLogin : ContentPage
 {
+    private readonly GoogleAuthService _googleAuth = new GoogleAuthService();
+
     public vLogin()
     {
         InitializeComponent();
@@ -29,7 +31,7 @@ public partial class vLogin : ContentPage
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.107/wsChefPro/auth/login",
+                "http://192.168.0.105/wsChefPro/auth/login",
                 "POST",
                 parametros
             );
@@ -43,6 +45,10 @@ public partial class vLogin : ContentPage
             if (resultado != null && resultado.usuario != null)
             {
                 await DisplayAlert("Éxito", $"Bienvenido {resultado.usuario.nombres}", "OK");
+
+                txtEmail.Text = "";
+                txtPassword.Text = "";
+
                 await Navigation.PushAsync(new vInicio());
             }
             else
@@ -79,8 +85,45 @@ public partial class vLogin : ContentPage
         Navigation.PushAsync(new vRegistro());
     }
 
-    private void btnLoginGoogle_Clicked(object sender, EventArgs e)
+    private async void btnLoginGoogle_Clicked(object sender, EventArgs e)
     {
+        try
+        {
+            btnLoginGoogle.IsEnabled = false;
+            btnLoginGoogle.Text = "Conectando...";
 
+            var userInfo = await _googleAuth.SignInAsync();
+
+            if (userInfo != null)
+            {
+                // Enviar a tu backend
+                WebClient cliente = new WebClient();
+                var parametros = new System.Collections.Specialized.NameValueCollection();
+                parametros.Add("nombres", userInfo.name);
+                parametros.Add("email", userInfo.email);
+                parametros.Add("google_id", userInfo.id);
+                parametros.Add("tipo_login", "2");
+
+                byte[] respuestaBytes = cliente.UploadValues(
+                    "http://192.168.0.105/wsChefPro/auth/google-login",
+                    "POST",
+                    parametros
+                );
+
+                string respuesta = System.Text.Encoding.UTF8.GetString(respuestaBytes);
+
+                await DisplayAlert("Éxito", $"Bienvenido {userInfo.name}", "OK");
+                await Navigation.PushAsync(new vInicio());
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+        finally
+        {
+            btnLoginGoogle.IsEnabled = true;
+            btnLoginGoogle.Text = "Iniciar con Google";
+        }
     }
 }

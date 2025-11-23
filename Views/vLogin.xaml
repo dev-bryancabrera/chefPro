@@ -109,7 +109,7 @@
                     Keyboard="Email"
                     FontSize="14"
                     Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}, Color=#222222}"
-                    AccentColor="Green">
+                    AccentColor="#FB8C00" >
 
                     <validation:RequiredValidation />
                     <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Email inválido" />
@@ -120,7 +120,7 @@
                         Style="{StaticResource entradaTexto}"
                         Title="Password" 
                         IsPassword="True"
-                        AccentColor="Green">
+                        AccentColor="#FB8C00">
 
                     <material:TextField.Attachments>
                         <material:TextFieldPasswordShowHideAttachment />
