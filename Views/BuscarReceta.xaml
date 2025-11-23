@@ -37,7 +37,7 @@
                 <VerticalStackLayout Spacing="20">
 
                     <!-- CARD SUPERIOR: TÍTULO, BUSCADOR Y BOTÓN -->
-                    <Frame BackgroundColor="White"
+                    <Frame BackgroundColor="#E6FFF5E8"
                        CornerRadius="25"
                        HasShadow="True"
                        Padding="20"
@@ -76,7 +76,7 @@
                     </Frame>
 
                     <!-- CARD INFERIOR: LISTA DE RESULTADOS -->
-                    <Frame BackgroundColor="White"
+                    <Frame BackgroundColor="#E6FFF5E8"
                        CornerRadius="25"
                        HasShadow="True"
                        Padding="15"

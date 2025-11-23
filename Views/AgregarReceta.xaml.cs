@@ -10,6 +10,7 @@ namespace chefPro.Views
         private readonly RecetaService _service = new RecetaService();
 
         public ObservableCollection<Ingrediente> Ingredientes { get; set; } = new ObservableCollection<Ingrediente>();
+
         public ObservableCollection<string> Unidades { get; set; } = new ObservableCollection<string>
         {
             "kg", "g", "ml", "l", "pieza", "tsp", "tbsp"
@@ -18,10 +19,13 @@ namespace chefPro.Views
         public AgregarReceta()
         {
             InitializeComponent();
+
             cvIngredientes.ItemsSource = Ingredientes;
-            this.BindingContext = this;
+
+            BindingContext = this;
         }
 
+        // AGREGAR INGREDIENTE
         private void BtnAgregarIngrediente_Clicked(object sender, EventArgs e)
         {
             Ingredientes.Add(new Ingrediente
@@ -33,6 +37,7 @@ namespace chefPro.Views
             });
         }
 
+        // ELIMINAR INGREDIENTE
         private void BtnEliminarIngrediente_Clicked(object sender, EventArgs e)
         {
             if (sender is Button btn && btn.CommandParameter is Ingrediente ingrediente)
@@ -41,15 +46,39 @@ namespace chefPro.Views
             }
         }
 
+        // FOTO (CÁMARA O GALERÍA)
         private async void BtnFoto_Clicked(object sender, EventArgs e)
         {
             try
             {
-                var result = await MediaPicker.Default.PickPhotoAsync();
-                if (result != null)
+                string opcion = await DisplayActionSheet(
+                    "Seleccionar opción",
+                    "Cancelar",
+                    null,
+                    "Tomar foto",
+                    "Elegir de galería");
+
+                if (opcion == "Tomar foto")
                 {
-                    var stream = await result.OpenReadAsync();
-                    imgFoto.Source = ImageSource.FromStream(() => stream);
+#if ANDROID
+                    var photo = await MediaPicker.CapturePhotoAsync();
+                    if (photo != null)
+                    {
+                        var stream = await photo.OpenReadAsync();
+                        imgFoto.Source = ImageSource.FromStream(() => stream);
+                    }
+#else
+                    await DisplayAlert("Aviso", "La cámara no está disponible en Windows.", "OK");
+#endif
+                }
+                else if (opcion == "Elegir de galería")
+                {
+                    var result = await MediaPicker.PickPhotoAsync();
+                    if (result != null)
+                    {
+                        var stream = await result.OpenReadAsync();
+                        imgFoto.Source = ImageSource.FromStream(() => stream);
+                    }
                 }
             }
             catch (Exception ex)
@@ -58,11 +87,11 @@ namespace chefPro.Views
             }
         }
 
+        // GUARDAR RECETA
         private async void BtnGuardarReceta_Clicked(object sender, EventArgs e)
         {
             try
             {
-                // --- LEER DATOS DE LOS ENTRY ---
                 string titulo = txtTitulo.Text?.Trim();
                 string descripcion = txtDescripcion.Text?.Trim();
                 string instrucciones = txtInstrucciones.Text?.Trim();
@@ -90,7 +119,6 @@ namespace chefPro.Views
                     return;
                 }
 
-                // --- CÁLCULOS AUTOMÁTICOS DEL COSTO ---
                 double costoReceta = 0;
                 double pesoTotal = 0;
 
@@ -101,46 +129,39 @@ namespace chefPro.Views
                     switch (ing.unidad.ToLower())
                     {
                         case "g":
-                            cantidadBase = ing.cantidad / 1000; // gramos → kg
-                            break;
                         case "ml":
-                            cantidadBase = ing.cantidad / 1000; // ml → litros
+                            cantidadBase = ing.cantidad / 1000;
                             break;
+
                         case "tsp":
-                            cantidadBase = ing.cantidad * 5 / 1000; // cucharadita → litros (aprox 5 ml)
+                            cantidadBase = ing.cantidad * 5 / 1000;
                             break;
+
                         case "tbsp":
-                            cantidadBase = ing.cantidad * 15 / 1000; // cucharada → litros (aprox 15 ml)
-                            break;
-                        case "kg":
-                        case "l":
-                        case "pieza":
-                            // ya está en unidad base
+                            cantidadBase = ing.cantidad * 15 / 1000;
                             break;
                     }
 
                     costoReceta += cantidadBase * ing.precio;
-                    pesoTotal += ing.cantidad; // cantidad original para mostrar al usuario
+                    pesoTotal += ing.cantidad;
                 }
 
-                double pesoPorcion = porciones > 0 ? pesoTotal / porciones : 0;
+                double pesoPorcion = pesoTotal / porciones;
 
-                // --- CALCULO INTELIGENTE DE VALOR / PORCENTAJE ---
+                // AUTOCÁLCULOS
                 if (valorVenta > 0 && porcentaje <= 0)
-                {
-                    porcentaje = costoReceta > 0 ? ((valorVenta - costoReceta) / costoReceta) * 100 : 0;
-                }
+                    porcentaje = ((valorVenta - costoReceta) / costoReceta) * 100;
+
                 else if (valorVenta <= 0 && porcentaje > 0)
-                {
                     valorVenta = costoReceta * (1 + porcentaje / 100);
-                }
+
                 else if (valorVenta <= 0 && porcentaje <= 0)
                 {
-                    porcentaje = 20; // margen por defecto
+                    porcentaje = 20;
                     valorVenta = costoReceta * 1.2;
                 }
 
-                // --- CREAR OBJETO RECETA ---
+                // CREAR OBJETO RECETA
                 var receta = new Receta
                 {
                     titulo = titulo,
@@ -155,24 +176,19 @@ namespace chefPro.Views
                     peso_porcion = pesoPorcion,
                     foto_url = imgFoto.Source?.ToString() ?? "",
                     fecha_creacion = DateTime.Now.ToString("yyyy-MM-dd"),
-                    id_usuario = 1 // reemplaza con el ID del usuario actual
+                    id_usuario = 1
                 };
 
-                // --- GUARDAR RECETA Y OBTENER ID GENERADO ---
                 int idReceta = await _service.InsertRecetaAsync(receta);
 
-                // --- GUARDAR INGREDIENTES ASOCIADOS ---
                 foreach (var ing in Ingredientes)
                 {
                     ing.id_receta = idReceta;
                     await _service.GuardarIngredienteAsync(ing);
-
                 }
 
                 await DisplayAlert("Guardado", "La receta y sus ingredientes se guardaron correctamente.", "OK");
-
-                // --- REGRESAR A PÁGINA DE INICIO O LOGIN ---
-                await Navigation.PushAsync(new vInicio()); // o vLogin según tu flujo
+                await Navigation.PushAsync(new vInicio());
             }
             catch (Exception ex)
             {
@@ -180,9 +196,10 @@ namespace chefPro.Views
             }
         }
 
+        // REGRESAR
         private async void BtnRegresar_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new vInicio()); // o vLogin según prefieras
+            await Navigation.PushAsync(new vInicio());
         }
     }
 }
