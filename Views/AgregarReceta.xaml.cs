@@ -165,7 +165,8 @@ namespace chefPro.Views
                 foreach (var ing in Ingredientes)
                 {
                     ing.id_receta = idReceta;
-                    await _service.InsertIngredienteAsync(ing);
+                    await _service.GuardarIngredienteAsync(ing);
+
                 }
 
                 await DisplayAlert("Guardado", "La receta y sus ingredientes se guardaron correctamente.", "OK");

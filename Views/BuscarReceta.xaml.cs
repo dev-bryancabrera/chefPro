@@ -18,14 +18,7 @@ public partial class BuscarReceta : ContentPage
         recetas = new ObservableCollection<Receta>();
         ResultadosList.ItemsSource = recetas;
 
-        _ = InicializarDatosAsync();
     }
-
-    private async Task InicializarDatosAsync()
-    {
-        await _service.InicializarRecetasAsync();
-    }
-
     private async void BtnBuscar_Clicked(object sender, EventArgs e)
     {
         string texto = txtBusqueda.Text?.Trim();
@@ -67,7 +60,8 @@ public partial class BuscarReceta : ContentPage
     }
     private async void BtnRegresar_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new vInicio()); // o la página que quieras
+        await Navigation.PushAsync(new vInicio());
     }
+
 
 }

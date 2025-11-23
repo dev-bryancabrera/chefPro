@@ -13,8 +13,7 @@ namespace chefPro
         {
             var loginPage = new vLogin();
 
-            return new Window(new NavigationPage(new  BuscarReceta
-                ()));
+            return new Window(new NavigationPage(new  vInicio()));
         }
     }
 }

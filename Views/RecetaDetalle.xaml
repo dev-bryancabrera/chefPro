@@ -144,17 +144,28 @@
                     <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True">
                         <VerticalStackLayout Spacing="10">
                             <Label Text="🧂 Ingredientes"
-                                   FontSize="26"
-                                   FontAttributes="Bold"
-                                   TextColor="Black"/>
-                            <Label Text="{Binding ingredientes}"
-                                   FontSize="18"
-                                   TextColor="Black"/>
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="Black"/>
+
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Ingredientes}" Spacing="5">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <HorizontalStackLayout Spacing="10">
+                                            <Label Text="{Binding nombre}" FontSize="18" TextColor="Black"/>
+                                            <Label Text="{Binding cantidad}" FontSize="18" TextColor="Black"/>
+                                            <Label Text="{Binding unidad}" FontSize="18" TextColor="Black"/>
+                                            <Label Text="{Binding precio, StringFormat='Precio: {0:C2}'}" FontSize="18" TextColor="Black"/>
+            
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
 
-
-                    <!-- INSTRUCCIONES -->
+        
+            <!-- INSTRUCCIONES -->
                     <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True">
                         <VerticalStackLayout Spacing="10">
                             <Label Text="👨‍🍳 Instrucciones"
