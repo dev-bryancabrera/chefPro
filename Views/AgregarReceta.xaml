@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="chefPro.Views.AgregarReceta"
+             x:Name="PageRoot"
              Title="Agregar Receta"
              BackgroundColor="#FFF5EE">
 
@@ -31,9 +32,8 @@
                     <Frame BackgroundColor="White"
                            BorderColor="#FF6600"
                            CornerRadius="12"
-                            HorizontalOptions="Center"
+                           HorizontalOptions="Center"
                            WidthRequest="700"
-                           
                            Padding="0">
                         <HorizontalStackLayout Spacing="1" Padding="2">
                             <Label Text="    📝" FontSize="20" VerticalOptions="Center"/>
@@ -94,8 +94,6 @@
                                        Keyboard="Numeric"
                                        Placeholder="Valor venta"
                                        TextColor="Black"
-                                       VerticalOptions="Fill"
-                                       HorizontalOptions="Start"
                                        HeightRequest="30"/>
                             </HorizontalStackLayout>
                         </Frame>
@@ -127,18 +125,17 @@
                         <HorizontalStackLayout Spacing="10" Padding="12">
                             <Label Text="💬" FontSize="20" VerticalOptions="Center"/>
                             <Entry x:Name="txtDescripcion"
-                                   Placeholder="Descripción (máx. 150 caracteres)"
+                                   Placeholder="Descripción (máx. 80 caracteres)"
                                    TextColor="Black"
                                    HeightRequest="25"
-                                   MaxLength="150"/>
+                                   MaxLength="80"/>
                         </HorizontalStackLayout>
                     </Frame>
 
-                    <!-- INGREDIENTES -->
+<!-- INGREDIENTES -->
                     <Frame BackgroundColor="White"
                            BorderColor="#FF6600"
                            CornerRadius="12"
-                           
                            Padding="0">
                         <VerticalStackLayout Spacing="12">
 
@@ -150,45 +147,42 @@
                                        TextColor="#FF6600"/>
                             </HorizontalStackLayout>
 
-                            <CollectionView x:Name="cvIngredientes"
-                                            HeightRequest="100"
-                                            
-                                            >
+                            <CollectionView x:Name="cvIngredientes">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <HorizontalStackLayout Spacing="6">
+                                        <HorizontalStackLayout Spacing="6" Padding="5">
 
                                             <Entry Placeholder="Nombre"
                                                    Text="{Binding nombre}"
                                                    HeightRequest="25"
-                                                    BackgroundColor="#FFE6D5"
-                                                   TextColor="black"
-                                                   VerticalOptions="Center"
-                                                   Margin="15"
+                                                   BackgroundColor="#FFE6D5"
+                                                   TextColor="Black"
                                                    WidthRequest="100"/>
 
                                             <Entry Placeholder="Cant"
-                                                   Text="{Binding cantidad}"
+                                                   Text="{Binding cantidad, Mode=TwoWay}"
                                                    Keyboard="Numeric"
-                                                   HeightRequest="45"
-                                                    BackgroundColor="#FFE6D5"
-                                                   TextColor="black"
+                                                   HeightRequest="25"
+                                                   BackgroundColor="#FFE6D5"
+                                                   TextColor="Black"
                                                    WidthRequest="75"/>
 
-                                            <Entry Placeholder="Und."
-                                                   Text="{Binding unidad}"
-                                                   HeightRequest="25"
-                                                   TextColor="black"
+                                            <!-- PICKER FUNCIONAL -->
+                                            <Picker 
+                                                    ItemsSource="{Binding Source={x:Reference PageRoot}, Path=Unidades}"
+                                                    SelectedItem="{Binding unidad, Mode=TwoWay}" 
+                                                    WidthRequest="100"
                                                     BackgroundColor="#FFE6D5"
-                                                   WidthRequest="70"/>
+                                                    TextColor="Black"/>
+
 
                                             <Entry Placeholder="$"
-                                                   Text="{Binding precio}"
-                                                   Keyboard="Numeric"
-                                                   HeightRequest="25"
-                                                   TextColor="black"
-                                                    BackgroundColor="#FFE6D5"
-                                                   WidthRequest="30"/>
+                                                       Text="{Binding precio, Mode=TwoWay}"
+                                                       Keyboard="Numeric"
+                                                       HeightRequest="25"
+                                                       TextColor="Black"
+                                                       BackgroundColor="#FFE6D5"
+                                                       WidthRequest="50"/>
 
                                             <Button Text="❌"
                                                     CommandParameter="{Binding .}"
@@ -209,8 +203,7 @@
                                     WidthRequest="250"
                                     CornerRadius="12"/>
                         </VerticalStackLayout>
-                    </Frame>
-
+                    </Frame>                   
                     <!-- INSTRUCCIONES -->
                     <Frame BackgroundColor="White"
                            BorderColor="#FF6600"
@@ -233,49 +226,49 @@
                         </VerticalStackLayout>
                     </Frame>
 
+                
+                    
+
                     <!-- FOTO -->
                     <Frame BackgroundColor="White"
                            BorderColor="#FF6600"
                            HorizontalOptions="Center"
                            CornerRadius="12"
-                           Padding="12">
+                           Padding="12">    
                         <VerticalStackLayout Spacing="10">
                             <Image x:Name="imgFoto"
-                                   HeightRequest="500"
+                               HeightRequest="300"
                                    Aspect="AspectFit"
                                    BackgroundColor="#EEE"/>
-                            <Button Text="📷 Tomar / Seleccionar Foto"
+                                        <Button Text="📷 Tomar / Seleccionar Foto"
                                     BackgroundColor="#FFE6D5"
                                     TextColor="#FF6600"
-                                     WidthRequest="300"
+                                    WidthRequest="300"
                                     CornerRadius="12"
                                     Clicked="BtnFoto_Clicked"/>
                         </VerticalStackLayout>
                     </Frame>
 
-                    <!-- BOTONES -->
-                    <VerticalStackLayout Spacing="12">
-                        <Button Text="💾 Guardar"
-                                BackgroundColor="#FF6600"
-                                TextColor="White"
-                                FontAttributes="Bold"
-                                HeightRequest="55"
-                                CornerRadius="15"
-                                HorizontalOptions="Center"
-                                 WidthRequest="120"
-                                Clicked="BtnGuardar_Clicked"/>
+                    <HorizontalStackLayout Spacing="20" HorizontalOptions="Center" Padding="10">
 
-                        <Button Text="↩️ Regresar"
-                                BackgroundColor="#FFE6D5"
-                                TextColor="#FF6600"
-                                HeightRequest="50"
-                                CornerRadius="15"
-                                WidthRequest="120"
-                                Clicked="BtnRegresar_Clicked"/>
-                    </VerticalStackLayout>
+                        <!-- Botón Guardar Receta -->
+                        <Button Text="💾 Guardar Receta"
+                            BackgroundColor="#FF6600"
+                            TextColor="White"
+                            WidthRequest="150"
+                            CornerRadius="12"
+                            Clicked="BtnGuardarReceta_Clicked"/>
+
+                        <!-- Botón Regresar -->
+                        <Button Text="⬅️ Regresar"
+                            BackgroundColor="#FFE6D5"
+                            TextColor="#FF6600"
+                            WidthRequest="150"
+                            CornerRadius="12"
+                            Clicked="BtnRegresar_Clicked"/>
+                    </HorizontalStackLayout>
 
                 </VerticalStackLayout>
-
             </Frame>
         </VerticalStackLayout>
     </ScrollView>

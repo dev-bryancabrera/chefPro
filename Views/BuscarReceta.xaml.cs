@@ -55,16 +55,19 @@ public partial class BuscarReceta : ContentPage
         }
     }
 
-    private async void Receta_Tap(object sender, TappedEventArgs e)
+    private async void Receta_Tap(object sender, EventArgs e)
     {
-        if (e.Parameter is Receta receta)
-        {
-            string mensaje =
-                $"Peso total: {receta.peso_total}\n" +
-                $"Peso por porción: {receta.peso_porcion}\n" +
-                $"Costo receta: {receta.costo_receta}";
+        var frame = sender as Frame;
+        var receta = frame.BindingContext as Receta;
 
-            await DisplayAlert("Detalles adicionales", mensaje, "OK");
+        if (receta != null)
+        {
+            await Navigation.PushAsync(new RecetaDetalle(receta));
         }
     }
+    private async void BtnRegresar_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new vInicio()); // o la página que quieras
+    }
+
 }

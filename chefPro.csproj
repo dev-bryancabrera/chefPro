@@ -86,6 +86,9 @@
 	  <MauiXaml Update="Views\BuscarReceta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\RecetaDetalle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\vDetalleReceta.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

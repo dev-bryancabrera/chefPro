@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="chefPro.Views.RecetaDetalle"
+          BackgroundColor="#FFF5EE">
+
+
+    <ScrollView>
+
+        <!-- TODO JUNTO EN UN SOLO LAYOUT -->
+        <VerticalStackLayout Spacing="20" Padding="15">
+
+            <!-- BOTONES -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="⬅️ Regresar"
+                        x:Name="BtnRegresar"
+                        BackgroundColor="#FFB7AE"
+                        TextColor="Black"
+                        CornerRadius="20"
+                        Padding="15,10"
+                        Clicked="BtnRegresar_Clicked"/>
+
+                <Button Text="🛒 Comprar"
+                        x:Name="BtnComprar"
+                        BackgroundColor="#FFA89E"
+                        TextColor="Black"
+                        CornerRadius="20"
+                        Padding="15,10"
+                        Clicked="BtnComprar_Clicked"/>
+            </HorizontalStackLayout>
+
+
+            <!-- TARJETA COMPLETA DE LA RECETA -->
+            <Frame CornerRadius="30"
+                   Margin="0"
+                   Padding="20"
+                   HasShadow="True"
+                   BackgroundColor="#FFEBEB">
+
+                <VerticalStackLayout Spacing="25">
+                    
+
+                    <!-- FOTO GRANDE -->
+                    <Frame CornerRadius="30"
+       HasShadow="True"
+       Padding="0"
+       BackgroundColor="Transparent"
+       HorizontalOptions="Center"
+       WidthRequest="420"
+       HeightRequest="280">
+
+    <Image Source="{Binding foto_url}"
+           Aspect="AspectFill"
+           HorizontalOptions="Center"
+           VerticalOptions="Center"
+           WidthRequest="420"
+           HeightRequest="280">
+        <Image.Clip>
+            <RoundRectangleGeometry CornerRadius="30"
+                                    Rect="0,10,600,300" />
+        </Image.Clip>
+    </Image>
+
+</Frame>
+
+
+                    <!-- INFO USUARIO + FECHA -->
+                    <VerticalStackLayout Spacing="12">
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="👤" FontSize="20" TextColor="Black"/>
+                            <Label Text="{Binding id_usuario}" FontSize="18" TextColor="Black"/>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label Text="📅" FontSize="20" TextColor="Black"/>
+                            <Label Text="{Binding fecha_creacion, StringFormat='{0:yyyy-MM-dd}'}"
+                                   FontSize="18" TextColor="Black"/>
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+
+
+                    <!-- TÍTULO -->
+                    <Label Text="{Binding titulo}"
+                           FontSize="32"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
+
+                    <!-- DESCRIPCIÓN -->
+                    <Label Text="{Binding descripcion}"
+                           FontSize="18"
+                           TextColor="Black"
+                           HorizontalTextAlignment="Center"/>
+
+
+                    <!-- TIEMPO / PORCIONES -->
+                    <Frame CornerRadius="20" BackgroundColor="White" HasShadow="True" Padding="15">
+                        <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                            <Label Text="⏱" FontSize="22" TextColor="Black"/>
+                            <Label Text="{Binding tiempo_preparacion, StringFormat='{0} min'}" FontSize="20" TextColor="Black"/>
+
+                            <Label Text="🍽" FontSize="22" TextColor="Black"/>
+                            <Label Text="{Binding porciones}" FontSize="20" TextColor="Black"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+
+                    <!-- COSTOS -->
+                    <Frame CornerRadius="20" BackgroundColor="White" HasShadow="True" Padding="15">
+                        <VerticalStackLayout Spacing="12">
+
+                            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                                <Label Text="💲" FontSize="22" TextColor="Black"/>
+                                <Label Text="{Binding costo_receta, StringFormat='Costo: {0:C2}'}"
+                                       FontSize="18" TextColor="Black"/>
+
+                                <Label Text="{Binding porcentaje_ganancia, StringFormat='Ganancia: {0}%'}"
+                                       FontSize="18" TextColor="Black"/>
+
+                                <Label Text="{Binding valor_venta, StringFormat='Venta: {0:C2}'}"
+                                       FontSize="18" TextColor="Black"/>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                                <Label Text="⚖️" FontSize="22" TextColor="Black"/>
+                                <Label Text="{Binding peso_total, StringFormat='Total: {0}g'}"
+                                       FontSize="18" TextColor="Black"/>
+
+                                <Label Text="{Binding peso_porcion, StringFormat='Porción: {0}g'}"
+                                       FontSize="18" TextColor="Black"/>
+
+                                <Label Text="💵" FontSize="22" TextColor="Black"/>
+                                <Label Text="{Binding precio_unidad, StringFormat='Unidad: {0:C2}'}"
+                                       FontSize="18" TextColor="Black"/>
+                            </HorizontalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Frame>
+
+
+                    <!-- INGREDIENTES -->
+                    <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="🧂 Ingredientes"
+                                   FontSize="26"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+                            <Label Text="{Binding ingredientes}"
+                                   FontSize="18"
+                                   TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+
+                    <!-- INSTRUCCIONES -->
+                    <Frame BackgroundColor="White" CornerRadius="20" Padding="20" HasShadow="True">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="👨‍🍳 Instrucciones"
+                                   FontSize="26"
+                                   FontAttributes="Bold"
+                                   TextColor="Black"/>
+                            <Label Text="{Binding instrucciones}"
+                                   FontSize="18"
+                                   TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+</ContentPage> 

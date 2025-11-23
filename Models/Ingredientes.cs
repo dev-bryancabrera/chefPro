@@ -17,5 +17,8 @@ namespace chefPro.Models
         public double cantidad { get; set; }
         public string unidad { get; set; } // ej: g, ml, pieza
         public double precio { get; set; }
+        [Ignore]
+        public List<string> Unidades { get; set; } = new List<string> { "kg", "g", "L", "ml", "unidad" };
     }
 }
+
