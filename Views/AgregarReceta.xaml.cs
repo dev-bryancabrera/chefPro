@@ -64,11 +64,11 @@ namespace chefPro.Views
                     var photo = await MediaPicker.CapturePhotoAsync();
                     if (photo != null)
                     {
-                        var stream = await photo.OpenReadAsync();
-                        imgFoto.Source = ImageSource.FromStream(() => stream);
+                        string ruta = await GuardarImagenLocal(photo);
+                        imgFoto.Source = ruta;
                     }
 #else
-                    await DisplayAlert("Aviso", "La cámara no está disponible en Windows.", "OK");
+            await DisplayAlert("Aviso", "La cámara no está disponible en Windows.", "OK");
 #endif
                 }
                 else if (opcion == "Elegir de galería")
@@ -76,8 +76,8 @@ namespace chefPro.Views
                     var result = await MediaPicker.PickPhotoAsync();
                     if (result != null)
                     {
-                        var stream = await result.OpenReadAsync();
-                        imgFoto.Source = ImageSource.FromStream(() => stream);
+                        string ruta = await GuardarImagenLocal(result);
+                        imgFoto.Source = ruta;
                     }
                 }
             }
@@ -86,6 +86,7 @@ namespace chefPro.Views
                 await DisplayAlert("Error", ex.Message, "OK");
             }
         }
+
 
         // GUARDAR RECETA
         private async void BtnGuardarReceta_Clicked(object sender, EventArgs e)
@@ -174,7 +175,8 @@ namespace chefPro.Views
                     costo_receta = costoReceta,
                     peso_total = pesoTotal,
                     peso_porcion = pesoPorcion,
-                    foto_url = imgFoto.Source?.ToString() ?? "",
+                    foto_url = (imgFoto.Source as FileImageSource)?.File ?? "",
+
                     fecha_creacion = DateTime.Now.ToString("yyyy-MM-dd"),
                     id_usuario = 1
                 };
@@ -201,5 +203,18 @@ namespace chefPro.Views
         {
             await Navigation.PushAsync(new vInicio());
         }
+        private async Task<string> GuardarImagenLocal(FileResult file)
+            {
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+                var ruta = Path.Combine(FileSystem.AppDataDirectory, fileName);
+
+                using var streamOriginal = await file.OpenReadAsync();
+                using var streamDestino = File.OpenWrite(ruta);
+
+                await streamOriginal.CopyToAsync(streamDestino);
+
+                return ruta;
+            }
+
     }
 }
