@@ -6,4 +6,9 @@ public partial class vEstadistica : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void btnActualizar_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }

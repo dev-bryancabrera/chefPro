@@ -21,7 +21,6 @@
 		<Nullable>enable</Nullable>
 
 		<!-- <RuntimeIdentifiers>android-arm;android-arm64</RuntimeIdentifiers> -->
-		<!--<RuntimeIdentifiers>android-arm;android-arm64</RuntimeIdentifiers-->
 		
 		<!-- Display name -->
 		<ApplicationTitle>chefPro</ApplicationTitle>

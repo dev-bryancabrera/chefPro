@@ -12,6 +12,8 @@ public partial class RecetaDetalle : ContentPage
     public RecetaDetalle(Receta receta)
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
+
         _recetaService = new RecetaService();
         _receta = receta;
     }

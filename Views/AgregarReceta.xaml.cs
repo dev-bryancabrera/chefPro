@@ -19,7 +19,7 @@ namespace chefPro.Views
         public AgregarReceta()
         {
             InitializeComponent();
-
+            NavigationPage.SetHasNavigationBar(this, false);
             cvIngredientes.ItemsSource = Ingredientes;
 
             BindingContext = this;

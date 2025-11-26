@@ -31,7 +31,7 @@ public partial class vLogin : ContentPage
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.105/wsChefPro/auth/login",
+                "http://192.168.0.106/wsChefPro/auth/login",
                 "POST",
                 parametros
             );
@@ -45,7 +45,11 @@ public partial class vLogin : ContentPage
             if (resultado != null && resultado.usuario != null)
             {
                 await DisplayAlert("Éxito", $"Bienvenido {resultado.usuario.nombres}", "OK");
-                await Navigation.PushAsync(new vInicio());
+
+                txtEmail.Text = "";
+                txtPassword.Text = "";
+
+                await Navigation.PushAsync(new vInicio(resultado.usuario.nombres));
             }
             else
             {

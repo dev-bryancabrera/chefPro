@@ -13,7 +13,7 @@ public partial class BuscarReceta : ContentPage
     public BuscarReceta()
     {
         InitializeComponent();
-
+        NavigationPage.SetHasNavigationBar(this, false);
         _service = new RecetaService();
         recetas = new ObservableCollection<Receta>();
         ResultadosList.ItemsSource = recetas;

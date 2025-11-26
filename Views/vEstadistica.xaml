@@ -61,8 +61,7 @@
                                                Source="{Binding imagen}"
                                                Aspect="AspectFill"
                                                HeightRequest="50"
-                                               WidthRequest="50"
-                                               CornerRadius="5"/>
+                                               WidthRequest="50"/>
                                         <Label Grid.Column="1"
                                                Text="{Binding nombre}"
                                                TextColor="White"
@@ -155,6 +154,7 @@
 
             <!-- Botón Actualizar -->
             <Button Text="🔄 Actualizar Estadísticas"
+                    x:Name="btnActualizar"
                     Clicked="btnActualizar_Clicked"
                     BackgroundColor="#FF6600"
                     TextColor="White"
