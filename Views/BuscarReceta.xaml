@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2021/maui/toolkit"
+             x:Class="chefPro.Views.BuscarReceta"
+             Title="Buscar Receta"
+             BackgroundColor="#FFE0C4">
+
+    <Grid>
+
+        <!-- IMAGEN DE FONDO -->
+        <Image Source="buscar.jpg"
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill" />
+
+        <Grid RowDefinitions="Auto,*">
+
+            <!-- BOTÓN DE REGRESO EN LA PARTE SUPERIOR -->
+            <Button 
+        Text="⬅️"
+        BackgroundColor="Transparent"
+        TextColor="#FF6600"
+        FontSize="28"
+        WidthRequest="50"
+        HeightRequest="50"
+        CornerRadius="25"
+        Clicked="BtnRegresar_Clicked"
+        HorizontalOptions="Start"
+        VerticalOptions="Start"
+        Margin="10"/>
+
+            <!-- SCROLLVIEW CON TODO EL CONTENIDO -->
+            <ScrollView Grid.Row="1" Padding="20">
+
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- CARD SUPERIOR: TÍTULO, BUSCADOR Y BOTÓN -->
+                    <Frame BackgroundColor="#E6FFF5E8"
+                       CornerRadius="25"
+                       HasShadow="True"
+                       Padding="20"
+                       VerticalOptions="StartAndExpand"
+                       HorizontalOptions="FillAndExpand">
+
+                        <VerticalStackLayout Spacing="20">
+
+                            <!-- TÍTULO -->
+                            <Label Text="Buscar Receta"
+                               FontAttributes="Bold"
+                               FontSize="32"
+                               HorizontalOptions="Center"
+                               TextColor="#FF6600"/>
+
+                            <!-- CAMPO DE BÚSQUEDA -->
+                            <material:TextField
+                            x:Name="txtBusqueda"
+                            Title="Título de la Receta"
+                            TextColor="Black"
+                            TitleColor="#FF6600"
+                            BorderColor="#FF6600"
+                            BackgroundColor="Transparent" />
+
+                            <!-- BOTÓN BUSCAR -->
+                            <Button Text="Buscar"
+                                Clicked="BtnBuscar_Clicked"
+                                BackgroundColor="#FF6600"
+                                CornerRadius="15"
+                                HeightRequest="55"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                WidthRequest="250"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- CARD INFERIOR: LISTA DE RESULTADOS -->
+                    <Frame BackgroundColor="#E6FFF5E8"
+                       CornerRadius="25"
+                       HasShadow="True"
+                       Padding="15"
+                       VerticalOptions="FillAndExpand"
+                       HorizontalOptions="FillAndExpand">
+
+                        <CollectionView x:Name="ResultadosList"
+                                    SelectionMode="None"
+                                    Margin="0">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <!-- CARD DE CADA RESULTADO -->
+                                    <Frame Padding="15"
+                                       BackgroundColor="#FFE0DB"
+                                       CornerRadius="20"
+                                       HasShadow="True">
+
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Receta_Tap"
+                                                              CommandParameter="{Binding}" />
+                                        </Frame.GestureRecognizers>
+
+                                        <Grid ColumnDefinitions="160,*" RowDefinitions="Auto">
+
+                                            <!-- IMAGEN -->
+                                            <Frame Grid.Column="0"
+                                               Padding="0"
+                                               CornerRadius="20"
+                                               HeightRequest="130"
+                                               WidthRequest="160"
+                                               HasShadow="True"
+                                               BackgroundColor="White">
+                                                <Image Source="{Binding foto_url}"
+                                                   Aspect="AspectFill"
+                                                   HeightRequest="130"
+                                                   WidthRequest="160">
+                                                    <Image.Clip>
+                                                        <RoundRectangleGeometry CornerRadius="20"
+                                                                            Rect="0,0,160,130" />
+                                                    </Image.Clip>
+                                                </Image>
+                                            </Frame>
+
+                                            <!-- INFORMACIÓN -->
+                                            <VerticalStackLayout Grid.Column="1"
+                                                             Padding="15,0"
+                                                             Spacing="10">
+                                                <Label Text="{Binding titulo}"
+                                                   FontSize="20"
+                                                   FontAttributes="Bold"
+                                                   TextColor="Black" />
+                                                <Label Text="{Binding descripcion}"
+                                                   FontSize="15"
+                                                   TextColor="Black"
+                                                   MaxLines="2"
+                                                   LineBreakMode="TailTruncation" />
+                                                <HorizontalStackLayout Spacing="12" Margin="0,5,0,0">
+                                                    <Label Text="⏱" FontSize="14"/>
+                                                    <Label Text="{Binding tiempo_preparacion, StringFormat='{0} min'}"
+                                                       FontSize="14"
+                                                       TextColor="Black"/>
+                                                    <Label Text="🍽" FontSize="14"/>
+                                                    <Label Text="{Binding porciones}"
+                                                       FontSize="14"
+                                                       TextColor="Black"/>
+                                                    <Label Text="💲" FontSize="14"/>
+                                                    <Label Text="{Binding valor_venta, StringFormat='{0:C2}'}"
+                                                       FontSize="14"
+                                                       TextColor="Black"/>
+                                                    <Label Text="💰" FontSize="14"/>
+                                                    <Label Text="{Binding costo_receta, StringFormat='Costo: {0:C2}'}"
+                                                       FontSize="14"
+                                                       TextColor="Black"/>
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+
+                                        </Grid>
+
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </Frame>
+
+                </VerticalStackLayout>
+
+            </ScrollView>
+        </Grid>
+    </Grid>
+</ContentPage>

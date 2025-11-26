@@ -45,10 +45,6 @@ public partial class vLogin : ContentPage
             if (resultado != null && resultado.usuario != null)
             {
                 await DisplayAlert("Éxito", $"Bienvenido {resultado.usuario.nombres}", "OK");
-
-                txtEmail.Text = "";
-                txtPassword.Text = "";
-
                 await Navigation.PushAsync(new vInicio());
             }
             else

@@ -2,11 +2,137 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="chefPro.Views.vInicio"
-             Title="vInicio">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+               Title="Inicio"
+             BackgroundColor="#FFF5EE"
+             Padding="20">
+    <Grid>
+
+        <Image Source="paginainicio.jpg"
+       Aspect="AspectFill"
+       HorizontalOptions="FillAndExpand"
+       VerticalOptions="FillAndExpand"/>
+
+
+        <!-- Contenido principal -->
+        <ScrollView>
+            <VerticalStackLayout Spacing="20">
+
+                <!-- Bloque 1: Frame del Chef -->
+                <Frame BackgroundColor="#80FFFFFF" CornerRadius="12" Padding="10" HasShadow="True">
+                    <VerticalStackLayout HorizontalOptions="End" Spacing="5">
+                        <Label x:Name="NombreUsuarioLabel"
+                               FontAttributes="Bold"
+                               FontSize="20"
+                               TextColor="Black"
+                               HorizontalOptions="End"/>
+                        <Button Text="Cerrar sesión"
+                                BackgroundColor="#FF6600"
+                                TextColor="#FFF5EE"
+                                BorderColor="#FF6600"
+                                CornerRadius="10"
+                                HeightRequest="30"
+                                WidthRequest="105"
+                                FontSize="12"
+                                HorizontalOptions="End"
+                                Clicked="CerrarSesion_Clicked"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Bloque 2: Contadores -->
+                <Frame BackgroundColor="#80FFFFFF" CornerRadius="12" Padding="15" HasShadow="True">
+                    <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                        <Frame BackgroundColor="White" CornerRadius="8" Padding="10" BorderColor="#FF6600" HasShadow="True">
+                            <Label x:Name="RecetasCreadasLabel" TextColor="Black" FontSize="16" HorizontalOptions="Center"/>
+                        </Frame>
+                        <Frame BackgroundColor="White" CornerRadius="8" Padding="10" BorderColor="#FF6600" HasShadow="True">
+                            <Label x:Name="RecetasCompradasLabel" TextColor="Black" FontSize="16" HorizontalOptions="Center"/>
+                        </Frame>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <!-- Acciones principales con degradados -->
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Crear Receta -->
+                    <Frame CornerRadius="8" Padding="10" HasShadow="True" WidthRequest="505">
+                        <Frame.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#FF6600" Offset="0.0"/>
+                                <GradientStop Color="#FFD9B3" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <HorizontalStackLayout Spacing="15">
+                            <Label Text="🍳" FontSize="40" VerticalOptions="Center"/>
+                            <Button Text="Crear Receta"
+                                    BackgroundColor="Transparent"
+                                    TextColor="Black"
+                                    CornerRadius="8"
+                                    HorizontalOptions="FillAndExpand"
+                                    Clicked="CrearReceta_Clicked"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <!-- Buscar Receta -->
+                    <Frame CornerRadius="8" Padding="10" HasShadow="True" WidthRequest="505">
+                        <Frame.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#FF6600" Offset="0.0"/>
+                                <GradientStop Color="#FFE0C9" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <HorizontalStackLayout Spacing="15">
+                            <Label Text="🔍" FontSize="40" VerticalOptions="Center"/>
+                            <Button Text="Buscar Receta"
+                                    BackgroundColor="Transparent"
+                                    TextColor="Black"
+                                    CornerRadius="8"
+                                    HorizontalOptions="FillAndExpand"
+                                    Clicked="BuscarReceta_Clicked"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <!-- Ver Ganancias -->
+                    <Frame CornerRadius="8" Padding="10" HasShadow="True" WidthRequest="505">
+                        <Frame.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#FF6600" Offset="0.0"/>
+                                <GradientStop Color="#FFE6D1" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <HorizontalStackLayout Spacing="15">
+                            <Label Text="💰" FontSize="40" VerticalOptions="Center"/>
+                            <Button Text="Ver Ganancias"
+                                    BackgroundColor="Transparent"
+                                    TextColor="Black"
+                                    CornerRadius="8"
+                                    HorizontalOptions="FillAndExpand"
+                                    Clicked="VerGanancias_Clicked"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+                <!-- Nota motivacional con degradado -->
+                <Frame Padding="0"
+                       CornerRadius="10"
+                       HasShadow="True"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Start"
+                       HeightRequest="60"
+                       WidthRequest="300"
+                       BackgroundColor="Transparent">
+                  
+                    <Label x:Name="NotaMotivacional"
+                           FontSize="16"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="Center"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           TextColor="#FF6600"/>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
 </ContentPage>
