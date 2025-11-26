@@ -3,13 +3,15 @@ namespace chefPro.Views;
 public partial class vInicio : ContentPage
 {
     private string nombreUsuario;
-      public vInicio()
+    public vInicio()
     {
         InitializeComponent();
         // Valores por defecto
         NombreUsuarioLabel.Text = "Chef invitado cocinando";
         RecetasCreadasLabel.Text = "Recetas creadas: 0";
         RecetasCompradasLabel.Text = "Recetas compradas: 0";
+
+        NavigationPage.SetHasNavigationBar(this, false);
     }
     public vInicio(string nombreUsuarioRegistrado)
     {
@@ -23,6 +25,8 @@ public partial class vInicio : ContentPage
         // Contadores iniciales
         RecetasCreadasLabel.Text = "Recetas creadas: 12";
         RecetasCompradasLabel.Text = "Recetas compradas: 8";
+
+        NavigationPage.SetHasNavigationBar(this, false);
     }
 
     protected override void OnAppearing()
@@ -57,8 +61,9 @@ public partial class vInicio : ContentPage
         await Navigation.PushAsync(new BuscarReceta());
     }
 
-    private async void VerGanancias_Clicked(object sender, EventArgs e)
+    private void btnEstadisticas_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Ganancias());
+        Navigation.PushAsync(new vEstadistica());
+
     }
 }

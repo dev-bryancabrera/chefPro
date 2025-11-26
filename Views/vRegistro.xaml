@@ -218,6 +218,7 @@
                    FontSize="13"
                    TextColor="#000"
                    HorizontalOptions="Center"
+                       IsVisible="False"
                    Margin="0,5,0,5" />
 
                 <!-- Botón de Google -->
@@ -226,6 +227,7 @@
                     Style="{StaticResource buttonRegisterGoogle}"
                     StyleClass="FilledButton" 
                     ImageSource="logo_google.png"
+                    IsVisible="False"
                     Text="Registrarse con Google"
                     Clicked="btnRegisterGoogle_Clicked"/>
 
@@ -237,7 +239,7 @@
                     <Label 
                         Text="¿Ya tienes una cuenta?"
                         FontSize="14"
-                        TextColor="#666"
+                        TextColor="#fff"
                         VerticalOptions="Center"/>
                     <Button 
                         x:Name="btnGoLogin"

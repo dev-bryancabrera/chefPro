@@ -79,7 +79,7 @@
 
             <!-- Contenido centrado -->
             <VerticalStackLayout
-                Padding="40,0"
+                Padding="40,50"
                 Spacing="25">
 
                 <!-- Logo / Título -->
@@ -136,12 +136,6 @@
                     input:FormView.IsSubmitButton="True"
                     Clicked="btnLogin_Clicked"/>
 
-                <Button 
-                    x:Name="btnRegister"
-                    Style="{StaticResource buttonRegister}"
-                    Text="Registrarse"
-                    Clicked="btnRegister_Clicked"/>
-
                 <Label Text="O"
                    FontAttributes="Bold"
                    FontSize="14"
@@ -149,10 +143,17 @@
                    HorizontalOptions="Center" />
 
                 <Button 
+                    x:Name="btnRegister"
+                    Style="{StaticResource buttonRegister}"
+                    Text="Registrarse"
+                    Clicked="btnRegister_Clicked"/>
+
+                <Button 
                     x:Name="btnLoginGoogle"
                     Style="{StaticResource buttonLoginGoogle}"
                     StyleClass="FilledButton" 
                     ImageSource="logo_google.png"
+                    IsVisible="False"
                     Text="Iniciar con Google"
                     Clicked="btnLoginGoogle_Clicked"/>
 

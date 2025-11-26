@@ -31,7 +31,7 @@ public partial class vLogin : ContentPage
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.106/wsChefPro/auth/login",
+                "http://192.168.0.104/wsChefPro/auth/login",
                 "POST",
                 parametros
             );
