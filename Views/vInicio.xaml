@@ -112,6 +112,35 @@
                         </HorizontalStackLayout>
                     </Frame>
 
+                    <!-- Crear Ingredientes -->
+                    <Frame CornerRadius="8"
+                       Padding="10"
+                       HasShadow="True"
+                       HorizontalOptions="FillAndExpand">
+
+                        <Frame.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#FF6600" Offset="0.0"/>
+                                <GradientStop Color="#FFD9B3" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Frame.Background>
+
+                        <HorizontalStackLayout Spacing="12">
+                            <Label Text="🧂"
+                               FontSize="35"
+                               VerticalOptions="Center"/>
+
+                            <Button Text="Ingredientes"
+                                    x:Name="btnIngredientes"
+                                BackgroundColor="Transparent"
+                                TextColor="Black"
+                                FontSize="17"
+                                CornerRadius="8"
+                                HorizontalOptions="FillAndExpand"
+                                Clicked="btnIngredientes_Clicked"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
                     <!-- Buscar Receta -->
                     <Frame CornerRadius="8"
                            Padding="10"

@@ -3,6 +3,8 @@ namespace chefPro.Views;
 public partial class vInicio : ContentPage
 {
     private string nombreUsuario;
+    private int id_usuario;
+
     public vInicio()
     {
         InitializeComponent();
@@ -13,11 +15,12 @@ public partial class vInicio : ContentPage
 
         NavigationPage.SetHasNavigationBar(this, false);
     }
-    public vInicio(string nombreUsuarioRegistrado)
+    public vInicio(string nombreUsuarioRegistrado, int usuario)
     {
         InitializeComponent();
 
         nombreUsuario = nombreUsuarioRegistrado;
+        id_usuario = usuario;
 
         // Asignar texto al Label
         NombreUsuarioLabel.Text = $"Chef {nombreUsuario} cocinando";
@@ -65,5 +68,10 @@ public partial class vInicio : ContentPage
     {
         Navigation.PushAsync(new vEstadistica());
 
+    }
+
+    private void btnIngredientes_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new vListaIngredientes(id_usuario));
     }
 }

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="chefPro.Views.vIngredientes"
+             BackgroundColor="#FFF5EE">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+
+            <!-- HEADER -->
+            <Frame CornerRadius="25" 
+                   BackgroundColor="#FFEBEB" 
+                   HasShadow="True" 
+                   Padding="20">
+                <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                    <Label Text="🧂" FontSize="32"/>
+                    <Label x:Name="LblTitulo"
+                           Text="Agregar Ingrediente" 
+                           FontSize="26" 
+                           FontAttributes="Bold" 
+                           TextColor="Black"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <!-- FORMULARIO -->
+            <Frame CornerRadius="30" 
+                   BackgroundColor="#FFEBEB" 
+                   HasShadow="True" 
+                   Padding="25">
+
+                <VerticalStackLayout Spacing="20">
+
+                    <!-- NOMBRE -->
+                    <Frame CornerRadius="20" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="15,5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="📝 Nombre del Ingrediente" 
+                                   FontSize="16" 
+                                   TextColor="#666"
+                                   Margin="5,0"/>
+                            <Entry x:Name="EntryNombre"
+                                   Placeholder="Ej: Harina de trigo"
+                                   FontSize="18"
+                                   TextColor="Black"
+                                   PlaceholderColor="Gray"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- PESO -->
+                    <Frame CornerRadius="20" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="15,5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="⚖️ Peso" 
+                                   FontSize="16" 
+                                   TextColor="#666"
+                                   Margin="5,0"/>
+                            <Entry x:Name="EntryPeso"
+                                   Placeholder="Ej: 500"
+                                   Keyboard="Numeric"
+                                   FontSize="18"
+                                   TextColor="Black"
+                                   PlaceholderColor="Gray"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- UNIDAD DE MEDIDA -->
+                    <Frame CornerRadius="20" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="15,5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="📏 Unidad de Medida" 
+                                   FontSize="16" 
+                                   TextColor="#666"
+                                   Margin="5,0"/>
+                            <Picker x:Name="PickerUnidad"
+                                    FontSize="18"
+                                    TextColor="Black">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Gramos (g)</x:String>
+                                        <x:String>Kilogramos (kg)</x:String>
+                                        <x:String>Mililitros (ml)</x:String>
+                                        <x:String>Litros (L)</x:String>
+                                        <x:String>Unidad (u)</x:String>
+                                        <x:String>Taza (cup)</x:String>
+                                        <x:String>Cucharada (tbsp)</x:String>
+                                        <x:String>Cucharadita (tsp)</x:String>
+                                        <x:String>Pizca</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- COSTO POR UNIDAD -->
+                    <Frame CornerRadius="20" 
+                           BackgroundColor="White" 
+                           HasShadow="True" 
+                           Padding="15,5">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="💰 Costo por Unidad" 
+                                   FontSize="16" 
+                                   TextColor="#666"
+                                   Margin="5,0"/>
+                            <Entry x:Name="EntryCosto"
+                                   Placeholder="Ej: 2.50"
+                                   Keyboard="Numeric"
+                                   FontSize="18"
+                                   TextColor="Black"
+                                   PlaceholderColor="Gray"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- PREVIEW DEL COSTO -->
+                    <Frame CornerRadius="20" 
+                           BackgroundColor="#E8F5E9" 
+                           HasShadow="True" 
+                           Padding="15"
+                           IsVisible="{Binding MostrarPreview}">
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Label Text="💵" FontSize="20"/>
+                            <Label x:Name="LblPreview"
+                                   Text="Costo total: $0.00" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold"
+                                   TextColor="#2E7D32"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- BOTONES -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+
+                <Button Grid.Column="0"
+                        Text="❌ Cancelar"
+                        x:Name="BtnCancelar"
+                        BackgroundColor="#FF6B6B"
+                        TextColor="White"
+                        CornerRadius="25"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HeightRequest="55"
+                        Clicked="BtnCancelar_Clicked"/>
+
+                <Button Grid.Column="1"
+                        Text="✅ Guardar"
+                        x:Name="BtnGuardar"
+                        BackgroundColor="#4CAF50"
+                        TextColor="White"
+                        CornerRadius="25"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HeightRequest="55"
+                        Clicked="BtnGuardar_Clicked"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

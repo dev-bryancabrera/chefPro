@@ -49,7 +49,7 @@ public partial class vLogin : ContentPage
                 txtEmail.Text = "";
                 txtPassword.Text = "";
 
-                await Navigation.PushAsync(new vInicio(resultado.usuario.nombres));
+                await Navigation.PushAsync(new vInicio(resultado.usuario.nombres, resultado.usuario.id_usuario));
             }
             else
             {

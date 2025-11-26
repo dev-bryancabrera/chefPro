@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="chefPro.Views.vListaIngredientes"
+             BackgroundColor="#FFF5EE">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="15" RowSpacing="15">
+
+        <!-- HEADER -->
+        <Frame Grid.Row="0" 
+               CornerRadius="25" 
+               BackgroundColor="#FFEBEB" 
+               HasShadow="True" 
+               Padding="20">
+            <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                <Label Text="🧂" FontSize="32"/>
+                <Label Text="Mis Ingredientes" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       TextColor="Black"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!-- TABLA DE INGREDIENTES -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="10">
+
+                <!-- HEADER DE LA TABLA -->
+                <Frame CornerRadius="20" 
+                       BackgroundColor="#FFB7AE" 
+                       HasShadow="True" 
+                       Padding="15,10">
+                    <Grid ColumnDefinitions="2*,1.5*,1.5*,1.5*,Auto" 
+                          ColumnSpacing="10">
+                        <Label Grid.Column="0" 
+                               Text="Nombre" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Column="1" 
+                               Text="Peso" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Column="2" 
+                               Text="Unidad" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Column="3" 
+                               Text="Costo" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                        <Label Grid.Column="4" 
+                               Text="Acciones" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Frame>
+
+                <!-- LISTA DE INGREDIENTES -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Ingredientes}" 
+                                     Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="20" 
+                                   BackgroundColor="White" 
+                                   HasShadow="True" 
+                                   Padding="15,12"
+                                   Margin="0">
+                                <Grid ColumnDefinitions="2*,1.5*,1.5*,1.5*,Auto" 
+                                      ColumnSpacing="10">
+
+                                    <!-- NOMBRE -->
+                                    <Label Grid.Column="0" 
+                                           Text="{Binding nombre}" 
+                                           FontSize="16" 
+                                           TextColor="Black"
+                                           VerticalOptions="Center"
+                                           LineBreakMode="TailTruncation"/>
+
+                                    <!-- PESO -->
+                                    <Label Grid.Column="1" 
+                                           Text="{Binding peso, StringFormat='{0:F2}'}" 
+                                           FontSize="16" 
+                                           TextColor="Black"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- UNIDAD -->
+                                    <Label Grid.Column="2" 
+                                           Text="{Binding unidad_medida}" 
+                                           FontSize="16" 
+                                           TextColor="Black"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- COSTO -->
+                                    <Label Grid.Column="3" 
+                                           Text="{Binding costo_unidad, StringFormat='{0:C2}'}" 
+                                           FontSize="16" 
+                                           TextColor="Black"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+
+                                    <!-- BOTONES DE ACCIÓN -->
+                                    <HorizontalStackLayout Grid.Column="4" 
+                                                          Spacing="5"
+                                                          HorizontalOptions="End">
+                                        <Button Text="✏️" 
+                                                BackgroundColor="#FFD700" 
+                                                x:Name="btnActualizar"
+                                                TextColor="Black"
+                                                CornerRadius="15"
+                                                WidthRequest="45"
+                                                HeightRequest="45"
+                                                Padding="0"
+                                                Clicked="btnActualizar_Clicked"
+                                                CommandParameter="{Binding .}"/>
+
+                                        <Button Text="🗑️" 
+                                                BackgroundColor="#FF6B6B" 
+                                                x:Name="btnEliminar"
+                                                TextColor="White"
+                                                CornerRadius="15"
+                                                WidthRequest="45"
+                                                HeightRequest="45"
+                                                Padding="0"
+                                                Clicked="btnEliminar_Clicked"
+                                                CommandParameter="{Binding .}"/>
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <!-- MENSAJE SI NO HAY INGREDIENTES -->
+                <Frame CornerRadius="20" 
+                       BackgroundColor="White" 
+                       HasShadow="True" 
+                       Padding="30"
+                       IsVisible="{Binding NoHayIngredientes}">
+                    <VerticalStackLayout Spacing="15" HorizontalOptions="Center">
+                        <Label Text="🍳" 
+                               FontSize="60" 
+                               HorizontalOptions="Center"/>
+                        <Label Text="No hay ingredientes registrados" 
+                               FontSize="20" 
+                               TextColor="Gray"
+                               HorizontalOptions="Center"/>
+                        <Label Text="¡Agrega tu primer ingrediente!" 
+                               FontSize="16" 
+                               TextColor="Gray"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTÓN AGREGAR INFERIOR -->
+        <Button Grid.Row="2" 
+                Text="➕ Agregar Ingrediente"
+                x:Name="btnAgregar"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                CornerRadius="25"
+                FontSize="20"
+                FontAttributes="Bold"
+                HeightRequest="60"
+                Clicked="btnAgregar_Clicked"/>
+
+    </Grid>
+
+</ContentPage>
