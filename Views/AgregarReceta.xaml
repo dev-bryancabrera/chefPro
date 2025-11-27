@@ -36,90 +36,113 @@
                                BorderColor="#FF6600"
                                CornerRadius="12"
                                HorizontalOptions="Fill"
-                               Padding="0">
-
-                            <HorizontalStackLayout Spacing="5" Padding="8">
-                                <Label Text="📝" FontSize="20" VerticalOptions="Center"/>
-                                <Entry x:Name="txtTitulo"
+                               Padding="8">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                <Label Grid.Column="0"
+                                       Text="📝" 
+                                       FontSize="20" 
+                                       VerticalOptions="Center"/>
+                                <Entry Grid.Column="1"
+                                       x:Name="txtTitulo"
                                        Placeholder="Título"
                                        HorizontalTextAlignment="Start"
-                                       TextColor="Black"/>
-                            </HorizontalStackLayout>
+                                       TextColor="Black"
+                                       VerticalOptions="Center"/>
+                            </Grid>
                         </Frame>
 
                         <!-- TIEMPO / PORCIONES / VALOR / % -->
                         <FlexLayout Wrap="Wrap"
                                     Direction="Row"
                                     JustifyContent="Center"
-                                    AlignItems="Center"
-                                    BindableLayout.ItemsSource="{x:Reference itemsTiempo}">
+                                    AlignItems="Center">
 
+                            <!-- TIEMPO -->
                             <!-- TIEMPO -->
                             <Frame BackgroundColor="White"
                                    BorderColor="#FF6600"
                                    CornerRadius="12"
-                                   Padding="0"
+                                   Padding="5"
                                    WidthRequest="150"
                                    Margin="5">
-
-                                <HorizontalStackLayout Padding="5" Spacing="5">
-                                    <Label Text="⏱️" FontSize="18" VerticalOptions="Center"/>
-                                    <Entry x:Name="txtTiempo"
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                    <Label Grid.Column="0"
+                                           Text="⏱️" 
+                                           FontSize="18" 
+                                           VerticalOptions="Center"/>
+                                    <Entry Grid.Column="1"
+                                           x:Name="txtTiempo"
                                            Keyboard="Numeric"
-                                           Placeholder="Tiempo"
-                                           TextColor="Black"/>
-                                </HorizontalStackLayout>
+                                           Placeholder="Tiempo (min)"
+                                           TextColor="Black"
+                                           VerticalOptions="Center"/>
+                                </Grid>
                             </Frame>
 
                             <!-- PORCIONES -->
                             <Frame BackgroundColor="White"
                                    BorderColor="#FF6600"
                                    CornerRadius="12"
-                                   Padding="0"
+                                   Padding="5"
                                    WidthRequest="150"
                                    Margin="5">
-
-                                <HorizontalStackLayout Padding="5" Spacing="5">
-                                    <Label Text="🍽️" FontSize="18"/>
-                                    <Entry x:Name="txtPorciones"
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                    <Label Grid.Column="0"
+                                           Text="🍽️" 
+                                           FontSize="18" 
+                                           VerticalOptions="Center"/>
+                                    <Entry Grid.Column="1"
+                                           x:Name="txtPorciones"
                                            Keyboard="Numeric"
                                            Placeholder="Porciones"
-                                           TextColor="Black"/>
-                                </HorizontalStackLayout>
+                                           TextColor="Black"
+                                           VerticalOptions="Center"
+                                           TextChanged="OnCampoNumericoChanged"/>
+                                </Grid>
                             </Frame>
 
-                            <!-- VALOR -->
+                            <!-- VALOR VENTA -->
                             <Frame BackgroundColor="White"
                                    BorderColor="#FF6600"
                                    CornerRadius="12"
-                                   Padding="0"
+                                   Padding="5"
                                    WidthRequest="150"
                                    Margin="5">
-
-                                <HorizontalStackLayout Padding="5" Spacing="5">
-                                    <Label Text="💲" FontSize="18"/>
-                                    <Entry x:Name="txtValorVenta"
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                    <Label Grid.Column="0"
+                                           Text="💲" 
+                                           FontSize="18" 
+                                           VerticalOptions="Center"/>
+                                    <Entry Grid.Column="1"
+                                           x:Name="txtValorVenta"
                                            Keyboard="Numeric"
                                            Placeholder="Valor venta"
-                                           TextColor="Black"/>
-                                </HorizontalStackLayout>
+                                           TextColor="Black"
+                                           VerticalOptions="Center"
+                                           TextChanged="OnCampoNumericoChanged"/>
+                                </Grid>
                             </Frame>
 
-                            <!-- % -->
+                            <!-- % GANANCIA -->
                             <Frame BackgroundColor="White"
                                    BorderColor="#FF6600"
                                    CornerRadius="12"
-                                   Padding="0"
+                                   Padding="5"
                                    WidthRequest="150"
                                    Margin="5">
-
-                                <HorizontalStackLayout Padding="5" Spacing="5">
-                                    <Label Text="📈" FontSize="18"/>
-                                    <Entry x:Name="txtPorcentaje"
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                    <Label Grid.Column="0"
+                                           Text="📈" 
+                                           FontSize="18" 
+                                           VerticalOptions="Center"/>
+                                    <Entry Grid.Column="1"
+                                           x:Name="txtPorcentaje"
                                            Keyboard="Numeric"
                                            Placeholder="% Ganancia"
-                                           TextColor="Black"/>
-                                </HorizontalStackLayout>
+                                           TextColor="Black"
+                                           VerticalOptions="Center"
+                                           TextChanged="OnCampoNumericoChanged"/>
+                                </Grid>
                             </Frame>
                         </FlexLayout>
 
@@ -129,119 +152,231 @@
                                CornerRadius="12"
                                HeightRequest="70"
                                HorizontalOptions="Fill"
-                               Padding="0">
-
-                            <HorizontalStackLayout Padding="10" Spacing="10">
-                                <Label Text="💬" FontSize="20"/>
-                                <Entry x:Name="txtDescripcion"
+                               Padding="10">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                <Label Grid.Column="0"
+                                       Text="💬" 
+                                       FontSize="20" 
+                                       VerticalOptions="Center"/>
+                                <Entry Grid.Column="1"
+                                       x:Name="txtDescripcion"
                                        Placeholder="Descripción (máx. 80 caracteres)"
                                        TextColor="Black"
-                                       MaxLength="80"/>
-                            </HorizontalStackLayout>
+                                       MaxLength="80"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </Frame>
+
+                        <!-- CAMPOS CALCULADOS (Opcionales - Solo lectura) -->
+                        <Frame BackgroundColor="White"
+                               BorderColor="#FFA500"
+                               CornerRadius="12"
+                               HorizontalOptions="Fill"
+                               Padding="12">
+
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="📊 Información Calculada"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       TextColor="#FF6600"/>
+
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="8">
+
+                                    <!-- Peso Total -->
+                                    <Label 
+                                        Grid.Row="0" 
+                                        Grid.Column="0" 
+                                        Text="Peso Total (kg):" 
+                                        VerticalOptions="Center" 
+                                        FontSize="13"
+                                        TextColor="#000"/>
+                                    
+                                    <Entry Grid.Row="0" Grid.Column="1" 
+                                           x:Name="txtPesoTotal"
+                                           IsReadOnly="True"
+                                           BackgroundColor="#F0F0F0"
+                                           TextColor="Gray"
+                                           FontSize="13"
+                                           HeightRequest="35"/>
+
+                                    <!-- Peso por Porción -->
+                                    <Label 
+                                        Grid.Row="1" 
+                                        Grid.Column="0" 
+                                        Text="Peso/Porción (kg):" 
+                                        VerticalOptions="Center" 
+                                        FontSize="13"
+                                        TextColor="#000"
+                                       />
+                                    
+                                    <Entry Grid.Row="1" Grid.Column="1" 
+                                           x:Name="txtPesoPorcion"
+                                           IsReadOnly="True"
+                                           BackgroundColor="#F0F0F0"
+                                           TextColor="Gray"
+                                           FontSize="13"
+                                           HeightRequest="35"/>
+
+                                    <!-- Costo Receta -->
+                                    <Label 
+                                        Grid.Row="2" 
+                                        Grid.Column="0" 
+                                        Text="Costo Receta ($):" 
+                                        VerticalOptions="Center" 
+                                        FontSize="13"
+                                        TextColor="#000"/>
+                                    
+                                    <Entry Grid.Row="2" Grid.Column="1" 
+                                           x:Name="txtCostoReceta"
+                                           IsReadOnly="True"
+                                           BackgroundColor="#F0F0F0"
+                                           TextColor="Gray"
+                                           FontSize="13"
+                                           HeightRequest="35"
+                                           TextChanged="OnCampoNumericoChanged"/>
+                                </Grid>
+
+                                <Label Text="*Estos valores se calculan automáticamente"
+                                       FontSize="11"
+                                       TextColor="Gray"
+                                       FontAttributes="Italic"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
                         </Frame>
 
                         <!-- INGREDIENTES -->
                         <Frame BackgroundColor="White"
-       BorderColor="#FF6600"
-       CornerRadius="12"
-       Padding="12"
-       HorizontalOptions="FillAndExpand">
+                           BorderColor="#FF6600"
+                           CornerRadius="12"
+                           Padding="12"
+                           HorizontalOptions="FillAndExpand">
 
                             <VerticalStackLayout Spacing="12">
 
                                 <!-- Título + botón -->
                                 <HorizontalStackLayout Spacing="10"
-                               HorizontalOptions="FillAndExpand">
+                                    HorizontalOptions="FillAndExpand">
 
                                     <Label Text="🥕 Ingredientes"
-                   FontAttributes="Bold"
-                   FontSize="18"
-                   TextColor="#FF6600"
-                   VerticalOptions="Center" />
+                                       FontAttributes="Bold"
+                                       FontSize="18"
+                                       TextColor="#FF6600"
+                                       VerticalOptions="Center" />
 
                                     <Button Text="➕ Agregar"
-                    Clicked="BtnAgregarIngrediente_Clicked"
-                    BackgroundColor="#FF884D"
-                    TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="35"
-                    FontSize="14"
-                    HorizontalOptions="EndAndExpand"/>
+                                        Clicked="BtnAgregarIngrediente_Clicked"
+                                        BackgroundColor="#FF884D"
+                                        TextColor="White"
+                                        CornerRadius="10"
+                                        HeightRequest="35"
+                                        FontSize="14"
+                                        HorizontalOptions="EndAndExpand"/>
                                 </HorizontalStackLayout>
 
+                                <!-- CABECERA -->
+                                <Grid ColumnDefinitions="2*,1*,1*,45"
+                                      ColumnSpacing="6"
+                                      Padding="8,0"
+                                      HorizontalOptions="FillAndExpand">
+
+                                    <Label Grid.Column="0"
+                                           Text="Ingrediente"
+                                           FontAttributes="Bold"
+                                           FontSize="14"
+                                           TextColor="#FF6600"
+                                           VerticalOptions="Center"/>
+
+                                    <Label Grid.Column="1"
+                                           Text="Cantidad"
+                                           FontAttributes="Bold"
+                                           FontSize="14"
+                                           TextColor="#FF6600"
+                                           VerticalOptions="Center"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Label Grid.Column="2"
+                                           Text="Costo Unit."
+                                           FontAttributes="Bold"
+                                           FontSize="14"
+                                           TextColor="#FF6600"
+                                           VerticalOptions="Center"
+                                           HorizontalTextAlignment="Center"/>
+
+                                    <Label Grid.Column="3"
+                                           Text=""
+                                           VerticalOptions="Center"/>
+                                </Grid>
 
                                 <!-- LISTA DE INGREDIENTES -->
-                                <CollectionView x:Name="cvIngredientes">
+                                <CollectionView x:Name="cvIngredientes"
+                                    ItemsSource="{Binding IngredientesReceta}"
+                                    EmptyView="No hay ingredientes agregados">
+
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
 
                                             <!-- Contenedor -->
                                             <Frame BorderColor="#FF6600"
-                           CornerRadius="10"
-                           BackgroundColor="white"
-                           Padding="8"
-                           Margin="0,5"
-                           HasShadow="False"
-                           HorizontalOptions="FillAndExpand">
+                                                   CornerRadius="10"
+                                                   BackgroundColor="white"
+                                                   Padding="8"
+                                                   Margin="0,5"
+                                                   HasShadow="False"
+                                                   HorizontalOptions="FillAndExpand">
 
                                                 <!-- GRID RESPONSIVE -->
-                                                <Grid ColumnDefinitions="2*,1*,1.5*,1*,45"
-                              ColumnSpacing="6"
-                              HorizontalOptions="FillAndExpand"
-                              VerticalOptions="Center">
+                                                <Grid ColumnDefinitions="2*,1*,1*,45"
+                                                        ColumnSpacing="6"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        VerticalOptions="Center">
 
-                                                    <!-- Nombre -->
-                                                    <Entry Grid.Column="0"
-                                   Placeholder="Nombre"
-                                   Text="{Binding nombre}"
-                                   HeightRequest="30"
-                                   TextColor="Black"
-                                   BackgroundColor="White"
-                                   FontSize="13"
-                                   HorizontalOptions="FillAndExpand"/>
+                                                    <!-- Selector de Ingrediente -->
+                                                    <Picker Grid.Column="0"
+                                                            ItemsSource="{Binding Source={x:Reference PageRoot}, Path=ListaIngredientes}"
+                                                            ItemDisplayBinding="{Binding nombre}"
+                                                            SelectedItem="{Binding IngredienteSeleccionado}"
+                                                            HeightRequest="30"
+                                                            BackgroundColor="White"
+                                                            FontSize="13"
+                                                            TextColor="Black"
+                                                            HorizontalOptions="FillAndExpand"
+                                                            SelectedIndexChanged="OnIngredienteSeleccionado"/>
 
                                                     <!-- Cantidad -->
                                                     <Entry Grid.Column="1"
-                                   Placeholder="Cant"
-                                   Keyboard="Numeric"
-                                   Text="{Binding cantidad}"
-                                   HeightRequest="30"
-                                   TextColor="Black"
-                                   BackgroundColor="White"
-                                   FontSize="13"
-                                   HorizontalOptions="FillAndExpand"/>
+                                                            Placeholder="0"
+                                                            Keyboard="Numeric"
+                                                            Text="{Binding Cantidad}"
+                                                            HeightRequest="30"
+                                                            TextColor="Black"
+                                                            BackgroundColor="White"
+                                                            FontSize="13"
+                                                            HorizontalTextAlignment="Center"
+                                                            HorizontalOptions="FillAndExpand"
+                                                           TextChanged="OnCampoNumericoChanged"/>
 
-                                                    <!-- Unidad -->
-                                                    <Picker Grid.Column="2"
-                                    ItemsSource="{Binding Source={x:Reference PageRoot}, Path=Unidades}"
-                                    SelectedItem="{Binding unidad}"
-                                    HeightRequest="30"
-                                    BackgroundColor="White"
-                                    FontSize="13"
-                                    TextColor="Black"
-                                    HorizontalOptions="FillAndExpand"/>
-
-                                                    <!-- Precio -->
-                                                    <Entry Grid.Column="3"
-                                   Placeholder="$"
-                                   Keyboard="Numeric"
-                                   Text="{Binding precio}"
-                                   HeightRequest="30"
-                                   TextColor="Black"
-                                   BackgroundColor="White"
-                                   FontSize="13"
-                                   HorizontalOptions="FillAndExpand"/>
+                                                    <!-- Costo Unitario (solo lectura, se llena automáticamente) -->
+                                                    <Entry Grid.Column="2"
+                                                            Placeholder="0.00"
+                                                            Text="{Binding CostoUnitario, StringFormat='{0:F2}'}"
+                                                            IsReadOnly="True"
+                                                            HeightRequest="30"
+                                                            TextColor="Gray"
+                                                            BackgroundColor="#F0F0F0"
+                                                            FontSize="13"
+                                                            HorizontalTextAlignment="Center"
+                                                            HorizontalOptions="FillAndExpand"/>
 
                                                     <!-- Eliminar -->
-                                                    <Button Grid.Column="4"
-                                    Text="❌"
-                                    CommandParameter="{Binding .}"
-                                    Clicked="BtnEliminarIngrediente_Clicked"
-                                    BackgroundColor="White"
-                                    TextColor="#FF6600"
-                                    CornerRadius="8"
-                                    HeightRequest="30"
-                                    FontSize="14"/>
+                                                    <Button Grid.Column="3"
+                                                            Text="❌"
+                                                            CommandParameter="{Binding .}"
+                                                            Clicked="BtnEliminarIngrediente_Clicked"
+                                                            BackgroundColor="White"
+                                                            TextColor="#FF6600"
+                                                            CornerRadius="8"
+                                                            HeightRequest="30"
+                                                            FontSize="14"/>
                                                 </Grid>
 
                                             </Frame>
@@ -286,7 +421,7 @@
                             <VerticalStackLayout Spacing="10">
                                 <HorizontalStackLayout Spacing="5">
                                     <Label Text="📷" FontSize="20"/>
-                                    <Label Text="" FontAttributes="Bold" FontSize="18" TextColor="#FF6600"/>
+                                    <Label Text="Foto" FontAttributes="Bold" FontSize="18" TextColor="#FF6600"/>
                                 </HorizontalStackLayout>
 
                                 <Image x:Name="imgFoto"
@@ -308,6 +443,7 @@
                         <HorizontalStackLayout Spacing="12"
                                                HorizontalOptions="Center"
                                                Margin="0,10">
+
                             <Button Text="Guardar Receta"
                                     Clicked="BtnGuardarReceta_Clicked"
                                     BackgroundColor="#FF6600"

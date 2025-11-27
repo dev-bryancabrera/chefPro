@@ -7,7 +7,7 @@ namespace chefPro.Views;
 
 public partial class vListaIngredientes : ContentPage
 {
-    private const string URL = "http://192.168.0.104/wsChefPro/ingredientes";
+    private const string URL = "http://192.168.0.106/wsChefPro/ingredientes";
     private readonly HttpClient client = new HttpClient();
     private ObservableCollection<Ingrediente> _ingredientes;
     private bool _noHayIngredientes;
@@ -53,7 +53,7 @@ public partial class vListaIngredientes : ContentPage
     {
         try
         {
-            var content = await client.GetStringAsync($"{URL}?id_usuario={_idUsuario}");
+            var content = await client.GetStringAsync($"{URL}/ingredientesUsuario?id_usuario={_idUsuario}");
             List<Ingrediente> listaIngredientes = JsonConvert.DeserializeObject<List<Ingrediente>>(content);
 
             if (listaIngredientes != null)
@@ -97,7 +97,7 @@ public partial class vListaIngredientes : ContentPage
                 try
                 {
                     WebClient cliente = new WebClient();
-                    string urlDelete = $"http://192.168.0.104/wsChefPro/ingredientes/" +
+                    string urlDelete = $"http://192.168.0.106/wsChefPro/ingredientes/" +
                          $"?id_ingrediente={ingrediente.id_ingrediente}";
 
                     string respuesta = cliente.UploadString(urlDelete, "DELETE", "");

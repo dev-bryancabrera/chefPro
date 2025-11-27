@@ -53,10 +53,10 @@ public partial class BuscarReceta : ContentPage
         var frame = sender as Frame;
         var receta = frame.BindingContext as Receta;
 
-        if (receta != null)
+        /*if (receta != null)
         {
             await Navigation.PushAsync(new RecetaDetalle(receta));
-        }
+        }*/
     }
     private async void BtnRegresar_Clicked(object sender, EventArgs e)
     {

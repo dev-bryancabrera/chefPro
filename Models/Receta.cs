@@ -15,7 +15,7 @@ namespace chefPro.Models
 
         public string titulo { get; set; }
         public string descripcion { get; set; }
-        public string instrucciones { get; set; }
+        public string preparacion { get; set; }
 
         public double tiempo_preparacion { get; set; }
         public double peso_total { get; set; }
@@ -31,9 +31,14 @@ namespace chefPro.Models
         public string fecha_creacion { get; set; }
         public int id_usuario { get; set; }
 
-        //ingredientes de la receta
-        [Ignore]
-        public List<Ingrediente> Ingredientes { get; set; } = new List<Ingrediente>();
+        public List<Ingrediente> Ingredientes { get; set; }
+
+        // Propiedad calculada para mostrar/ocultar botones
+        public bool UsuarioActual { get; set; }
+
+        public string FotoUrlCompleta => string.IsNullOrEmpty(foto_url)
+            ? "fondo_cocina.jpg"
+            : $"http://192.168.0.106/wsChefPro/uploads/recetas/{foto_url}";
 
         // CON ESTO SE MUESTRA LA TARJETA DE INGREDIENTES EN TEXTO
         [Ignore]

@@ -16,7 +16,7 @@ public partial class vIngredientes : ContentPage
         _idUsuario = id_usuario;
         _modoEdicion = false;
         LblTitulo.Text = "Agregar Ingrediente";
-        ConfigurarEventos();
+        EventoCalcularTotal();
 
         NavigationPage.SetHasNavigationBar(this, false);
     }
@@ -29,11 +29,11 @@ public partial class vIngredientes : ContentPage
         _ingredienteActual = ingrediente;
         LblTitulo.Text = "Editar Ingrediente";
         CargarDatos();
-        ConfigurarEventos();
-        CalcularPreviewInicial();
+        EventoCalcularTotal();
+        CalcularCostoTotalActualizar();
     }
 
-    private void CalcularPreviewInicial()
+    private void CalcularCostoTotalActualizar()
     {
         if (decimal.TryParse(EntryPeso.Text, out decimal peso) &&
             decimal.TryParse(EntryCosto.Text, out decimal costo))
@@ -47,10 +47,10 @@ public partial class vIngredientes : ContentPage
         }
     }
 
-    private void ConfigurarEventos()
+    private void EventoCalcularTotal()
     {
-        EntryPeso.TextChanged += CalcularPreview;
-        EntryCosto.TextChanged += CalcularPreview;
+        EntryPeso.TextChanged += EventoPrecioCosto;
+        EntryCosto.TextChanged += EventoPrecioCosto;
     }
 
     private void CargarDatos()
@@ -93,7 +93,7 @@ public partial class vIngredientes : ContentPage
         }
     }
 
-    private void CalcularPreview(object sender, TextChangedEventArgs e)
+    private void EventoPrecioCosto(object sender, TextChangedEventArgs e)
     {
         if (decimal.TryParse(EntryPeso.Text, out decimal peso) &&
             decimal.TryParse(EntryCosto.Text, out decimal costo))
@@ -147,7 +147,7 @@ public partial class vIngredientes : ContentPage
                 parametros.Add("costo_unidad", EntryCosto.Text.Trim());
                 parametros.Add("id_usuario", _idUsuario.ToString());
 
-                url = "http://192.168.0.104/wsChefPro/ingredientes/registrar";
+                url = "http://192.168.0.106/wsChefPro/ingredientes/registrar";
                 respuestaBytes = cliente.UploadValues(url, "POST", parametros);
                 mensaje = "agregado";
 
@@ -157,7 +157,7 @@ public partial class vIngredientes : ContentPage
             else
             {
                 // Editar ingrediente existente — PUT
-                url = $"http://192.168.0.104/wsChefPro/ingredientes/{_ingredienteActual.id_ingrediente}";
+                url = $"http://192.168.0.106/wsChefPro/ingredientes/{_ingredienteActual.id_ingrediente}";
 
                 // Crear el objeto JSON para enviar en el body
                 var datos = new

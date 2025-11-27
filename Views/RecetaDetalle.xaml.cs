@@ -1,32 +1,58 @@
 using chefPro.Models;
-
+using Newtonsoft.Json;
 using chefPro.Services;
 
 namespace chefPro.Views;
 
 public partial class RecetaDetalle : ContentPage
 {
-    private readonly RecetaService _recetaService;
-    private readonly Receta _receta;
+    private Receta _receta;
+    private int _idUsuario;
+    private string _nombreUsuario;
+    HttpClient client = new HttpClient();
+    private const string URL = "http://192.168.0.106/wsChefPro/recetaIngrediente"; // Cambia por tu URL
 
-    public RecetaDetalle(Receta receta)
+
+    public RecetaDetalle(Receta receta, int id_usuario, string usuario)
     {
         InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
 
-        _recetaService = new RecetaService();
         _receta = receta;
+        _idUsuario = id_usuario;
+        _nombreUsuario = usuario;
+
+        // Establecer el binding context con la receta
+        BindingContext = _receta;
+
+        // Cargar los ingredientes desde la API
+        CargarIngredientes();
     }
 
-    protected override async void OnAppearing()
+    private async void CargarIngredientes()
     {
-        base.OnAppearing();
+        try
+        {
+            var content = await client.GetStringAsync($"{URL}/ingredientesReceta?id={_receta.id_receta}");
+            var ingredientes = JsonConvert.DeserializeObject<List<Ingrediente>>(content);
 
-        // Cargar ingredientes desde la base de datos usando el id correcto
-        _receta.Ingredientes = await _recetaService.ObtenerIngredientesPorRecetaAsync(_receta.id_receta);
+            if (ingredientes != null && ingredientes.Count > 0)
+            {
+                _receta.Ingredientes = ingredientes;
 
-        // Asignar BindingContext después de cargar los ingredientes
-        BindingContext = _receta;
+                // Refrescar el binding para que se muestren los ingredientes
+                BindingContext = null;
+                BindingContext = _receta;
+            }
+            else
+            {
+                await DisplayAlert("Info", "Esta receta no tiene ingredientes registrados", "OK");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudieron cargar los ingredientes: {ex.Message}", "OK");
+        }
     }
 
     private async void BtnRegresar_Clicked(object sender, EventArgs e)
