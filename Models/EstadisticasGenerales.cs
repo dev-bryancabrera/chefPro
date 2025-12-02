@@ -8,11 +8,9 @@ namespace chefPro.Models
 {
     public class EstadisticasGenerales
     {
-        public bool success { get; set; }
         public int total_vistas { get; set; }
-        public List<RecetasEst> recetas_top { get; set; }
-        public List<IngredientesEst> ingredientes_top { get; set; }
-        public List<TecnicasEst> tecnicas_top { get; set; }
-        public decimal promedio_ingredientes { get; set; }
+        public double promedio_ingredientes { get; set; }
+        public int total_recetas { get; set; }
+        public double vistas_por_receta { get; set; }
     }
 }

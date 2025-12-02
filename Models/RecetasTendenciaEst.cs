@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace chefPro.Models
 {
-    public class TecnicasEst
+    public class RecetasTendenciaEst
     {
+        public int id_receta { get; set; }
         public string nombre { get; set; }
-        public int total_usos { get; set; }
-        public int recetas_usadas { get; set; }
+        public string imagen { get; set; }
+        public int vistas_semana { get; set; }
     }
 }

@@ -8,68 +8,183 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="20">
 
-            <!-- Header -->
-            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
-                <VerticalStackLayout Spacing="10">
+            <!-- Header con Estadísticas Principales -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="20" HasShadow="True">
+                <VerticalStackLayout Spacing="15">
                     <Label Text="📊 Panel de Estadísticas" 
-                           FontSize="24" 
+                           FontSize="26" 
                            FontAttributes="Bold"
                            TextColor="White"
                            HorizontalOptions="Center"/>
-                    <Label x:Name="lblTotalVistas" 
-                           Text="Total de vistas: 0" 
-                           FontSize="16"
-                           TextColor="#FF6600"
-                           HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-            </Frame>
 
-            <!-- Promedio de Ingredientes -->
-            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="📝 Promedio de Ingredientes por Receta" 
-                           FontSize="18" 
-                           FontAttributes="Bold"
-                           TextColor="White"/>
-                    <Label x:Name="lblPromedioIngredientes" 
-                           Text="0 ingredientes" 
-                           FontSize="32"
-                           TextColor="#FF6600"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"/>
+                    <!-- Grid de Estadísticas Principales -->
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10" Margin="0,10,0,0">
+
+                        <!-- Total Vistas -->
+                        <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="👁️" FontSize="28" HorizontalOptions="Center"/>
+                                <Label x:Name="lblTotalVistas" 
+                                       Text="0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF6600"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Total Vistas" 
+                                       FontSize="12"
+                                       TextColor="#CCCCCC"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Total Recetas -->
+                        <Frame Grid.Column="1" Grid.Row="0" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="📖" FontSize="28" HorizontalOptions="Center"/>
+                                <Label x:Name="lblTotalRecetas" 
+                                       Text="0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#4CAF50"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Recetas" 
+                                       FontSize="12"
+                                       TextColor="#CCCCCC"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Promedio Ingredientes -->
+                        <Frame Grid.Column="0" Grid.Row="1" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="🥕" FontSize="28" HorizontalOptions="Center"/>
+                                <Label x:Name="lblPromedioIngredientes" 
+                                       Text="0.0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#2196F3"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Prom. Ingred." 
+                                       FontSize="12"
+                                       TextColor="#CCCCCC"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Vistas por Receta -->
+                        <Frame Grid.Column="1" Grid.Row="1" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="📈" FontSize="28" HorizontalOptions="Center"/>
+                                <Label x:Name="lblVistasPorReceta" 
+                                       Text="0.0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#9C27B0"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Vistas/Receta" 
+                                       FontSize="12"
+                                       TextColor="#CCCCCC"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                    </Grid>
                 </VerticalStackLayout>
             </Frame>
 
             <!-- Recetas Más Vistas -->
-            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="🏆 Recetas Más Vistas" 
-                           FontSize="18" 
-                           FontAttributes="Bold"
-                           TextColor="White"/>
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="🏆" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Top 10 Recetas Más Vistas" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
                     <CollectionView x:Name="cvRecetasTop" 
+                                    HeightRequest="350">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#3d3d3d" 
+                                       Margin="0,5" 
+                                       Padding="12"
+                                       CornerRadius="10">
+                                    <Grid ColumnDefinitions="50,*,Auto" 
+                                          ColumnSpacing="12">
+                                        <Frame Grid.Column="0"
+                                               Padding="0"
+                                               CornerRadius="8"
+                                               IsClippedToBounds="True"
+                                               HeightRequest="50"
+                                               WidthRequest="50">
+                                            <Image Source="{Binding imagen}"
+                                                   Aspect="AspectFill"/>
+                                        </Frame>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                            <Label Text="{Binding nombre}"
+                                                   TextColor="White"
+                                                   FontSize="14"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding total_vistas, StringFormat='👁️ {0} vistas'}"
+                                                   TextColor="#AAAAAA"
+                                                   FontSize="12"/>
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="2"
+                                               Text="{Binding total_vistas}"
+                                               TextColor="#FF6600"
+                                               VerticalOptions="Center"
+                                               FontSize="18"
+                                               FontAttributes="Bold"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Ingredientes Más Usados -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="🥘" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Ingredientes Más Utilizados" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <CollectionView x:Name="cvIngredientesTop" 
                                     HeightRequest="300">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame BackgroundColor="#3d3d3d" 
                                        Margin="0,5" 
-                                       Padding="10"
-                                       CornerRadius="8">
-                                    <Grid ColumnDefinitions="60,*,Auto" 
-                                          ColumnSpacing="10">
-                                        <Image Grid.Column="0"
-                                               Source="{Binding imagen}"
-                                               Aspect="AspectFill"
-                                               HeightRequest="50"
-                                               WidthRequest="50"/>
+                                       Padding="12"
+                                       CornerRadius="10">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                        <Frame Grid.Column="0" 
+                                               BackgroundColor="#4CAF50"
+                                               CornerRadius="15"
+                                               Padding="8,5"
+                                               VerticalOptions="Center">
+                                            <Label Text="{Binding total_usos}"
+                                                   TextColor="White"
+                                                   FontSize="12"
+                                                   FontAttributes="Bold"/>
+                                        </Frame>
                                         <Label Grid.Column="1"
                                                Text="{Binding nombre}"
                                                TextColor="White"
                                                VerticalOptions="Center"
-                                               FontSize="14"/>
+                                               FontSize="14"
+                                               FontAttributes="Bold"/>
                                         <Label Grid.Column="2"
-                                               Text="{Binding total_vistas, StringFormat='{0} vistas'}"
-                                               TextColor="#FF6600"
+                                               Text="{Binding total_usos, StringFormat='{0} usos'}"
+                                               TextColor="#4CAF50"
                                                VerticalOptions="Center"
                                                FontSize="12"/>
                                     </Grid>
@@ -80,34 +195,240 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Ingredientes Más Usados -->
-            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+            <!-- Tiempo Promedio de Preparación -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="🥘 Ingredientes Más Usados" 
-                           FontSize="18" 
-                           FontAttributes="Bold"
-                           TextColor="White"/>
-                    <CollectionView x:Name="cvIngredientesTop" 
-                                    HeightRequest="250">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="⏱️" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Tiempos de Preparación" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="10">
+                        <Frame Grid.Column="0" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="⚡ Rápidas" 
+                                       FontSize="14"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblRecetasRapidas" 
+                                       Text="0" 
+                                       FontSize="28"
+                                       FontAttributes="Bold"
+                                       TextColor="#4CAF50"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="≤ 30 min" 
+                                       FontSize="11"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame Grid.Column="1" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="🕐 Promedio" 
+                                       FontSize="14"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblTiempoPromedio" 
+                                       Text="0" 
+                                       FontSize="28"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF9800"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="minutos" 
+                                       FontSize="11"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Actividad Reciente -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="📅" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Actividad Reciente" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="10">
+                        <Frame Grid.Column="0" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="📖 Esta Semana" 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblRecetasSemana" 
+                                       Text="0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#9C27B0"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="recetas nuevas" 
+                                       FontSize="11"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame Grid.Column="1" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="👁️ Esta Semana" 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblVistasSemana" 
+                                       Text="0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF6600"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="recetas vistas" 
+                                       FontSize="11"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Estadísticas Financieras -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="💰" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Análisis Financiero" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                        <Frame Grid.Column="0" Grid.Row="0" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="💵 Costo Prom." 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblCostoPromedio" 
+                                       Text="$0.00" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF5252"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame Grid.Column="1" Grid.Row="0" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="💸 Venta Prom." 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblVentaPromedio" 
+                                       Text="$0.00" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="#4CAF50"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame Grid.Column="0" Grid.Row="1" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="📊 Ganancia %" 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblGananciaPromedio" 
+                                       Text="0%" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="#FFC107"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame Grid.Column="1" Grid.Row="1" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="🎯 Costeadas" 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblRecetasCosteadas" 
+                                       Text="0" 
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="#00BCD4"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Recetas Más Rentables -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="💎" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Recetas Más Rentables" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <CollectionView x:Name="cvRecetasRentables" 
+                                    HeightRequest="300">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame BackgroundColor="#3d3d3d" 
                                        Margin="0,5" 
-                                       Padding="10"
-                                       CornerRadius="8">
-                                    <Grid ColumnDefinitions="*,Auto" 
-                                          ColumnSpacing="10">
-                                        <Label Grid.Column="0"
+                                       Padding="12"
+                                       CornerRadius="10">
+                                    <Grid ColumnDefinitions="50,*,Auto" ColumnSpacing="12" RowDefinitions="Auto,Auto">
+                                        <Frame Grid.Column="0" Grid.RowSpan="2"
+                                               Padding="0"
+                                               CornerRadius="8"
+                                               IsClippedToBounds="True"
+                                               HeightRequest="50"
+                                               WidthRequest="50">
+                                            <Image Source="{Binding imagen}"
+                                                   Aspect="AspectFill"/>
+                                        </Frame>
+                                        <Label Grid.Column="1" Grid.Row="0"
                                                Text="{Binding nombre}"
                                                TextColor="White"
-                                               VerticalOptions="Center"
-                                               FontSize="14"/>
-                                        <Label Grid.Column="1"
-                                               Text="{Binding total_usos, StringFormat='{0} usos'}"
-                                               TextColor="#4CAF50"
-                                               VerticalOptions="Center"
-                                               FontSize="12"
-                                               FontAttributes="Bold"/>
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation"/>
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                               Text="{Binding costo_receta, StringFormat='Costo: ${0:F2}'}"
+                                               TextColor="#AAAAAA"
+                                               FontSize="11"/>
+                                        <VerticalStackLayout Grid.Column="2" Grid.RowSpan="2" VerticalOptions="Center" Spacing="2">
+                                            <Label Text="{Binding porcentaje_ganancia, StringFormat='{0:F1}%'}"
+                                                   TextColor="#4CAF50"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"
+                                                   HorizontalOptions="Center"/>
+                                            <Label Text="ganancia"
+                                                   TextColor="#AAAAAA"
+                                                   FontSize="9"
+                                                   HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
                                     </Grid>
                                 </Frame>
                             </DataTemplate>
@@ -116,39 +437,157 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Técnicas Más Usadas -->
-            <Frame BackgroundColor="#2d2d2d" CornerRadius="10" Padding="15">
+            <!-- Recetas en Tendencia -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="👨‍🍳 Técnicas Más Usadas" 
-                           FontSize="18" 
-                           FontAttributes="Bold"
-                           TextColor="White"/>
-                    <CollectionView x:Name="cvTecnicasTop" 
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="🔥" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Tendencia Esta Semana" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <CollectionView x:Name="cvRecetasTendencia" 
                                     HeightRequest="250">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame BackgroundColor="#3d3d3d" 
                                        Margin="0,5" 
-                                       Padding="10"
-                                       CornerRadius="8">
-                                    <Grid ColumnDefinitions="*,Auto" 
-                                          ColumnSpacing="10">
-                                        <Label Grid.Column="0"
+                                       Padding="12"
+                                       CornerRadius="10">
+                                    <Grid ColumnDefinitions="50,*,Auto" ColumnSpacing="12">
+                                        <Frame Grid.Column="0"
+                                               Padding="0"
+                                               CornerRadius="8"
+                                               IsClippedToBounds="True"
+                                               HeightRequest="50"
+                                               WidthRequest="50">
+                                            <Image Source="{Binding imagen}"
+                                                   Aspect="AspectFill"/>
+                                        </Frame>
+                                        <Label Grid.Column="1"
                                                Text="{Binding nombre}"
                                                TextColor="White"
                                                VerticalOptions="Center"
-                                               FontSize="14"/>
-                                        <Label Grid.Column="1"
-                                               Text="{Binding total_usos, StringFormat='{0} usos'}"
-                                               TextColor="#2196F3"
-                                               VerticalOptions="Center"
-                                               FontSize="12"
-                                               FontAttributes="Bold"/>
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation"/>
+                                        <HorizontalStackLayout Grid.Column="2" Spacing="5" VerticalOptions="Center">
+                                            <Label Text="🔥"
+                                                   FontSize="16"/>
+                                            <Label Text="{Binding vistas_semana}"
+                                                   TextColor="#FF6600"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"/>
+                                        </HorizontalStackLayout>
                                     </Grid>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Ingredientes Más Costosos -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="💲" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Ingredientes Más Costosos" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <CollectionView x:Name="cvIngredientesCostosos" 
+                                    HeightRequest="250">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BackgroundColor="#3d3d3d" 
+                                       Margin="0,5" 
+                                       Padding="12"
+                                       CornerRadius="10">
+                                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" RowDefinitions="Auto,Auto">
+                                        <Label Grid.Column="0" Grid.Row="0"
+                                               Text="{Binding nombre}"
+                                               TextColor="White"
+                                               FontSize="14"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Column="0" Grid.Row="1"
+                                               Text="{Binding veces_usado, StringFormat='Usado {0} veces'}"
+                                               TextColor="#AAAAAA"
+                                               FontSize="11"/>
+                                        <Label Grid.Column="1" Grid.RowSpan="2"
+                                               Text="{Binding costo_total_acumulado, StringFormat='${0:F2}'}"
+                                               TextColor="#FF5252"
+                                               VerticalOptions="Center"
+                                               FontSize="16"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Column="2" Grid.RowSpan="2"
+                                               Text="{Binding costo_unidad, StringFormat='${0:F2}/{1}', ConverterParameter={Binding unidad_medida}}"
+                                               TextColor="#AAAAAA"
+                                               VerticalOptions="Center"
+                                               FontSize="11"/>
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Resumen de Porciones -->
+            <Frame BackgroundColor="#2d2d2d" CornerRadius="15" Padding="15">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="🍽️" FontSize="20" VerticalOptions="Center"/>
+                        <Label Text="Análisis de Porciones" 
+                               FontSize="18" 
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto" ColumnSpacing="10">
+                        <Frame Grid.Column="0" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="📊 Promedio" 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblPromedioPorciones" 
+                                       Text="0.0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#9C27B0"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="porciones/receta" 
+                                       FontSize="10"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame Grid.Column="1" BackgroundColor="#3d3d3d" CornerRadius="10" Padding="15">
+                            <VerticalStackLayout Spacing="5">
+                                <Label Text="🎯 Total" 
+                                       FontSize="12"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="lblTotalPorciones" 
+                                       Text="0" 
+                                       FontSize="24"
+                                       FontAttributes="Bold"
+                                       TextColor="#00BCD4"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="porciones totales" 
+                                       FontSize="10"
+                                       TextColor="#AAAAAA"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
                 </VerticalStackLayout>
             </Frame>
 
@@ -158,8 +597,11 @@
                     Clicked="btnActualizar_Clicked"
                     BackgroundColor="#FF6600"
                     TextColor="White"
-                    CornerRadius="10"
-                    HeightRequest="50"/>
+                    CornerRadius="15"
+                    HeightRequest="55"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Margin="0,10,0,20"/>
 
         </VerticalStackLayout>
     </ScrollView>

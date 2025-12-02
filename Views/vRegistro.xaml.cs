@@ -51,7 +51,7 @@ public partial class vRegistro : ContentPage
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.104/wsChefPro/usuarios/registrar",
+                "http://192.168.0.102/wsChefPro/usuarios/registrar",
                 "POST",
                 parametros
             );

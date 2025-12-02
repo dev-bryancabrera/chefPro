@@ -16,6 +16,7 @@
             <VerticalStackLayout Padding="15" Spacing="18">
 
                 <Label Text="Agregar Receta"
+                       x:Name="lblTitulo"
                        FontSize="28"
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
@@ -445,6 +446,7 @@
                                                Margin="0,10">
 
                             <Button Text="Guardar Receta"
+                                    x:Name="btnGuardarReceta"
                                     Clicked="BtnGuardarReceta_Clicked"
                                     BackgroundColor="#FF6600"
                                     TextColor="White"

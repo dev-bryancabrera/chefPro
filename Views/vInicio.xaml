@@ -205,7 +205,7 @@
 
                                         <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" Margin="0,5"/>
 
-                                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="5">
+                                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="5">
                                             <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
                                                 <Label Text="Precio de Venta" FontSize="11" TextColor="#999999"/>
                                                 <Label Text="{Binding valor_venta, StringFormat='${0:F2}'}"
@@ -232,6 +232,15 @@
                                                 <Label Text="Por porción:" FontSize="12" TextColor="#999999" VerticalOptions="Center"/>
                                                 <Label Text="{Binding precio_unidad, StringFormat='${0:F2}'}"
                                                    FontSize="13" FontAttributes="Bold" TextColor="#FF6600" VerticalOptions="Center"/>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout Grid.Row="2" Spacing="6">
+                                                <Label Text="👤" FontSize="14" VerticalOptions="Center"/>
+                                                <Label Text="{Binding nombre_usuario}"
+                                                       FontSize="14"
+                                                       FontAttributes="Bold"
+                                                       TextColor="#333333"
+                                                       VerticalOptions="Center"/>
                                             </HorizontalStackLayout>
                                         </Grid>
                                     </VerticalStackLayout>

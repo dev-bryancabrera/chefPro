@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace chefPro.Models
 {
-    public class IngredientesEst
+    public class IngredientesCostososEst
     {
         public int id_ingrediente { get; set; }
         public string nombre { get; set; }
-        public int total_usos { get; set; }
-        public double cantidad_total { get; set; }
+        public double costo_unidad { get; set; }
+        public string unidad_medida { get; set; }
+        public int veces_usado { get; set; }
+        public double costo_total_acumulado { get; set; }
     }
 }

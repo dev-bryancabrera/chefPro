@@ -14,7 +14,7 @@ public partial class vInicio : ContentPage
     /* Obtener todas las recetas para mostrar como un dashboard */
     private const string URL = "http://192.168.0.102/wsChefPro/recetas";
     private HttpClient client = new HttpClient();
-    private int _idUsuario;
+    private WebClient cliente = new WebClient();
 
     public ObservableCollection<Receta> ListaRecetas { get; set; }
 
@@ -79,8 +79,12 @@ public partial class vInicio : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        Random rnd = new Random();
-        /* NotaMotivacional.Text = notas[rnd.Next(notas.Length)];*/
+
+        // Solo cargar si hay un usuario válido
+        if (id_usuario > 0)
+        {
+            CargarRecetas();
+        }
     }
 
     private readonly string[] notas = new string[]
@@ -100,7 +104,7 @@ public partial class vInicio : ContentPage
 
     private async void CrearReceta_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AgregarReceta(id_usuario));
+        await Navigation.PushAsync(new AgregarReceta(id_usuario, nombreUsuario));
     }
 
     private async void BuscarReceta_Clicked(object sender, EventArgs e)
@@ -111,7 +115,7 @@ public partial class vInicio : ContentPage
 
     private void btnEstadisticas_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new vEstadistica());
+        Navigation.PushAsync(new vEstadistica(id_usuario));
 
     }
 
@@ -122,38 +126,81 @@ public partial class vInicio : ContentPage
 
     private async void OnRecetaSeleccionada(object sender, EventArgs e)
     {
-        // El sender es el Frame, el TapGestureRecognizer está en los EventArgs
-        var tappedEventArgs = (TappedEventArgs)e;
-        var receta = (Receta)tappedEventArgs.Parameter;
+        try
+        {
+            var tappedEventArgs = (TappedEventArgs)e;
+            var receta = (Receta)tappedEventArgs.Parameter;
 
-        // Navegar a la página de detalle
-        await Navigation.PushAsync(new RecetaDetalle(receta, id_usuario, nombreUsuario));
+            if (receta.id_usuario != id_usuario)
+            {
+                await RegistrarVistaReceta(receta.id_receta);
+            }
+
+            // Navegar a la página de detalle
+            await Navigation.PushAsync(new RecetaDetalle(receta, id_usuario, nombreUsuario));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Error al abrir receta: {ex.Message}", "OK");
+        }
+    }
+
+    private async Task RegistrarVistaReceta(int idReceta)
+    {
+        try
+        {
+            var parametros = new System.Collections.Specialized.NameValueCollection();
+            parametros.Add("id_receta", idReceta.ToString());
+            parametros.Add("id_usuario", id_usuario.ToString());
+
+            byte[] respuestaBytes = null;
+            try
+            {
+                respuestaBytes = cliente.UploadValues("http://192.168.0.102/wsChefPro/estadisticas/registrar_vista_receta", "POST", parametros);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al conectar con el servidor de recetas: {ex.Message}");
+            }
+
+            string respuestaReceta = System.Text.Encoding.UTF8.GetString(respuestaBytes);
+
+            if (string.IsNullOrWhiteSpace(respuestaReceta))
+            {
+                throw new Exception("El servidor no devolvió ninguna respuesta al crear el evento capturado");
+            }
+        }
+        catch (Exception ex)
+        {
+            // No mostramos error al usuario para no interrumpir la navegación
+            System.Diagnostics.Debug.WriteLine($"Error al registrar vista de receta: {ex.Message}");
+        }
     }
 
     private async void OnEditarReceta(object sender, EventArgs e)
     {
-        var tappedEventArgs = (TappedEventArgs)e;
-        var receta = (Receta)tappedEventArgs.Parameter;
-
-        await DisplayAlert("Editar", $"Editar receta: {receta.titulo}", "OK");
-        // await Navigation.PushAsync(new EditarReceta(receta));
+        // Con TapGestureRecognizer, el parameter viene en TappedEventArgs
+        if (e is TappedEventArgs tappedEventArgs && tappedEventArgs.Parameter is Receta receta)
+        {
+            await Navigation.PushAsync(new AgregarReceta(receta, id_usuario, nombreUsuario));
+        }
     }
 
     private async void OnEliminarReceta(object sender, EventArgs e)
     {
-        var tappedEventArgs = (TappedEventArgs)e;
-        var receta = (Receta)tappedEventArgs.Parameter;
-
-        bool confirmacion = await DisplayAlert(
-            "Confirmar eliminación",
-            $"¿Estás seguro de eliminar '{receta.titulo}'?",
-            "Sí",
-            "No"
-        );
-
-        if (confirmacion)
+        if (e is TappedEventArgs tappedEventArgs && tappedEventArgs.Parameter is Receta receta)
         {
-            await EliminarReceta(receta.id_receta);
+            bool confirmacion = await DisplayAlert(
+                "Confirmar eliminación",
+                $"¿Estás seguro de eliminar '{receta.titulo}'?\n\nEsta acción no se puede deshacer.",
+                "Sí, eliminar",
+                "Cancelar"
+            );
+
+            if (confirmacion)
+            {
+                await EliminarReceta(receta.id_receta);
+            }
         }
     }
 
@@ -161,8 +208,11 @@ public partial class vInicio : ContentPage
     {
         try
         {
+            // Mostrar indicador de carga
+            IsBusy = true;
+
             var response = await client.DeleteAsync(
-                $"https://tudominio.com/chefPro/receta.php?id={idReceta}"
+                $"http://192.168.0.102/wsChefPro/recetas/eliminar?id={idReceta}"
             );
 
             if (response.IsSuccessStatusCode)
@@ -172,13 +222,17 @@ public partial class vInicio : ContentPage
             }
             else
             {
-                await DisplayAlert("Error", "No se pudo eliminar la receta", "OK");
+                var errorContent = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Error", $"No se pudo eliminar la receta: {errorContent}", "OK");
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"Error al eliminar: {ex.Message}", "OK");
         }
+        finally
+        {
+            IsBusy = false;
+        }
     }
-
 }

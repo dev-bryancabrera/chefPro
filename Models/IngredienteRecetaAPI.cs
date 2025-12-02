@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace chefPro.Models
 {
-    public class IngredientesEst
+    public class IngredienteRecetaAPI
     {
         public int id_ingrediente { get; set; }
-        public string nombre { get; set; }
-        public int total_usos { get; set; }
-        public double cantidad_total { get; set; }
+        public double cantidad { get; set; }
+        public double costo_unitario { get; set; }
     }
 }

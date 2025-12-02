@@ -9,8 +9,7 @@ public partial class RecetaDetalle : ContentPage
     private int _idUsuario;
     private string _nombreUsuario;
     HttpClient client = new HttpClient();
-    private const string URL = "http://192.168.0.104/wsChefPro/recetaIngrediente"; // Cambia por tu URL
-
+    private const string URL = "http://192.168.0.102/wsChefPro/recetaIngrediente";
 
     public RecetaDetalle(Receta receta, int id_usuario, string usuario)
     {

@@ -30,6 +30,7 @@ namespace chefPro.Models
         public string foto_url { get; set; }
         public string fecha_creacion { get; set; }
         public int id_usuario { get; set; }
+        public string nombre_usuario { get; set; }
 
         public List<Ingrediente> Ingredientes { get; set; }
 

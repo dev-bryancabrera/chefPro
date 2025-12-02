@@ -36,7 +36,7 @@ public partial class BuscarReceta : ContentPage
         {
             using (WebClient cliente = new WebClient())
             {
-                string url = $"http://192.168.0.104/wsChefPro/receta?titulo={Uri.EscapeDataString(texto)}";
+                string url = $"http://192.168.0.102/wsChefPro/receta?titulo={Uri.EscapeDataString(texto)}";
                 string respuesta = await cliente.DownloadStringTaskAsync(url);
 
                 var resultados = JsonSerializer.Deserialize<List<Receta>>(respuesta);

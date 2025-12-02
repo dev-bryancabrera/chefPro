@@ -267,9 +267,9 @@
                                                    VerticalOptions="Center">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="{Binding cantidad}" FontAttributes="Bold"/>
+                                                        <Span Text="{Binding cantidad}" TextColor="#666666" FontAttributes="Bold"/>
                                                         <Span Text=" "/>
-                                                        <Span Text="{Binding unidad_medida}"/>
+                                                        <Span Text="{Binding unidad_medida}" TextColor="#666666"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -326,11 +326,11 @@
                                    FontSize="12"
                                    TextColor="#666666"
                                    HorizontalOptions="Center"/>
-                            <Label Text="{Binding id_usuario}" 
-                                   FontSize="16"
-                                   FontAttributes="Bold"
-                                   TextColor="Black"
-                                   HorizontalOptions="Center"/>
+                            <Label Text="{Binding nombre_usuario}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center"/>
                         </VerticalStackLayout>
 
                         <BoxView WidthRequest="1" 

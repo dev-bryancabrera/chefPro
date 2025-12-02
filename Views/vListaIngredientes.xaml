@@ -172,17 +172,37 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- BOTÓN AGREGAR INFERIOR -->
-        <Button Grid.Row="2" 
-                Text="➕ Agregar Ingrediente"
-                x:Name="btnAgregar"
-                BackgroundColor="#4CAF50"
-                TextColor="White"
-                CornerRadius="25"
-                FontSize="20"
-                FontAttributes="Bold"
-                HeightRequest="60"
-                Clicked="btnAgregar_Clicked"/>
+        <!-- BOTONES INFERIORES -->
+        <Grid Grid.Row="2" 
+              ColumnSpacing="12"
+              Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                    Text="➕ Agregar Ingrediente"
+                    x:Name="btnAgregar"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="25"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    HeightRequest="60"
+                    Clicked="btnAgregar_Clicked"/>
+
+            <Button Grid.Column="1"
+                    Text="Regresar"
+                    x:Name="btnRegresar"
+                    Clicked="btnRegresar_Clicked"
+                    BackgroundColor="#FFB7AE"
+                    TextColor="Black"
+                    CornerRadius="25"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    HeightRequest="60"/>
+        </Grid>
 
     </Grid>
 
