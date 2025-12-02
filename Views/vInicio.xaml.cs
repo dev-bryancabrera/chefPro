@@ -105,8 +105,9 @@ public partial class vInicio : ContentPage
 
     private async void BuscarReceta_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new BuscarReceta());
+        await Navigation.PushAsync(new BuscarReceta(id_usuario));
     }
+
 
     private void btnEstadisticas_Clicked(object sender, EventArgs e)
     {
