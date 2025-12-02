@@ -9,7 +9,7 @@ namespace chefPro.Views
 {
     public partial class AgregarReceta : ContentPage
     {
-        private const string URL = "http://192.168.0.106/wsChefPro/ingredientes";
+        private const string URL = "http://192.168.0.104/wsChefPro/ingredientes";
         private HttpClient client = new HttpClient();
         private WebClient cliente = new WebClient();
         private int _idUsuario;
@@ -17,6 +17,7 @@ namespace chefPro.Views
         private string fotoUrlServidor = "";
         private FileResult fotoSeleccionada;
 
+        private bool _edicionReceta = false;
         public ObservableCollection<Ingrediente> ListaIngredientes { get; set; }
 
         // Lista de ingredientes agregados a la receta
@@ -201,7 +202,7 @@ namespace chefPro.Views
 
                     // Enviar al servidor
                     var response = await httpClient.PostAsync(
-                        "http://192.168.0.106/wsChefPro/recetas/subir_foto",
+                        "http://192.168.0.104/wsChefPro/recetas/subir_foto",
                         content
                     );
 
@@ -322,7 +323,7 @@ namespace chefPro.Views
                     parametrosReceta.Add("porcentaje_ganancia", porcentajeGanancia.ToString("F2"));
                     parametrosReceta.Add("foto_url", fotoUrlServidor ?? "");
 
-                    string urlReceta = "http://192.168.0.106/wsChefPro/recetas/registrar";
+                    string urlReceta = "http://192.168.0.104/wsChefPro/recetas/registrar";
 
                     byte[] respuestaBytes = null;
                     try
@@ -361,7 +362,7 @@ namespace chefPro.Views
                     int idRecetaCreada = Convert.ToInt32(recetaCreada["id_receta"]);
 
                     // PASO 4: Registrar los ingredientes de la receta
-                    string urlRecetaIngrediente = "http://192.168.0.106/wsChefPro/recetaIngrediente/registrar";
+                    string urlRecetaIngrediente = "http://192.168.0.104/wsChefPro/recetaIngrediente/registrar";
                     int ingredientesGuardados = 0;
 
                     foreach (var ingrediente in IngredientesReceta)

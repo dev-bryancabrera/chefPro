@@ -38,7 +38,7 @@ namespace chefPro.Models
 
         public string FotoUrlCompleta => string.IsNullOrEmpty(foto_url)
             ? "fondo_cocina.jpg"
-            : $"http://192.168.0.106/wsChefPro/uploads/recetas/{foto_url}";
+            : $"http://192.168.0.102/wsChefPro/uploads/recetas/{foto_url}";
 
         // CON ESTO SE MUESTRA LA TARJETA DE INGREDIENTES EN TEXTO
         [Ignore]

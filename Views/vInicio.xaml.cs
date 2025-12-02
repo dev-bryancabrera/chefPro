@@ -12,7 +12,7 @@ public partial class vInicio : ContentPage
     private int id_usuario;
 
     /* Obtener todas las recetas para mostrar como un dashboard */
-    private const string URL = "http://192.168.0.106/wsChefPro/recetas";
+    private const string URL = "http://192.168.0.102/wsChefPro/recetas";
     private HttpClient client = new HttpClient();
     private int _idUsuario;
 

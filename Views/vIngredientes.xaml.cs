@@ -147,7 +147,7 @@ public partial class vIngredientes : ContentPage
                 parametros.Add("costo_unidad", EntryCosto.Text.Trim());
                 parametros.Add("id_usuario", _idUsuario.ToString());
 
-                url = "http://192.168.0.106/wsChefPro/ingredientes/registrar";
+                url = "http://192.168.0.104/wsChefPro/ingredientes/registrar";
                 respuestaBytes = cliente.UploadValues(url, "POST", parametros);
                 mensaje = "agregado";
 
@@ -157,7 +157,7 @@ public partial class vIngredientes : ContentPage
             else
             {
                 // Editar ingrediente existente — PUT
-                url = $"http://192.168.0.106/wsChefPro/ingredientes/{_ingredienteActual.id_ingrediente}";
+                url = $"http://192.168.0.104/wsChefPro/ingredientes/{_ingredienteActual.id_ingrediente}";
 
                 // Crear el objeto JSON para enviar en el body
                 var datos = new
