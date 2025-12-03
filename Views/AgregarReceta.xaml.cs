@@ -8,7 +8,6 @@ namespace chefPro.Views
 {
     public partial class AgregarReceta : ContentPage
     {
-        private const string URL = "http://192.168.0.102/wsChefPro/ingredientes";
         private HttpClient client = new HttpClient();
         private WebClient cliente = new WebClient();
 
@@ -25,6 +24,8 @@ namespace chefPro.Views
 
         // Lista de ingredientes agregados a la receta
         public ObservableCollection<RecetaIngrediente> IngredientesReceta { get; set; }
+
+        private const string URL_BASE = AppConfig.URL_BASE;
 
         public AgregarReceta(int id_usuario, string nombreUsuario)
         {
@@ -93,7 +94,7 @@ namespace chefPro.Views
         {
             try
             {
-                var content = await client.GetStringAsync($"{URL}/ingredientesUsuario?id_usuario={_idUsuario}");
+                var content = await client.GetStringAsync($"{URL_BASE}/ingredientes/ingredientesUsuario?id_usuario={_idUsuario}");
                 List<Ingrediente> listaIngredientes = JsonConvert.DeserializeObject<List<Ingrediente>>(content);
 
                 ListaIngredientes.Clear();
@@ -157,7 +158,7 @@ namespace chefPro.Views
         {
             try
             {
-                var content = await client.GetStringAsync($"http://192.168.0.102/wsChefPro/recetaIngrediente/ingredientesReceta?id={_recetaEditar.id_receta}");
+                var content = await client.GetStringAsync($"{URL_BASE}/recetaIngrediente/ingredientesReceta?id={_recetaEditar.id_receta}");
                 var ingredientes = JsonConvert.DeserializeObject<List<IngredienteRecetaAPI>>(content);
 
                 if (ingredientes != null && ingredientes.Count > 0)
@@ -341,7 +342,7 @@ namespace chefPro.Views
 
                     // Enviar al servidor
                     var response = await httpClient.PostAsync(
-                        "http://192.168.0.102/wsChefPro/recetas/subir_foto",
+                        $"{URL_BASE}/recetas/subir_foto",
                         content
                     );
 
@@ -472,7 +473,7 @@ namespace chefPro.Views
                     {
                         // ============ MODO EDICIÓN ============
                         parametrosReceta.Add("id_receta", _recetaEditar.id_receta.ToString());
-                        string urlActualizar = "http://192.168.0.102/wsChefPro/recetas/actualizar";
+                        string urlActualizar = $"{URL_BASE}/recetas/actualizar";
 
                         byte[] respuestaBytes = null;
                         try
@@ -499,7 +500,7 @@ namespace chefPro.Views
                     else
                     {
                         // ============ MODO CREACIÓN ============
-                        string urlReceta = "http://192.168.0.102/wsChefPro/recetas/registrar";
+                        string urlReceta = $"{URL_BASE}/recetas/registrar";
 
                         byte[] respuestaBytes = null;
                         try
@@ -537,8 +538,8 @@ namespace chefPro.Views
                     }
 
                     // PASO 5: Registrar los ingredientes de la receta
-                    string urlRecetaIngrediente = "http://192.168.0.102/wsChefPro/recetaIngrediente/registrar";
-                    string urlRegistroUsoIngrediente = "http://192.168.0.102/wsChefPro/estadisticas/registrar_ingrediente";
+                    string urlRecetaIngrediente = $"{URL_BASE}/recetaIngrediente/registrar";
+                    string urlRegistroUsoIngrediente = $"{URL_BASE}/estadisticas/registrar_ingrediente";
                     int ingredientesGuardados = 0;
 
                     foreach (var ingrediente in IngredientesReceta)
@@ -637,7 +638,7 @@ namespace chefPro.Views
         {
             try
             {
-                string urlEliminar = $"http://192.168.0.102/wsChefPro/recetaIngrediente/eliminarIngredienteReceta?id_receta={idReceta}";
+                string urlEliminar = $"{URL_BASE}/recetaIngrediente/eliminarIngredienteReceta?id_receta={idReceta}";
 
                 await Task.Run(() =>
                 {

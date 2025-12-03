@@ -37,9 +37,11 @@ namespace chefPro.Models
         // Propiedad calculada para mostrar/ocultar botones
         public bool UsuarioActual { get; set; }
 
+        private const string URL_BASE = AppConfig.URL_BASE;
+
         public string FotoUrlCompleta => string.IsNullOrEmpty(foto_url)
             ? "fondo_cocina.jpg"
-            : $"http://192.168.0.102/wsChefPro/uploads/recetas/{foto_url}";
+            : $"{URL_BASE}/uploads/recetas/{foto_url}";
 
         // CON ESTO SE MUESTRA LA TARJETA DE INGREDIENTES EN TEXTO
         [Ignore]

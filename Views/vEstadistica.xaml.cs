@@ -7,7 +7,7 @@ public partial class vEstadistica : ContentPage
 {
     private HttpClient client = new HttpClient();
     private int _idUsuario;
-    private const string URL_BASE = "http://192.168.0.102/wsChefPro/estadisticas";
+    private const string URL_BASE = AppConfig.URL_BASE;
 
     public vEstadistica(int idUsuario)
     {
@@ -39,7 +39,6 @@ public partial class vEstadistica : ContentPage
                 CargarEstadisticasGenerales(),
                 CargarRecetasMasVistas(),
                 CargarIngredientesMasUsados(),
-                CargarTecnicasMasUsadas(),
                 CargarEstadisticasTiempo(),
                 CargarActividadReciente(),
                 CargarEstadisticasFinancieras(),
@@ -67,7 +66,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/estadisticas_generales_mejoradas?id_usuario={_idUsuario}";
+            var url = $"{URL_BASE}/estadisticas/estadisticas_generales_mejoradas?id_usuario={_idUsuario}";
             var response = await client.GetStringAsync(url);
             var stats = JsonConvert.DeserializeObject<EstadisticasGenerales>(response);
 
@@ -89,7 +88,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/recetas_mas_vistas?id_usuario={_idUsuario}&limite=10";
+            var url = $"{URL_BASE}/estadisticas/recetas_mas_vistas?id_usuario={_idUsuario}&limite=10";
             var response = await client.GetStringAsync(url);
             var recetas = JsonConvert.DeserializeObject<List<RecetasEst>>(response);
 
@@ -99,7 +98,7 @@ public partial class vEstadistica : ContentPage
                 {
                     if (!string.IsNullOrEmpty(receta.imagen) && !receta.imagen.StartsWith("http"))
                     {
-                        receta.imagen = $"http://192.168.0.102/wsChefPro/uploads/recetas/{receta.imagen}";
+                        receta.imagen = $"{URL_BASE}/uploads/recetas/{receta.imagen}";
                     }
                     else if (string.IsNullOrEmpty(receta.imagen))
                     {
@@ -124,7 +123,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/ingredientes_mas_usados?id_usuario={_idUsuario}&limite=10";
+            var url = $"{URL_BASE}/estadisticas/ingredientes_mas_usados?id_usuario={_idUsuario}&limite=10";
             var response = await client.GetStringAsync(url);
             var ingredientes = JsonConvert.DeserializeObject<List<IngredientesEst>>(response);
 
@@ -137,28 +136,11 @@ public partial class vEstadistica : ContentPage
         }
     }
 
-    private async Task CargarTecnicasMasUsadas()
-    {
-        try
-        {
-            var url = $"{URL_BASE}/tecnicas_mas_usadas?id_usuario={_idUsuario}&limite=10";
-            var response = await client.GetStringAsync(url);
-            var tecnicas = JsonConvert.DeserializeObject<List<TecnicasEst>>(response);
-
-            cvTecnicasTop.ItemsSource = tecnicas ?? new List<TecnicasEst>();
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Error al cargar técnicas más usadas: {ex.Message}");
-            cvTecnicasTop.ItemsSource = new List<TecnicasEst>();
-        }
-    }
-
     private async Task CargarEstadisticasTiempo()
     {
         try
         {
-            var url = $"{URL_BASE}/estadisticas_tiempo?id_usuario={_idUsuario}";
+            var url = $"{URL_BASE}/estadisticas/estadisticas_tiempo?id_usuario={_idUsuario}";
             var response = await client.GetStringAsync(url);
             var tiempos = JsonConvert.DeserializeObject<TiemposEst>(response);
 
@@ -180,7 +162,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/actividad_reciente?id_usuario={_idUsuario}";
+            var url = $"{URL_BASE}/estadisticas/actividad_reciente?id_usuario={_idUsuario}";
             var response = await client.GetStringAsync(url);
             var actividad = JsonConvert.DeserializeObject<ActividadEst>(response);
 
@@ -202,7 +184,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/estadisticas_financieras?id_usuario={_idUsuario}";
+            var url = $"{URL_BASE}/estadisticas/estadisticas_financieras?id_usuario={_idUsuario}";
             var response = await client.GetStringAsync(url);
             var financiero = JsonConvert.DeserializeObject<FinancieroEst>(response);
 
@@ -228,7 +210,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/recetas_mas_rentables?id_usuario={_idUsuario}&limite=5";
+            var url = $"{URL_BASE}/estadisticas/recetas_mas_rentables?id_usuario={_idUsuario}&limite=5";
             var response = await client.GetStringAsync(url);
             var recetas = JsonConvert.DeserializeObject<List<RecetasRentablesEst>>(response);
 
@@ -238,7 +220,7 @@ public partial class vEstadistica : ContentPage
                 {
                     if (!string.IsNullOrEmpty(receta.imagen) && !receta.imagen.StartsWith("http"))
                     {
-                        receta.imagen = $"http://192.168.0.102/wsChefPro/uploads/recetas/{receta.imagen}";
+                        receta.imagen = $"{URL_BASE}/uploads/recetas/{receta.imagen}";
                     }
                     else if (string.IsNullOrEmpty(receta.imagen))
                     {
@@ -263,7 +245,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/recetas_tendencia?id_usuario={_idUsuario}&limite=5";
+            var url = $"{URL_BASE}/estadisticas/recetas_tendencia?id_usuario={_idUsuario}&limite=5";
             var response = await client.GetStringAsync(url);
             var recetas = JsonConvert.DeserializeObject<List<RecetasTendenciaEst>>(response);
 
@@ -273,7 +255,7 @@ public partial class vEstadistica : ContentPage
                 {
                     if (!string.IsNullOrEmpty(receta.imagen) && !receta.imagen.StartsWith("http"))
                     {
-                        receta.imagen = $"http://192.168.0.102/wsChefPro/uploads/recetas/{receta.imagen}";
+                        receta.imagen = $"{URL_BASE}/uploads/recetas/{receta.imagen}";
                     }
                     else if (string.IsNullOrEmpty(receta.imagen))
                     {
@@ -298,7 +280,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/ingredientes_costosos?id_usuario={_idUsuario}&limite=8";
+            var url = $"{URL_BASE}/estadisticas/ingredientes_costosos?id_usuario={_idUsuario}&limite=8";
             var response = await client.GetStringAsync(url);
             var ingredientes = JsonConvert.DeserializeObject<List<IngredientesCostososEst>>(response);
 
@@ -315,7 +297,7 @@ public partial class vEstadistica : ContentPage
     {
         try
         {
-            var url = $"{URL_BASE}/resumen_porciones?id_usuario={_idUsuario}";
+            var url = $"{URL_BASE}/estadisticas/resumen_porciones?id_usuario={_idUsuario}";
             var response = await client.GetStringAsync(url);
             var porciones = JsonConvert.DeserializeObject<PorcionesEst>(response);
 

@@ -9,7 +9,8 @@ public partial class RecetaDetalle : ContentPage
     private int _idUsuario;
     private string _nombreUsuario;
     HttpClient client = new HttpClient();
-    private const string URL = "http://192.168.0.102/wsChefPro/recetaIngrediente";
+
+    private const string URL_BASE = AppConfig.URL_BASE;
 
     public RecetaDetalle(Receta receta, int id_usuario, string usuario)
     {
@@ -31,7 +32,7 @@ public partial class RecetaDetalle : ContentPage
     {
         try
         {
-            var content = await client.GetStringAsync($"{URL}/ingredientesReceta?id={_receta.id_receta}");
+            var content = await client.GetStringAsync($"{URL_BASE}/recetaIngrediente/ingredientesReceta?id={_receta.id_receta}");
             var ingredientes = JsonConvert.DeserializeObject<List<Ingrediente>>(content);
 
             if (ingredientes != null && ingredientes.Count > 0)

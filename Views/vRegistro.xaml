@@ -4,17 +4,20 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2021/maui/toolkit"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:Class="chefPro.Views.vRegistro">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!-- Entrada de texto -->
+            <!-- Entrada de texto con fondo blanco -->
             <Style x:Key="entradaTexto" TargetType="material:TextField">
-                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="TextColor" Value="#333333" />
-                <Setter Property="TitleColor" Value="#222222"/>
+                <Setter Property="TitleColor" Value="#666666"/>
                 <Setter Property="FontSize" Value="16" />
-                <Setter Property="BorderColor" Value="#000000" />
+                <Setter Property="BorderColor" Value="#DDDDDD" />
+                <Setter Property="Margin" Value="0,5" />
             </Style>
 
             <!-- Botón Principal de Registro -->
@@ -27,7 +30,7 @@
                 <Setter Property="HeightRequest" Value="50" />
             </Style>
 
-            <!-- Botón Secundario (Ya tengo cuenta) -->
+            <!-- Botón Secundario -->
             <Style x:Key="buttonLoginSecondary" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="#FF6600" />
@@ -37,7 +40,7 @@
                 <Setter Property="BorderWidth" Value="0" />
             </Style>
 
-            <!-- Botón de Registro con Google -->
+            <!-- Botón de Google -->
             <Style x:Key="buttonRegisterGoogle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="TextColor" Value="#333" />
@@ -52,7 +55,7 @@
             <!-- Estilo para Labels de Términos -->
             <Style x:Key="labelTerms" TargetType="Label">
                 <Setter Property="FontSize" Value="12" />
-                <Setter Property="TextColor" Value="#666" />
+                <Setter Property="TextColor" Value="#333" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
             </Style>
@@ -60,38 +63,39 @@
     </ContentPage.Resources>
 
     <Grid>
-
+        <!-- Imagen de fondo -->
         <Image Source="fondo_cocina.jpg"
-            Aspect="AspectFill"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill"/>
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"/>
 
+        <!-- Overlay oscuro para mejor legibilidad -->
+        <BoxView BackgroundColor="#99000000"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill"/>
+
+        <!-- Overlay blanco semi-transparente en la parte superior -->
         <BoxView HorizontalOptions="Fill"
                  VerticalOptions="Fill">
             <BoxView.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <!-- Blanco sólido arriba -->
-                    <GradientStop Color="White" Offset="0.2" />
-                    <!-- Blanco semi-transparente en el medio -->
-                    <GradientStop Color="#CCFFFFFF" Offset="0.4" />
-                    <!-- Transparente abajo (se ve la imagen) -->
-                    <GradientStop Color="Transparent" Offset="0.8" />
+                    <GradientStop Color="#EEFFFFFF" Offset="0.0" />
+                    <GradientStop Color="#CCFFFFFF" Offset="0.15" />
+                    <GradientStop Color="#66FFFFFF" Offset="0.3" />
+                    <GradientStop Color="Transparent" Offset="0.5" />
                 </LinearGradientBrush>
             </BoxView.Background>
         </BoxView>
 
         <ScrollView>
-
-            <!-- Contenido centrado -->
-            <VerticalStackLayout
-                Padding="40,20"
-                Spacing="20">
+            <!-- Contenedor principal con fondo blanco semi-transparente -->
+            <VerticalStackLayout Padding="30,20" Spacing="15">
 
                 <!-- Logo / Título -->
                 <Image Source="chefpro_logo.png"
-                       HeightRequest="100"
+                       HeightRequest="80"
                        HorizontalOptions="Center"
-                       Margin="0,0,0,-30"/>
+                       Margin="0,0,0,5"/>
 
                 <Label Text="ChefPro"
                        FontAttributes="Bold"
@@ -104,128 +108,179 @@
                        FontSize="24"
                        TextColor="#1E1E1E"
                        HorizontalOptions="Center"
-                       Margin="0,0,0,10"/>
+                       Margin="0,0,0,15"/>
 
-                <!-- Campos del formulario -->
-                <material:TextField 
-                    Style="{StaticResource entradaTexto}"
-                    Title="Nombre Completo"
-                    x:Name="txtNombre"
-                    TextColor="#666"
-                    FontSize="14"
-                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}}"
-                    AccentColor="#FB8C00"/>
+                <!-- Card contenedor para los campos -->
+                <Border BackgroundColor="White"
+                        StrokeThickness="0"
+                        Padding="20"
+                        Margin="0,10"
+                        StrokeShape="RoundRectangle 15">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.2"
+                                Radius="10"
+                                Offset="0,5" />
+                    </Border.Shadow>
 
-                <material:TextField 
-                    Style="{StaticResource entradaTexto}"
-                    Title="Correo Electrónico"
-                    x:Name="txtEmail"
-                    TextColor="#666"
-                    FontSize="14"
-                    Keyboard="Email"
-                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}}"
-                    AccentColor="#FB8C00" />
+                    <VerticalStackLayout Spacing="15">
 
-                <material:TextField 
-                    Style="{StaticResource entradaTexto}"
-                    Title="Teléfono (opcional)"
-                    x:Name="txtTelefono"
-                    TextColor="#666"
-                    FontSize="14"
-                    Keyboard="Telephone"
-                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Phone}}"
-                    AccentColor="#FB8C00" />
+                        <!-- Nombre Completo -->
+                        <material:TextField 
+                            Style="{StaticResource entradaTexto}"
+                            Title="Nombre Completo"
+                            x:Name="txtNombre"
+                            TextColor="#333"
+                            FontSize="14"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}, Color=#666}"
+                            AccentColor="#FB8C00"
+                            >
+                            <validation:RequiredValidation Message="El nombre completo es obligatorio" />
+                            <validation:LettersOnlyValidation AllowSpaces="True" Message="Solo se permiten letras" />
+                        </material:TextField>
 
-                <material:TextField 
-                    Style="{StaticResource entradaTexto}"
-                    Title="Contraseña" 
-                    x:Name="txtPassword"
-                    IsPassword="True"
-                    AccentColor="#FB8C00">
-                    <material:TextField.Attachments>
-                        <material:TextFieldPasswordShowHideAttachment />
-                    </material:TextField.Attachments>
-                </material:TextField>
+                        <!-- Email -->
+                        <material:TextField 
+                            Style="{StaticResource entradaTexto}"
+                            Title="Correo Electrónico"
+                            x:Name="txtEmail"
+                            TextColor="#333"
+                            FontSize="14"
+                            Keyboard="Email"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}, Color=#666}"
+                            AccentColor="#FB8C00"
+                            >
+                            <validation:RequiredValidation Message="El correo electrónico es obligatorio" />
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Email inválido" />
+                        </material:TextField>
 
-                <material:TextField 
-                    Style="{StaticResource entradaTexto}"
-                    Title="Confirmar Contraseña" 
-                    x:Name="txtConfirmPassword"
-                    IsPassword="True"
-                    AccentColor="#FB8C00" >
-                    <material:TextField.Attachments>
-                        <material:TextFieldPasswordShowHideAttachment />
-                    </material:TextField.Attachments>
-                </material:TextField>
+                        <!-- Teléfono -->
+                        <material:TextField 
+                            Style="{StaticResource entradaTexto}"
+                            Title="Teléfono"
+                            x:Name="txtTelefono"
+                            TextColor="#333"
+                            FontSize="14"
+                            Keyboard="Numeric"
+                            MaxLength="10"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Phone}, Color=#666}"
+                            AccentColor="#FB8C00"
+                            >
+                            <validation:RequiredValidation Message="El teléfono es obligatorio" />
+                            <validation:DigitsOnlyValidation Message="Solo se permiten números" />
+                            <validation:RegexValidation Pattern="^\d{10}$" Message="El teléfono debe tener exactamente 10 dígitos" />
+                        </material:TextField>
 
-                <!-- CheckBox de Términos y Condiciones -->
-                <Grid Margin="0,10,0,0" ColumnSpacing="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <!-- Contraseña -->
+                        <material:TextField 
+                            Style="{StaticResource entradaTexto}"
+                            Title="Contraseña" 
+                            x:Name="txtPassword"
+                            TextColor="#333"
+                            IsPassword="True"
+                            AccentColor="#FB8C00"
+                            >
+                            <material:TextField.Attachments>
+                                <material:TextFieldPasswordShowHideAttachment />
+                            </material:TextField.Attachments>
+                            <validation:RequiredValidation Message="La contraseña es obligatoria" />
+                            <validation:MinLengthValidation MinLength="6" Message="La contraseña debe tener al menos 6 caracteres" />
+                            <validation:RegexValidation 
+                                Pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$" 
+                                Message="Debe contener al menos una mayúscula, una minúscula y un número" />
+                        </material:TextField>
 
-                    <material:CheckBox 
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        x:Name="chkTerminos"
-                        Color="#FF6600"
-                        VerticalOptions="Start"
-                        Margin="0,2,0,0"/>
+                        <!-- Confirmar Contraseña -->
+                        <material:TextField 
+                            Style="{StaticResource entradaTexto}"
+                            Title="Confirmar Contraseña" 
+                            x:Name="txtConfirmPassword"
+                            TextColor="#333"
+                            IsPassword="True"
+                            AccentColor="#FB8C00"
+                            >
+                            <material:TextField.Attachments>
+                                <material:TextFieldPasswordShowHideAttachment />
+                            </material:TextField.Attachments>
+                            <validation:RequiredValidation Message="Debe confirmar la contraseña" />
+                        </material:TextField>
 
-                    <Label 
-                        Grid.Column="1"
-                        Style="{StaticResource labelTerms}"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start"
-                        LineBreakMode="WordWrap">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Acepto los " TextColor="#000" />
-                                <Span Text="Términos y Condiciones" 
-                                      TextColor="#FF6600" 
-                                      TextDecorations="Underline"/>
-                                <Span Text=" y la " TextColor="#000" />
-                                <Span Text="Política de Privacidad" 
-                                      TextColor="#FF6600" 
-                                      TextDecorations="Underline"/>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
+                        <!-- CheckBox de Términos -->
+                        <Grid Margin="0,10,0,0" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                </Grid>
+                            <material:CheckBox 
+                                Grid.Column="0"
+                                x:Name="chkTerminos"
+                                Color="#FF6600"
+                                VerticalOptions="Start"
+                                Margin="0,2,0,0"/>
 
-                <Label 
-                    x:Name="lblErrorTerminos"
-                    Text="Debe aceptar los términos y condiciones"
-                    TextColor="Red"
-                    FontSize="12"
-                    IsVisible="False"
-                    Margin="0,5,0,0"/>
+                            <Label 
+                                Grid.Column="1"
+                                FontSize="12"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                LineBreakMode="WordWrap">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Acepto los " TextColor="#333" />
+                                        <Span Text="Términos y Condiciones" 
+                                              TextColor="#FF6600" 
+                                              TextDecorations="Underline"
+                                              FontAttributes="Bold"/>
+                                        <Span Text=" y la " TextColor="#333" />
+                                        <Span Text="Política de Privacidad" 
+                                              TextColor="#FF6600" 
+                                              TextDecorations="Underline"
+                                              FontAttributes="Bold"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+
+                        <Label 
+                            x:Name="lblErrorTerminos"
+                            Text="Debe aceptar los términos y condiciones"
+                            TextColor="Red"
+                            FontSize="12"
+                            IsVisible="False"
+                            Margin="0,5,0,0"/>
+
+                    </VerticalStackLayout>
+                </Border>
 
                 <!-- Botón de Registro -->
                 <Button
                     x:Name="btnRegister"
                     Style="{StaticResource buttonRegisterPrimary}"
-                    StyleClass="FilledButton" 
                     Text="Registrarse"
-                    Margin="0,10,0,0"
-                    Clicked="btnRegister_Clicked"/>
+                    Margin="0,10,0,10"
+                    Clicked="btnRegister_Clicked">
+                    <Button.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.3"
+                                Radius="10"
+                                Offset="0,5" />
+                    </Button.Shadow>
+                </Button>
 
                 <!-- Separador -->
                 <Label Text="O"
-                   FontAttributes="Bold"
-                   FontSize="13"
-                   TextColor="#000"
-                   HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="13"
+                       TextColor="#666"
+                       HorizontalOptions="Center"
                        IsVisible="False"
-                   Margin="0,5,0,5" />
+                       Margin="0,5,0,5" />
 
                 <!-- Botón de Google -->
                 <Button 
                     x:Name="btnRegisterGoogle"
                     Style="{StaticResource buttonRegisterGoogle}"
-                    StyleClass="FilledButton" 
                     ImageSource="logo_google.png"
                     IsVisible="False"
                     Text="Registrarse con Google"
@@ -240,6 +295,7 @@
                         Text="¿Ya tienes una cuenta?"
                         FontSize="14"
                         TextColor="#fff"
+                        FontAttributes="Bold"
                         VerticalOptions="Center"/>
                     <Button 
                         x:Name="btnGoLogin"
@@ -250,6 +306,5 @@
 
             </VerticalStackLayout>
         </ScrollView>
-
     </Grid>
 </ContentPage>

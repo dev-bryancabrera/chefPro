@@ -10,13 +10,14 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!-- Entrada de texto -->
+            <!-- Entrada de texto con fondo blanco -->
             <Style x:Key="entradaTexto" TargetType="material:TextField">
-                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="TextColor" Value="#333333" />
-                <Setter Property="TitleColor" Value="#222222"/>
+                <Setter Property="TitleColor" Value="#666666"/>
                 <Setter Property="FontSize" Value="16" />
-                <Setter Property="BorderColor" Value="#000000" />
+                <Setter Property="BorderColor" Value="#DDDDDD" />
+                <Setter Property="Margin" Value="0,5" />
             </Style>
 
             <!-- Botón de Login -->
@@ -29,18 +30,19 @@
                 <Setter Property="HeightRequest" Value="50" />
             </Style>
 
-            <!-- Boton de Registro -->
+            <!-- Botón de Registro -->
             <Style x:Key="buttonRegister" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="#FFE5D6" />
+                <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="TextColor" Value="#FF6600" />
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="HeightRequest" Value="50" />
-                <Setter Property="BorderWidth" Value="0" />
+                <Setter Property="BorderColor" Value="#FF6600" />
+                <Setter Property="BorderWidth" Value="2" />
             </Style>
 
-            <!-- Boton de Login con Google -->
+            <!-- Botón de Login con Google -->
             <Style x:Key="buttonLoginGoogle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="White" />
                 <Setter Property="TextColor" Value="#333" />
@@ -55,38 +57,39 @@
     </ContentPage.Resources>
 
     <Grid>
-
+        <!-- Imagen de fondo -->
         <Image Source="fondo_cocina.jpg"
-            Aspect="AspectFill"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill"/>
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill"/>
 
+        <!-- Overlay oscuro para mejor legibilidad -->
+        <BoxView BackgroundColor="#99000000"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill"/>
+
+        <!-- Gradiente blanco en la parte superior -->
         <BoxView HorizontalOptions="Fill"
                  VerticalOptions="Fill">
             <BoxView.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <!-- Blanco sólido arriba -->
-                    <GradientStop Color="White" Offset="0.0" />
-                    <!-- Blanco semi-transparente en el medio -->
-                    <GradientStop Color="#CCFFFFFF" Offset="0.3" />
-                    <!-- Transparente abajo (se ve la imagen) -->
-                    <GradientStop Color="Transparent" Offset="0.7" />
+                    <GradientStop Color="#EEFFFFFF" Offset="0.0" />
+                    <GradientStop Color="#CCFFFFFF" Offset="0.2" />
+                    <GradientStop Color="#66FFFFFF" Offset="0.35" />
+                    <GradientStop Color="Transparent" Offset="0.55" />
                 </LinearGradientBrush>
             </BoxView.Background>
         </BoxView>
 
         <ScrollView>
-
             <!-- Contenido centrado -->
-            <VerticalStackLayout
-                Padding="40,50"
-                Spacing="25">
+            <VerticalStackLayout Padding="40,50" Spacing="15" VerticalOptions="Center">
 
                 <!-- Logo / Título -->
                 <Image Source="chefpro_logo.png"
                        HeightRequest="120"
                        HorizontalOptions="Center"
-                       Margin="0,0,0,-40"/>
+                       Margin="0,0,0,10"/>
 
                 <Label Text="ChefPro"
                        FontAttributes="Bold"
@@ -95,70 +98,113 @@
                        HorizontalOptions="Center" />
 
                 <Label Text="¡Bienvenido de nuevo!"
-                       FontAttributes="Bold"
-                       FontSize="24"
-                       TextColor="#1E1E1E"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,20"/>
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   TextColor="#1E1E1E"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20">
+                    <Label.Shadow>
+                        <Shadow Brush="White"
+                            Opacity="0.8"
+                            Radius="10"
+                            Offset="0,0" />
+                    </Label.Shadow>
+                </Label>
 
-                <material:TextField 
-                    Style="{StaticResource entradaTexto}"
-                    Title="Correo Electronico"
-                    x:Name="txtEmail"
-                    TextColor="#666"
-                    Keyboard="Email"
-                    FontSize="14"
-                    Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}, Color=#222222}"
-                    AccentColor="#FB8C00" >
+                <!-- Card contenedor para los campos -->
+                <Border BackgroundColor="White"
+                        StrokeThickness="0"
+                        Padding="25,20"
+                        Margin="0,10"
+                        StrokeShape="RoundRectangle 15">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.2"
+                                Radius="10"
+                                Offset="0,5" />
+                    </Border.Shadow>
 
-                    <validation:RequiredValidation />
-                    <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Email inválido" />
+                    <VerticalStackLayout Spacing="20">
 
-                </material:TextField>
+                        <!-- Email -->
+                        <material:TextField 
+                            Style="{StaticResource entradaTexto}"
+                            Title="Correo Electrónico"
+                            x:Name="txtEmail"
+                            TextColor="#333"
+                            Keyboard="Email"
+                            FontSize="14"
+                            Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}, Color=#666}"
+                            AccentColor="#FB8C00">
+                            <validation:RequiredValidation Message="El correo es obligatorio" />
+                            <validation:RegexValidation Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}" Message="Email inválido" />
+                        </material:TextField>
 
-                <material:TextField x:Name="txtPassword" 
-                        Style="{StaticResource entradaTexto}"
-                        Title="Password" 
-                        IsPassword="True"
-                        AccentColor="#FB8C00">
+                        <!-- Password -->
+                        <material:TextField 
+                            x:Name="txtPassword" 
+                            Style="{StaticResource entradaTexto}"
+                            Title="Contraseña" 
+                            TextColor="#333"
+                            IsPassword="True"
+                            AccentColor="#FB8C00">
+                            <material:TextField.Attachments>
+                                <material:TextFieldPasswordShowHideAttachment />
+                            </material:TextField.Attachments>
+                            <validation:RequiredValidation Message="La contraseña es obligatoria" />
+                        </material:TextField>
 
-                    <material:TextField.Attachments>
-                        <material:TextFieldPasswordShowHideAttachment />
-                    </material:TextField.Attachments>
+                    </VerticalStackLayout>
+                </Border>
 
-                </material:TextField>
-
+                <!-- Botón de Login -->
                 <Button
                     x:Name="btnLogin"
                     Style="{StaticResource buttonLogin}"
-                    StyleClass="FilledButton" 
-                    Text="Inciar Sesión"
-                    input:FormView.IsSubmitButton="True"
-                    Clicked="btnLogin_Clicked"/>
+                    Text="Iniciar Sesión"
+                    Margin="0,10,0,0"
+                    Clicked="btnLogin_Clicked">
+                    <Button.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.3"
+                                Radius="10"
+                                Offset="0,5" />
+                    </Button.Shadow>
+                </Button>
 
+                <!-- Separador -->
                 <Label Text="O"
-                   FontAttributes="Bold"
-                   FontSize="14"
-                   TextColor="#000"
-                   HorizontalOptions="Center" />
+                       FontAttributes="Bold"
+                       FontSize="14"
+                       TextColor="#fff"
+                       HorizontalOptions="Center"
+                       Margin="0,5" />
 
+                <!-- Botón de Registro -->
                 <Button 
                     x:Name="btnRegister"
                     Style="{StaticResource buttonRegister}"
-                    Text="Registrarse"
-                    Clicked="btnRegister_Clicked"/>
+                    Text="Crear una cuenta"
+                    Clicked="btnRegister_Clicked">
+                    <Button.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.15"
+                                Radius="8"
+                                Offset="0,3" />
+                    </Button.Shadow>
+                </Button>
 
+                <!-- Botón de Google -->
                 <Button 
                     x:Name="btnLoginGoogle"
                     Style="{StaticResource buttonLoginGoogle}"
-                    StyleClass="FilledButton" 
                     ImageSource="logo_google.png"
                     IsVisible="False"
                     Text="Iniciar con Google"
-                    Clicked="btnLoginGoogle_Clicked"/>
+                    Clicked="btnLoginGoogle_Clicked"
+                    Margin="0,5,0,0"/>
 
             </VerticalStackLayout>
         </ScrollView>
-
     </Grid>
 </ContentPage>

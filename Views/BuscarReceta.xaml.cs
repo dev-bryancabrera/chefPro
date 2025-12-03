@@ -11,6 +11,8 @@ public partial class BuscarReceta : ContentPage
     private ObservableCollection<Receta> recetas;
     private int _idUsuario;
 
+    private const string URL_BASE = AppConfig.URL_BASE;
+
     // Constructor recibe el ID del usuario
     public BuscarReceta(int idUsuario)
     {
@@ -36,7 +38,7 @@ public partial class BuscarReceta : ContentPage
         {
             using (WebClient cliente = new WebClient())
             {
-                string url = $"http://192.168.0.102/wsChefPro/receta?titulo={Uri.EscapeDataString(texto)}";
+                string url = $"{URL_BASE}/receta?titulo={Uri.EscapeDataString(texto)}";
                 string respuesta = await cliente.DownloadStringTaskAsync(url);
 
                 var resultados = JsonSerializer.Deserialize<List<Receta>>(respuesta);

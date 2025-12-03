@@ -6,6 +6,7 @@ namespace chefPro.Views;
 public partial class vLogin : ContentPage
 {
     private readonly GoogleAuthService _googleAuth = new GoogleAuthService();
+    private const string URL_BASE = AppConfig.URL_BASE;
 
     public vLogin()
     {
@@ -17,10 +18,15 @@ public partial class vLogin : ContentPage
     {
         try
         {
-            // Validar campos
+            if (!txtEmail.IsValid || !txtPassword.IsValid)
+            {
+                return;
+            }
+
+            // Validar campos vacios
             if (string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                await DisplayAlert("Error", "Complete todos los campos", "OK");
+                await DisplayAlert("Error", "Credenciales incorrectas", "OK");
                 return;
             }
 
@@ -31,7 +37,7 @@ public partial class vLogin : ContentPage
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.102/wsChefPro/auth/login",
+                $"{URL_BASE}/auth/login",
                 "POST",
                 parametros
             );
@@ -45,9 +51,6 @@ public partial class vLogin : ContentPage
             if (resultado != null && resultado.usuario != null)
             {
                 /*await DisplayAlert("Éxito", $"Bienvenido {resultado.usuario.nombres}", "OK");*/
-
-                txtEmail.Text = "";
-                txtPassword.Text = "";
 
                 await Navigation.PushAsync(new vInicio(resultado.usuario.nombres, resultado.usuario.id_usuario));
             }
@@ -80,6 +83,19 @@ public partial class vLogin : ContentPage
         }
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Limpiar campos
+        txtEmail.Text = string.Empty;
+        txtPassword.Text = string.Empty;
+
+        // Resetear validaciones
+        txtEmail.ResetValidation();
+        txtPassword.ResetValidation();
+    }
+
     private void btnRegister_Clicked(object sender, EventArgs e)
     {
         Navigation.PushAsync(new vRegistro());
@@ -105,7 +121,7 @@ public partial class vLogin : ContentPage
                 parametros.Add("tipo_login", "2");
 
                 byte[] respuestaBytes = cliente.UploadValues(
-                    "http://192.168.0.102/wsChefPro/auth/google-login",
+                    $"{URL_BASE}/auth/google-login",
                     "POST",
                     parametros
                 );

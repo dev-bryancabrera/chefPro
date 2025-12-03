@@ -12,9 +12,9 @@ public partial class vInicio : ContentPage
     private int id_usuario;
 
     /* Obtener todas las recetas para mostrar como un dashboard */
-    private const string URL = "http://192.168.0.102/wsChefPro/recetas";
     private HttpClient client = new HttpClient();
     private WebClient cliente = new WebClient();
+    private const string URL_BASE = AppConfig.URL_BASE;
 
     public ObservableCollection<Receta> ListaRecetas { get; set; }
 
@@ -55,7 +55,7 @@ public partial class vInicio : ContentPage
     {
         try
         {
-            var content = await client.GetStringAsync($"{URL}/listarRecetas");
+            var content = await client.GetStringAsync($"{URL_BASE}/recetas/listarRecetas");
             List<Receta> recetas = JsonConvert.DeserializeObject<List<Receta>>(content);
 
             ListaRecetas.Clear();
@@ -156,7 +156,7 @@ public partial class vInicio : ContentPage
             byte[] respuestaBytes = null;
             try
             {
-                respuestaBytes = cliente.UploadValues("http://192.168.0.102/wsChefPro/estadisticas/registrar_vista_receta", "POST", parametros);
+                respuestaBytes = cliente.UploadValues($"{URL_BASE}/estadisticas/registrar_vista_receta", "POST", parametros);
             }
             catch (Exception ex)
             {
@@ -212,7 +212,7 @@ public partial class vInicio : ContentPage
             IsBusy = true;
 
             var response = await client.DeleteAsync(
-                $"http://192.168.0.102/wsChefPro/recetas/eliminar?id={idReceta}"
+                $"{URL_BASE}/recetas/eliminar?id={idReceta}"
             );
 
             if (response.IsSuccessStatusCode)

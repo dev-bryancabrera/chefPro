@@ -5,6 +5,8 @@ namespace chefPro.Views;
 
 public partial class vRegistro : ContentPage
 {
+    private const string URL_BASE = AppConfig.URL_BASE;
+
     public vRegistro()
     {
         InitializeComponent();
@@ -17,19 +19,14 @@ public partial class vRegistro : ContentPage
         {
             lblErrorTerminos.IsVisible = false;
 
-            // Validar campos
-            if (string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrWhiteSpace(txtPassword.Text) || string.IsNullOrWhiteSpace(txtNombre.Text))
+            if (!txtNombre.IsValid || !txtEmail.IsValid || !txtTelefono.IsValid ||
+            !txtPassword.IsValid || !txtConfirmPassword.IsValid)
             {
-                await DisplayAlert("Error", "Complete todos los campos", "OK");
+                await DisplayAlert("Error", "Por favor corrige los errores en el formulario", "OK");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtPassword.Text) || txtPassword.Text.Length < 6)
-            {
-                await DisplayAlert("Error", "La contraseña debe tener al menos 6 caracteres", "OK");
-                return;
-            }
-
+            // Validar que las contraseñas coincidan
             if (txtPassword.Text != txtConfirmPassword.Text)
             {
                 await DisplayAlert("Error", "Las contraseñas no coinciden", "OK");
@@ -51,7 +48,7 @@ public partial class vRegistro : ContentPage
 
             // Hacer la petición
             byte[] respuestaBytes = cliente.UploadValues(
-                "http://192.168.0.102/wsChefPro/usuarios/registrar",
+                $"{URL_BASE}/usuarios/registrar",
                 "POST",
                 parametros
             );
