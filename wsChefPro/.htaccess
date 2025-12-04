@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /wsChefPro/
+
+# Redirigir todo al index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?request=$1 [QSA,L]
+
+# Habilitar CORS (si necesitas acceso desde otros dominios)
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"

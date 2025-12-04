@@ -123,4 +123,8 @@
 	  </MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wsChefPro\config\" />
+	</ItemGroup>
+
 </Project>
