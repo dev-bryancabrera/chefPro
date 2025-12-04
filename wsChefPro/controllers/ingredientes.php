@@ -3,7 +3,7 @@ $dbConn = connect($db);
 
 // GET /ingrediente - Listar todos los ingredientes
 // GET /ingrediente/5 - Obtener ingrediente con id 5
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && $action == 'listarIngredientes') {
     if (!empty($id)) {
         // Mostrar un ingrediente específico
         $sql = $dbConn->prepare("SELECT * FROM ingrediente WHERE id_ingrediente=:id_ingrediente");
@@ -30,9 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && $action == 'ingredientesUsuario') {
 
-    if (!empty($_GET['id_usuario'])) {
+    if (isset($_GET['id_usuario']) && $_GET['id_usuario'] !== '') {
+
         // Buscar ingredientes por usuario
         $id_usuario = $_GET['id_usuario'];
 
@@ -41,29 +42,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             WHERE id_usuario = :id_usuario
         ");
 
-        $sql->bindValue(':id_usuario', $id_usuario);
+        $sql->bindValue(':id_usuario', $id_usuario, PDO::PARAM_INT);
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($result) {
+        if (!empty($result)) {
             header("HTTP/1.1 200 OK");
             echo json_encode($result);
-        } else {
-            header("HTTP/1.1 404 Not Found");
-            echo json_encode(['error' => 'No hay ingredientes para este usuario']);
         }
         exit();
-    } else {
-        // Listar todos los ingredientes
-        $sql = $dbConn->prepare("SELECT * FROM ingrediente");
-        $sql->execute();
-        $sql->setFetchMode(PDO::FETCH_ASSOC);
+    } 
+    
+    // Si NO se envía id_usuario → listar todos
+    $sql = $dbConn->prepare("SELECT * FROM ingrediente");
+    $sql->execute();
+    $sql->setFetchMode(PDO::FETCH_ASSOC);
 
-        header("HTTP/1.1 200 OK");
-        echo json_encode($sql->fetchAll());
-        exit();
-    }
+    header("HTTP/1.1 200 OK");
+    echo json_encode($sql->fetchAll());
+    exit();
 }
+
 
 // POST /ingrediente/registrar - Crear nuevo ingrediente
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && $action == 'registrar') {

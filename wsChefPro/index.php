@@ -36,6 +36,10 @@ switch ($resource) {
         include 'controllers/ingredientes.php';
         break;
 
+    case 'recetaIngrediente':
+        include 'controllers/recetaIngrediente.php';
+        break;
+
     default:
         header("HTTP/1.1 404 Not Found");
         echo json_encode(['error' => 'Recurso no encontrado']);
